@@ -452,3 +452,56 @@ function audiotheme_build_query( $data, $arg_separator = '|', $value_separator =
 	$output = http_build_query( $data, null, $arg_separator );
 	return str_replace( '=', $value_separator, $output );
 }
+
+/**
+ * Convert a date string to MySQL DateTime format.
+ *
+ * @since x.x.x
+ *
+ * @param string $datetime Date or date and time string.
+ * @param string $time Optional. Time string.
+ * @return string Blank string if input couldn't be converted.
+ */
+function audiotheme_string_to_datetime( $datetime, $time = '' ) {
+	$dt = date_parse( $datetime . ' ' . $time );
+	$datetime = '';
+
+	// Date and time are always stored local to the venue.
+	// If GMT, or time in another locale is needed, use the venue time zone to calculate.
+	// Other functions should be aware that time is optional; check for the presence of gig_time.
+	if ( checkdate( $dt['month'], $dt['day'], $dt['year'] ) ) {
+		$datetime = sprintf(
+			'%d-%s-%s %s:%s:%s',
+			$dt['year'],
+			zeroise( $dt['month'], 2 ),
+			zeroise( $dt['day'], 2 ),
+			zeroise( $dt['hour'], 2 ),
+			zeroise( $dt['minute'], 2 ),
+			zeroise( $dt['second'], 2 )
+		);
+	}
+
+	return $datetime;
+}
+
+/**
+ * Convert a time string to the format used in the time portion of MySQL DateTime.
+ *
+ * @since x.x.x
+ *
+ * @param string $time Time string.
+ * @return string
+ */
+function audiotheme_string_to_time( $time ) {
+	$t = date_parse( $time );
+
+	if ( empty( $t['errors'] ) ) {
+		$time = sprintf( '%s:%s:%s',
+			zeroise( $t['hour'], 2 ),
+			zeroise( $t['minute'], 2 ),
+			zeroise( $t['second'], 2 )
+		);
+	}
+
+	return $time;
+}
