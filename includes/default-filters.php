@@ -70,13 +70,7 @@ function audiotheme_archives_post_type_archive_link( $link, $post_type ) {
  */
 function audiotheme_archives_post_type_archive_title( $title ) {
 	$post_type_object = get_queried_object();
-
-	if ( $page_id = get_audiotheme_post_type_archive( $post_type_object->name ) ) {
-		$page = get_post( $page_id );
-		$title = $page->post_title;
-	}
-
-	return $title;
+	return get_audiotheme_post_type_archive_title( $post_type_object->name, $title );
 }
 
 /**

@@ -89,6 +89,31 @@ function is_audiotheme_default_template( $template ) {
 }
 
 /**
+ * Retrieve the title for a post type archive.
+ *
+ * @since x.x.x
+ *
+ * @param string $post_type Optional. Post type name. Defaults to the current post type.
+ * @param string $title Optional. Fallback title.
+ * @return string
+ */
+function get_audiotheme_post_type_archive_title( $post_type = '', $title = '' ) {
+	if ( empty( $post_type ) ) {
+		$post_type = get_query_var( 'post_type' );
+		if ( is_array( $post_type ) ) {
+			$post_type = reset( $post_type );
+		}
+	}
+
+	if ( $page_id = get_audiotheme_post_type_archive( $post_type) ) {
+		$page = get_post( $page_id );
+		$title = $page->post_title;
+	}
+
+	return $title;
+}
+
+/**
  * Display a post type archive title.
  *
  * Just a wrapper to the default post_type_archive_title for the sake of
