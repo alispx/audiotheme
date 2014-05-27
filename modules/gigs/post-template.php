@@ -465,11 +465,8 @@ function get_audiotheme_gig_admin_url( $args = '' ) {
 	$admin_url = admin_url( 'admin.php?page=audiotheme-gigs' );
 
 	if ( ! empty( $args ) ) {
-		if ( is_array( $args ) ) {
-			$admin_url = add_query_arg( $args, $admin_url );
-		} else {
-			$admin_url = ( 0 !== strpos( $args, '&' ) ) ? '&' . $admin_url : $admin_url;
-		}
+		$args = wp_parse_args( $args, array() );
+		$admin_url = add_query_arg( $args, $admin_url );
 	}
 
 	return $admin_url;
