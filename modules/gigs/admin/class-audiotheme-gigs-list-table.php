@@ -207,7 +207,7 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$sql = "SELECT COUNT( DISTINCT p.ID )
 			FROM $wpdb->posts p
 			INNER JOIN $wpdb->postmeta pm ON p.ID=pm.post_id
-			WHERE p.post_type='audiotheme_gig' AND p.post_status!='auto-draft' AND pm.meta_key='_audiotheme_gig_datetime'";
+			WHERE p.post_type='audiotheme_gig' AND p.post_status NOT IN ( 'auto-draft', 'trash' ) AND pm.meta_key='_audiotheme_gig_datetime'";
 
 		$upcoming_count = $wpdb->get_var( $wpdb->prepare( $sql . " AND pm.meta_value>=%s", current_time( 'mysql' ) ) );
 		$status_links['upcoming'] = sprintf( '<a href="%s"%s>%s <span class="count">(%d)</span></a>',
