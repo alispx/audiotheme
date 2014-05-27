@@ -71,9 +71,9 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		$per_page = ( empty( $per_page ) ) ? 20 : $per_page;
 
 		// Set up column headers.
-		$columns = $this->get_columns();
-		$hidden = get_hidden_columns( $screen->id );
-		$sortable = $this->get_sortable_columns();
+		$columns               = $this->get_columns();
+		$hidden                = get_hidden_columns( $screen->id );
+		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		// Compile the WP_Query args based on the current view and user options.
@@ -381,8 +381,9 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 		}
 
 		$sendback = remove_query_arg( array( 'trashed', 'untrashed', 'deleted', 'ids' ), wp_get_referer() );
-		if ( ! $sendback )
+		if ( ! $sendback ) {
 			$sendback = get_audiotheme_gig_admin_url();
+		}
 		$sendback = add_query_arg( 'paged', $this->get_pagenum(), $sendback );
 
 		if ( ! empty( $action ) ) {
@@ -434,7 +435,6 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			wp_redirect( $sendback );
 			exit;
 		}
-
 
 		if ( ! empty( $_REQUEST['_wp_http_referer'] ) ) {
 			 wp_redirect( remove_query_arg( array( '_wp_http_referer', '_wpnonce' ), stripslashes( $_SERVER['REQUEST_URI'] ) ) );
