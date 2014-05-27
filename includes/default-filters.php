@@ -76,9 +76,6 @@ function audiotheme_archives_post_type_archive_title( $title ) {
 /**
  * Add helpful nav menu item classes.
  *
- * Adds class hooks to various nav menu items since child pseudo selectors
- * aren't supported in all browsers.
- *
  * @since 1.0.0
  *
  * @param array $items List of menu items.
@@ -88,8 +85,9 @@ function audiotheme_archives_post_type_archive_title( $title ) {
 function audiotheme_nav_menu_classes( $items, $args ) {
 	global $wp;
 
-	$classes = array();
-	$first_top = -1;
+	if ( is_404() || is_search() ) {
+		return $items;
+	}
 
 	$current_url = trailingslashit( home_url( add_query_arg( array(), $wp->request ) ) );
 	$blog_page_id = get_option( 'page_for_posts' );
@@ -99,44 +97,37 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 	$post_type_archive_id = get_audiotheme_post_type_archive( get_post_type() );
 	$post_type_archive_link = get_post_type_archive_link( get_post_type() );
 
+	$current_menu_parents = array();
+
 	foreach ( $items as $key => $item ) {
-		if ( 0 == $item->menu_item_parent ) {
-			$first_top = ( -1 == $first_top ) ? $key : $first_top;
-			$last_top = $key;
-		} else {
-			if ( ! isset( $classes['first-child-items'][ $item->menu_item_parent ] ) ) {
-				$classes['first-child-items'][ $item->menu_item_parent ] = $key;
-				$items[ $key ]->classes[] = 'first-child-item';
-			}
-			$classes['last-child-items'][ $item->menu_item_parent ] = $key;
+		if (
+			'audiotheme_archive' == $item->object &&
+			$post_type_archive_id == $item->object_id &&
+			trailingslashit( $item->url ) == $current_url
+		) {
+			$items[ $key ]->classes[] = 'current-menu-item';
+			$current_menu_parents[] = $item->menu_item_parent;
 		}
 
-		if ( ! is_404() && ! is_search() ) {
-			if (
-				'audiotheme_archive' == $item->object &&
-				$post_type_archive_id == $item->object_id &&
-				trailingslashit( $item->url ) == $current_url
-			) {
-				$items[ $key ]->classes[] = 'current-menu-item';
-			}
+		if ( $is_blog_post && $blog_page_id == $item->object_id ) {
+			$items[ $key ]->classes[] = 'current-menu-parent';
+			$current_menu_parents[] = $item->menu_item_parent;
+		}
 
-			if ( $is_blog_post && $blog_page_id == $item->object_id ) {
-				$items[ $key ]->classes[] = 'current-menu-parent';
-			}
-
-			// Add 'current-menu-parent' class to CPT archive links when viewing a singular template.
-			if ( $is_audiotheme_post_type && $post_type_archive_link == $item->url ) {
-				$items[ $key ]->classes[] = 'current-menu-parent';
-			}
+		// Add 'current-menu-parent' class to CPT archive links when viewing a singular template.
+		if ( $is_audiotheme_post_type && $post_type_archive_link == $item->url ) {
+			$items[ $key ]->classes[] = 'current-menu-parent';
 		}
 	}
 
-	$items[ $first_top ]->classes[] = 'first-item';
-	$items[ $last_top ]->classes[] = 'last-item';
+	// Add 'current-menu-parent' classes.
+	$current_menu_parents = array_filter( $current_menu_parents );
 
-	if ( isset( $classes['last-child-items'] ) ) {
-		foreach ( $classes['last-child-items'] as $item_id ) {
-			$items[ $item_id ]->classes[] = 'last-child-item';
+	if ( ! empty( $current_menu_parents ) ) {
+		foreach ( $items as $key => $item ) {
+			if ( in_array( $item->ID, $current_menu_parents ) ) {
+				$items[ $key ]->classes[] = 'current-menu-parent';
+			}
 		}
 	}
 
