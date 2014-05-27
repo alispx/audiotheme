@@ -181,7 +181,7 @@ function audiotheme_gigs_admin_menu_highlight( $parent_file ) {
  * @since 1.0.0
  */
 function audiotheme_gigs_manage_screen_setup() {
-	audiotheme_gig_list_help();	
+	audiotheme_gig_list_help();
 
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
 	$title = $post_type_object->labels->name;
@@ -218,7 +218,7 @@ function audiotheme_gigs_manage_screen() {
  * @param WP_Post $post The gig post object being edited.
  */
 function audiotheme_gig_edit_screen_setup( $post ) {
-	audiotheme_gig_help();	
+	audiotheme_gig_help();
 
 	wp_enqueue_script( 'audiotheme-gig-edit' );
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
@@ -311,60 +311,25 @@ function audiotheme_gig_tickets_meta_box( $post ) {
  * @param WP_Post $post Gig post object.
  */
 function audiotheme_gig_save_post( $post_id, $post ) {
-	$is_autosave = ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ? true : false;
-	$is_revision = wp_is_post_revision( $post_id );
-	$is_valid_nonce = ( isset( $_POST['audiotheme_save_gig_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_gig_nonce'], 'save-gig_' . $post_id ) ) ? true : false;
+	$is_autosave    = defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE;
+	$is_revision    = wp_is_post_revision( $post_id );
+	$is_valid_nonce = isset( $_POST['audiotheme_save_gig_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_save_gig_nonce'], 'save-gig_' . $post_id );
+	$data_exists    = isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] );
 
 	// Bail if the data shouldn't be saved or intention can't be verified.
-	if( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+	if( $is_autosave || $is_revision || ! $is_valid_nonce || ! $data_exists ) {
 		return;
 	}
 
-	$post_type_object = get_post_type_object( 'audiotheme_gig' );
-	if ( isset( $_POST['gig_date'] ) && isset( $_POST['gig_time'] ) && current_user_can( $post_type_object->cap->edit_post, $post_id ) ) {
-		$venue = set_audiotheme_gig_venue( $post_id, $_POST['gig_venue'] );
+	$venue    = set_audiotheme_gig_venue( $post_id, $_POST['gig_venue'] );
+	$datetime = audiotheme_string_to_datetime( $_POST['gig_date'], $_POST['gig_time'] );
+	$time     = audiotheme_string_to_time( $_POST['gig_time'] );
 
-		$dt = date_parse( $_POST['gig_date'] . ' ' . $_POST['gig_time'] );
-
-		// Date and time are always stored local to the venue.
-		// If GMT, or time in another locale is needed, use the venue time zone to calculate.
-		// Other functions should be aware that time is optional; check for the presence of gig_time.
-		if ( checkdate( $dt['month'], $dt['day'], $dt['year'] ) ) {
-			$datetime = sprintf( '%d-%s-%s %s:%s:%s',
-				$dt['year'],
-				zeroise( $dt['month'], 2 ),
-				zeroise( $dt['day'], 2 ),
-				zeroise( $dt['hour'], 2 ),
-				zeroise( $dt['minute'], 2 ),
-				zeroise( $dt['second'], 2 ) );
-
-			update_post_meta( $post_id, '_audiotheme_gig_datetime', $datetime );
-
-			// If the post name is empty, default it to the date.
-			if ( empty( $post->post_name ) ) {
-				wp_update_post( array(
-					'ID'        => $post->ID,
-					'post_name' => sprintf( '%s-%s-%s', $dt['year'], zeroise( $dt['month'], 2 ), zeroise( $dt['day'], 2 ) ),
-				) );
-			}
-		} else {
-			update_post_meta( $post_id, '_audiotheme_gig_datetime', '' );
-		}
-
-		// Store time separately to check for empty values, TBA, etc.
-		$time = $_POST['gig_time'];
-		$t = date_parse( $time );
-		if ( empty( $t['errors'] ) ) {
-			$time = sprintf( '%s:%s:%s',
-				zeroise( $t['hour'], 2 ),
-				zeroise( $t['minute'], 2 ),
-				zeroise( $t['second'], 2 ) );
-		}
-
-		update_post_meta( $post_id, '_audiotheme_gig_time', $time );
-		update_post_meta( $post_id, '_audiotheme_tickets_price', $_POST['gig_tickets_price'] );
-		update_post_meta( $post_id, '_audiotheme_tickets_url', $_POST['gig_tickets_url'] );
-	}
+	// Time is saved separately to check for empty values, TBA, etc.
+	update_post_meta( $post_id, '_audiotheme_gig_datetime', $datetime );
+	update_post_meta( $post_id, '_audiotheme_gig_time', $time );
+	update_post_meta( $post_id, '_audiotheme_tickets_price', $_POST['gig_tickets_price'] );
+	update_post_meta( $post_id, '_audiotheme_tickets_url', $_POST['gig_tickets_url'] );
 }
 
 /**
@@ -378,7 +343,7 @@ function audiotheme_gig_list_help() {
 		'title'   => __( 'Overview', 'audiotheme' ),
 		'content' => '<p>' . __( 'This screen provides access to all of your gigs. You can customize the display of this screen to suit your workflow.', 'audiotheme' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'screen-content',
 		'title'   => __( 'Screen Content', 'audiotheme' ),
@@ -391,7 +356,7 @@ function audiotheme_gig_list_help() {
 			'<li>' . __( "You can also sort your gigs in any view by clicking the column headers.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'available-actions',
 		'title'   => __( 'Available Actions', 'audiotheme' ),
@@ -423,7 +388,7 @@ function audiotheme_gig_help() {
 			'<p>' . __( "<strong>Note</strong> - Enter a short note about the gig.", 'audiotheme' ) . '</p>' .
 			'<p>' . __( "<strong>Editor</strong> - Enter a longer description for your gig. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'inserting-media',
 		'title'		=> __( 'Inserting Media', 'audiotheme' ),
@@ -431,7 +396,7 @@ function audiotheme_gig_help() {
 			'<p>' . __( 'You can upload and insert media (images, audio, documents, etc.) by clicking the Add Media button. You can select from the images and files already uploaded to the Media Library, or upload new media to add to your gig description. To create an image gallery, select the images to add and click the "Create a new gallery" button.', 'audiotheme' ) . '</p>' .
 			'<p>' . __( 'You can also embed media from many popular websites including Twitter, YouTube, Flickr and others by pasting the media URL on its own line into the gig description editor. Please refer to the Codex to <a href="http://codex.wordpress.org/Embeds">learn more about embeds</a>.', 'audiotheme' ) . '</p>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'tickets',
 		'title'		=> __( 'Tickets', 'audiotheme' ),
@@ -442,7 +407,7 @@ function audiotheme_gig_help() {
 			'<li>' . __( "<strong>URL</strong> - If tickets can be purchased online, provide a link.", 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'		=> 'publish-settings',
 		'title'		=> __( 'Publish Settings', 'audiotheme' ),
@@ -453,7 +418,7 @@ function audiotheme_gig_help() {
 			'<li>' . __( '<strong>Featured Image</strong> - If the author of your theme built in support for featured images, you can set those here. Find out more about <a href="http://codex.wordpress.org/Post_Thumbnails" target="_blank">setting featured images</a> in the WordPress Codex.', 'audiotheme' ) . '</li>' .
 			'</ul>',
 	) );
-	
+
 	get_current_screen()->add_help_tab( array(
 		'id'      => 'customize-display',
 		'title'   => __( 'Customize This Screen', 'audiotheme' ),
