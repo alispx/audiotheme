@@ -310,9 +310,9 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 	function get_columns() {
 		$columns = array(
 			'cb'         => '<input type="checkbox">',
-			'title'      => 'Date',
-			'post_title' => 'Title',
-			'venue'      => 'Venue',
+			'title'      => __( 'Date', 'audiotheme' ),
+			'post_title' => __( 'Title', 'audiotheme' ),
+			'venue'      => __( 'Venue', 'audiotheme' ),
 		);
 
 		// The screen id is used when managing column visibility.
