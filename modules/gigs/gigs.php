@@ -104,7 +104,7 @@ function audiotheme_gigs_init() {
 	add_filter( 'post_type_link', 'audiotheme_gig_permalink', 10, 4 );
 	add_filter( 'post_type_archive_link', 'audiotheme_gigs_archive_link', 10, 2 );
 	add_filter( 'wp_unique_post_slug', 'audiotheme_gig_unique_slug', 10, 6 );
-	add_action( 'save_post_audiotheme_gig', 'audiotheme_gig_update_bad_slug', 10, 2 );
+	add_action( 'save_post_audiotheme_gig', 'audiotheme_gig_update_bad_slug', 20, 2 );
 	add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 
 	add_action( 'before_delete_post', 'audiotheme_gig_before_delete' );
@@ -359,20 +359,22 @@ function audiotheme_gigs_archive_link( $link, $post_type ) {
  *
  * Gigs without titles will fall back to using the ID for the slug, however,
  * when the ID is a 4 digit number, it will conflict with date-based permalinks.
- * Any slugs that match the ID are preprended with 'gig-'.
+ *
+ * Any slugs that match the ID will default to the gig date if one has been
+ * saved, otherwise the ID will be prepended with 'gig-'.
  *
  * @since 1.6.1
  * @see wp_unique_post_slug()
  *
  * @param string $slug The desired slug (post_name).
- * @param integer $post_ID
+ * @param integer $post_id
  * @param string $post_status No uniqueness checks are made if the post is still draft or pending.
  * @param string $post_type
  * @param integer $post_parent
  * @param string $original_slug Slug passed to the uniqueness method.
  * @return string
  */
-function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug = null ) {
+function audiotheme_gig_unique_slug( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug = null ) {
 	global $wpdb, $wp_rewrite;
 
 	if ( 'audiotheme_gig' == $post_type ) {
@@ -384,19 +386,26 @@ function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, 
 		}
 
 		// Four-digit numeric slugs interfere with date-based archives.
-		if ( $slug == $post_ID ) {
+		if ( $slug == $post_id ) {
 			$slug = 'gig-' . $slug;
+
+			// If a date is set, default to the date rather than the post id.
+			$datetime = get_post_meta( $post_id, '_audiotheme_gig_datetime', true );
+			if ( ! empty( $datetime ) ) {
+				$dt = date_parse( $datetime );
+				$slug = sprintf( '%s-%s-%s', $dt['year'], zeroise( $dt['month'], 2 ), zeroise( $dt['day'], 2 ) );
+			}
 		}
 
 		// Make sure the gig slug is unique.
 		$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND ID!=%d LIMIT 1";
-		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_ID ) );
+		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_id ) );
 
 		if ( $post_name_check || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $slug, $post_type ) ) {
 			$suffix = 2;
 			do {
 				$alt_post_name = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_ID ) );
+				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_id ) );
 				$suffix++;
 			} while ( $post_name_check );
 			$slug = $alt_post_name;
@@ -411,8 +420,7 @@ function audiotheme_gig_unique_slug( $slug, $post_ID, $post_status, $post_type, 
  *
  * If a slug is empty when a post is published, wp_insert_post() will base the
  * slug off the title/ID without a way to filter it until after the post is
- * saved. If the saved slug matches the post ID for a gig, it's prefixed with
- * 'gig-' here to mimic the behavior in audiotheme_gig_unique_slug().
+ * saved.
  *
  * @since 1.6.1
  *
@@ -427,7 +435,15 @@ function audiotheme_gig_update_bad_slug( $post_id, $post ) {
 	}
 
 	if ( $post->post_name == $post_id && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
-		$slug = 'gig-' . $post->post_name;
+		$slug = audiotheme_gig_unique_slug(
+			'gig-' . $post_id,
+			$post_id,
+			$post->post_status,
+			$post->post_type,
+			$post->post_parent,
+			$post_id
+		);
+
 		$wpdb->update( $wpdb->posts, array( 'post_name' => $slug ), array( 'ID' => $post_id ) );
 	}
 }
