@@ -325,8 +325,12 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 	$datetime = audiotheme_string_to_datetime( $_POST['gig_date'], $_POST['gig_time'] );
 	$time     = audiotheme_string_to_time( $_POST['gig_time'] );
 
-	// Time is saved separately to check for empty values, TBA, etc.
+	// Date and time are always stored local to the venue.
+	// If GMT, or time in another locale is needed, use the venue time zone to calculate.
+	// Other functions should be aware that time is optional; check for the presence of gig_time.
 	update_post_meta( $post_id, '_audiotheme_gig_datetime', $datetime );
+
+	// Time is saved separately to check for empty values, TBA, etc.
 	update_post_meta( $post_id, '_audiotheme_gig_time', $time );
 	update_post_meta( $post_id, '_audiotheme_tickets_price', $_POST['gig_tickets_price'] );
 	update_post_meta( $post_id, '_audiotheme_tickets_url', $_POST['gig_tickets_url'] );

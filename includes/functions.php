@@ -196,8 +196,8 @@ function vd( $var ) {
 endif;
 
 /**
- * Remove a portion of an associative array, optionally replace it with something else
- * and maintain the keys.
+ * Remove a portion of an associative array, optionally replace it with
+ * something else and maintain the keys.
  *
  * Can produce unexpected behavior with numeric indexes. Use array_splice() if
  * keys don't need to be preserved, although exact behavior of offset and
@@ -410,7 +410,9 @@ function audiotheme_encode_svg( $path ) {
 /**
  * Encode the path portion of a URL.
  *
- * Spaces in directory or filenames are stripped by esc_url() and can cause issues when requesting a URL programmatically. This method encodes spaces and other characters.
+ * Spaces in directory or filenames are stripped by esc_url() and can cause
+ * issues when requesting a URL programmatically. This method encodes spaces and
+ * other characters.
  *
  * @since 1.4.4
  *
@@ -466,9 +468,6 @@ function audiotheme_string_to_datetime( $datetime, $time = '' ) {
 	$dt = date_parse( $datetime . ' ' . $time );
 	$datetime = '';
 
-	// Date and time are always stored local to the venue.
-	// If GMT, or time in another locale is needed, use the venue time zone to calculate.
-	// Other functions should be aware that time is optional; check for the presence of gig_time.
 	if ( checkdate( $dt['month'], $dt['day'], $dt['year'] ) ) {
 		$datetime = sprintf(
 			'%d-%s-%s %s:%s:%s',
