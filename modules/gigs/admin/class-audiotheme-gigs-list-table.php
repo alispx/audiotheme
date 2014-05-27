@@ -508,6 +508,8 @@ class Audiotheme_Gigs_List_Table extends WP_List_Table {
 			}
 		}
 
+		$actions = apply_filters( 'audiotheme_gig_row_actions', $actions, $item );
+
 		$out.= $this->row_actions( $actions );
 
 		return $out;
