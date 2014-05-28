@@ -58,7 +58,7 @@ get_header();
 
 	<?php endwhile; ?>
 
-</div><!-- /.media-grid -->
+</div><!-- /.audiotheme-records -->
 
 <?php audiotheme_archive_nav(); ?>
 

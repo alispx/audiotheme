@@ -31,10 +31,10 @@
 		}
 
 		a.nav-tab-active.audiotheme-settings-tab-has-error {
-			color: #464646;
 			background: #fff;
 			border-color: #ccc;
 			border-bottom-color: #fff;
+			color: #464646;
 		}
 	}
 
@@ -57,10 +57,19 @@
 }
 
 .audiotheme-response{
-	&.is-error { color: #cc0000;}
-	&.is-valid { color: #009900;}
+	&.is-error {
+		color: #cc0000;
+	}
+
+	&.is-valid {
+		color: #009900;
+	}
 }
 
 @media only screen and (max-width: 860px) {
-	.audiotheme-feature-section img { float: none; display: block; width: 100%;}
+	.audiotheme-feature-section img {
+		display: block;
+		float: none;
+		width: 100%;
+	}
 }

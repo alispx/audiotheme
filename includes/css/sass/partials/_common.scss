@@ -1,0 +1,141 @@
+/**
+ * Common / Shared Styles
+ * -----------------------------------------------------------------------------
+ */
+
+.audiotheme-archive-intro {
+	line-height: 1.5;
+	margin: 0 0 30px 0;
+}
+
+.audiotheme-archive-title {
+	font-size: 24px;
+	font-weight: normal;
+	margin: 0 0 1.5em 0;
+}
+
+.audiotheme-grid {
+	.item {
+		margin-bottom: 20px;
+
+		.audiotheme-featured-image {
+			img {
+				display: block;
+				height: auto;
+				max-width: 100%;
+				width: 100%;
+			}
+		}
+	}
+
+	&.min-width-400 {
+		@include responsive-grid(2, 2%);
+
+		margin-right: -2%;
+		margin-left: -2%;
+	}
+
+	&.min-width-600 {
+		margin-right: -1%;
+		margin-left: -1%;
+
+		// Reset the the smaller breakpoint rules.
+		.item:nth-of-type(2n+1),
+		.item-2np1,
+		.item:nth-of-type(2n),
+		.item-2n {
+			clear: none;
+		}
+
+		@include responsive-grid(4, 1%);
+	}
+}
+
+.audiotheme-meta-list {
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 1px 0;
+	font-weight: bold;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	.audiotheme-meta-item {
+		border-color: #d3d3d3;
+		border-style: solid;
+		border-width: 0 0 0 1px;
+		display: inline-block;
+		padding: 10px;
+
+		&:first-child {
+			border-left-width: 0;
+		}
+	}
+}
+
+.audiotheme-paged-nav {
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 1px 0;
+	padding: 10px;
+
+	a {
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.audiotheme-paged-nav-prev {
+		float: left;
+		width: 50%;
+	}
+
+	.audiotheme-paged-nav-next {
+		float: right;
+		text-align: right;
+		width: 50%;
+	}
+}
+
+.audiotheme-term-list {
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 1px 0;
+	display: table;
+	width: 100%;
+
+	.audiotheme-term-list-label {
+		@extend %audiotheme-label;
+
+		border-color: #d3d3d3;
+		border-style: solid;
+		border-width: 0 1px 0 0;
+		display: table-cell;
+		padding: 10px;
+		vertical-align: middle;
+	}
+
+	.audiotheme-term-list-items {
+		display: table-cell;
+		padding: 5px 10px;
+
+		a {
+			background: #b2b2b2;
+			border-radius: 10px;
+			color: #fff;
+			display: inline-block;
+			font-size: 12px;
+			height: 21px;
+			line-height: 21px;
+			margin: 5px 0;
+			padding: 0 10px;
+			text-decoration: none;
+
+			&:hover {
+				background: #333;
+			}
+		}
+	}
+}

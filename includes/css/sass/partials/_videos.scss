@@ -1,0 +1,53 @@
+/**
+ * Videos
+ * -----------------------------------------------------------------------------
+ */
+
+
+/* Video Archive
+------------------------------------------------------------------------------*/
+
+.audiotheme-videos {
+	line-height: 1.5;
+
+	.audiotheme_video {
+		.audiotheme-featured-image {
+			margin: 0 0 10px 0;
+		}
+
+		.audiotheme-video-title {
+			font-size: 16px;
+			font-weight: bold;
+
+			a {
+				font-size: 16px;
+			}
+		}
+	}
+}
+
+
+/* Single Video
+------------------------------------------------------------------------------*/
+
+.audiotheme-video-single {
+	.audiotheme-embed {
+		margin: 0 0 30px 0;
+	}
+
+	.audiotheme-video-header {
+		width: 100%;
+	}
+
+	.audiotheme-video-title {
+		border-width: 0;
+		font-size: 24px;
+		font-weight: bold;
+		margin: 0 0 20px 0;
+		padding: 0;
+	}
+
+	.audiotheme-term-list {
+		margin: 0 0 30px 0;
+	}
+}

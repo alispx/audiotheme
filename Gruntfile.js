@@ -49,20 +49,22 @@ module.exports = function(grunt) {
 		cssmin: {
 			dist: {
 				files: [
+					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' },
 					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
-					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
+					{ src: 'admin/css/sass/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' }
 				]
 			}
 		},
 
 		/**
-		 * Compile LESS style sheets.
+		 * Compile Sass style sheets.
 		 */
-		less: {
+		sass: {
 			dist: {
 				files: [
-					{ src: 'includes/css/less/audiotheme.less', dest: 'includes/css/audiotheme.min.css' },
-					{ src: 'admin/css/less/admin.less', dest: 'admin/css/admin.min.css' }
+					{ src: 'includes/css/sass/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' },
+					{ src: 'admin/css/sass/admin.scss', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/sass/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' }
 				]
 			}
 		},
@@ -92,9 +94,9 @@ module.exports = function(grunt) {
 				files: ['<%= jshint.all %>'],
 				tasks: ['jshint', 'uglify']
 			},
-			less: {
-				files: ['includes/css/less/*.less', 'admin/css/less/*.less', 'admin/css/less/**/*.less'],
-				tasks: ['less', 'autoprefixer', 'cssmin']
+			sass: {
+				files: ['includes/css/**/*.scss', 'admin/css/**/*.scss'],
+				tasks: ['sass', 'autoprefixer', 'cssmin']
 			}
 		},
 
@@ -136,9 +138,9 @@ module.exports = function(grunt) {
 		makepot: {
 			build: {
 				options: {
+					exclude: ['release/.*', 'tests/.*'],
 					mainFile: 'audiotheme.php',
-					type: 'wp-plugin',
-					exclude: ['release/.*','tests/.*']
+					type: 'wp-plugin'
 				}
 			}
 		},
@@ -210,7 +212,7 @@ module.exports = function(grunt) {
 	/**
 	 * Default task.
 	 */
-	grunt.registerTask( 'default', ['jshint', 'uglify', 'less', 'autoprefixer', 'cssmin', 'watch'] );
+	grunt.registerTask( 'default', ['jshint', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'watch'] );
 
 	/**
 	 * Build a release.
@@ -229,7 +231,7 @@ module.exports = function(grunt) {
 		grunt.config.set('version', version);
 		grunt.task.run('string-replace:build');
 		grunt.task.run('jshint');
-		grunt.task.run('less');
+		grunt.task.run('sass');
 		grunt.task.run('autoprefixer');
 		grunt.task.run('cssmin');
 		grunt.task.run('uglify');

@@ -1,0 +1,256 @@
+/**
+ * Gigs
+ * -----------------------------------------------------------------------------
+ */
+
+
+/* Gig Archive
+------------------------------------------------------------------------------*/
+
+.audiotheme-gigs {
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 1px 0 0 0;
+	line-height: 1.5;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.audiotheme-gig-card {
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 0 0 1px 0;
+	clear: both;
+	float: left;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 100%;
+
+	.audiotheme-gig-title {
+		clear: none;
+		font-size: 16px;
+		font-weight: normal;
+		margin: 0;
+	}
+
+	.audiotheme-gig-meta-datetime {
+		float: left;
+		margin-right: -150px;
+		padding: 10px;
+		width: 130px;
+
+		.audiotheme-gig-date {
+			display: block;
+			font-weight: bold;
+		}
+
+		.audiotheme-gig-time {
+			display: block;
+		}
+	}
+
+	.audiotheme-gig-details {
+		padding: 10px 10px 10px 150px;
+
+		.audiotheme-gig-note {
+			margin: 10px 0 0 0;
+
+			p:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		.audiotheme-gig-place {
+			clear: none;
+			margin: 0;
+
+			.audiotheme-gig-location {
+				display: block;
+				font-weight: bold;
+			}
+
+			.audiotheme-gig-venue {
+				display: block;
+			}
+		}
+	}
+
+	.audiotheme-gig-meta-tickets {
+		margin-left: 140px;
+		padding: 0 10px 10px 10px;
+
+		.audiotheme-gig-tickets-price {
+			display: block;
+			font-weight: bold;
+		}
+
+		.audiotheme-gig-tickets-url {
+			display: block;
+		}
+	}
+}
+
+/* Desktop only */
+.audiotheme-gigs.min-width-600 {
+	.audiotheme-gig-card {
+		&.has-audiotheme-ticket-meta .audiotheme-gig-details {
+			padding-right: 120px;
+		}
+
+		.audiotheme-gig-meta-tickets {
+			margin-left: 0;
+			padding: 10px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			text-align: right;
+			width: 100px;
+		}
+	}
+}
+
+
+/* Single Gig
+------------------------------------------------------------------------------*/
+
+.audiotheme-gig-single {
+	line-height: 1.5;
+	margin: 0;
+
+	.audiotheme-content {
+		padding: 30px 10px 0 10px;
+	}
+
+	.audiotheme-gig-description {
+		border-color: #d3d3d3;
+		border-style: solid;
+		border-width: 0 0 1px 0;
+		margin: 0;
+		padding: 20px 10px;
+
+		.audiotheme-gig-note {
+			margin: 10px 0 0 0;
+
+			p:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		.audiotheme-gig-place {
+			font-size: 18px;
+			font-weight: bold;
+			margin: 0;
+
+			.country-name,
+			.sep-country-name {
+				font-weight: normal;
+			}
+		}
+	}
+
+	.audiotheme-gig-header {
+		border-color: #d3d3d3;
+		border-style: solid;
+		border-width: 0 0 1px 0;
+		font-size: 24px;
+		font-weight: bold;
+		line-height: 36px;
+		margin: 0;
+		padding: 0 10px 20px 10px;
+
+		.audiotheme-gig-title {
+			font-weight: normal;
+			margin: 0 0 4px 0;
+		}
+	}
+
+	.audiotheme-gig-meta {
+		border-top-width: 0;
+
+		.audiotheme-gig-tickets-link {
+			&:before {
+				content: "\2022\00a0";
+				padding: 0 5px;
+			}
+		}
+
+		.audiotheme-gig-time {
+			border-width: 0;
+		}
+	}
+
+	.audiotheme-gig-venue {
+		border-color: #d3d3d3;
+		border-style: solid;
+		border-width: 0 0 1px 0;
+		margin: 0;
+		padding: 20px 10px;
+
+		.venue-name {
+			clear: both;
+			display: block;
+			font-weight: bold;
+			width: 100%;
+		}
+
+		.venue-address {
+			display: block;
+
+			.street-address {
+				display: block;
+			}
+
+			.sep-street-address {
+				display: none;
+			}
+		}
+
+		.audiotheme-venue-website {
+			display: block;
+		}
+
+		.audiotheme-venue-map {
+			iframe {
+				display: none;
+			}
+		}
+	}
+}
+
+/* Tablets + Desktop */
+.audiotheme-gig-single.min-width-400 {
+	.audiotheme-gig-venue {
+		.venue-address {
+			float: left;
+
+			.street-address,
+			.sep-street-address {
+				display: inline;
+			}
+		}
+
+		.audiotheme-venue-meta {
+			float: right;
+			text-align: right;
+		}
+
+		.audiotheme-venue-map {
+			clear: both;
+			display: block;
+			float: left;
+			padding-top: 20px;
+			width: 100%;
+
+			iframe {
+				display: block;
+				max-width: 100%;
+			}
+
+			.venue-map-link {
+				display: none;
+			}
+		}
+	}
+}

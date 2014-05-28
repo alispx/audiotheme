@@ -1,0 +1,351 @@
+/**
+ * Discography
+ * -----------------------------------------------------------------------------
+ */
+
+
+/* Record Archive
+------------------------------------------------------------------------------*/
+
+.audiotheme-records {
+	line-height: 1.5;
+
+	.audiotheme_record {
+		.audiotheme-record-artwork {
+			margin: 0 0 10px 0;
+			position: relative;
+
+			.audiotheme-record-type {
+				background: #000;
+				border-radius: 10px;
+				color: #fff;
+				display: inline-block;
+				font-size: 11px;
+				line-height: 20px;
+				opacity: 0.5;
+				padding: 0 10px;
+				position: absolute;
+				bottom: 10px;
+				left: 10px;
+				text-transform: uppercase;
+			}
+
+			a:hover {
+				.audiotheme-record-type {
+					opacity: 0.9;
+				}
+			}
+		}
+
+		.audiotheme-record-meta {
+			strong {
+				font-weight: normal;
+			}
+		}
+
+		.audiotheme-record-title {
+			border-width: 0;
+			font-size: 16px;
+			font-weight: bold;
+			margin: 0;
+			padding: 0;
+			width: auto;
+
+			a {
+				font-size: 16px;
+			}
+		}
+	}
+}
+
+
+/* Single Record
+------------------------------------------------------------------------------*/
+
+.audiotheme-record-single {
+	@extend .audiotheme-clearfix;
+
+	line-height: 1.5;
+	width: auto;
+
+	h1, h2, h3, h4, h5, h6 {
+		clear: none;
+	}
+
+	.audiotheme-record-artwork {
+		margin: 0 0 30px 0;
+		max-width: 400px;
+
+		img,
+		img.wp-post-image {
+			height: auto;
+			max-width: 100%;
+			width: 100%;
+		}
+	}
+
+	.audiotheme-record-header {
+		width: 100%;
+
+		.audiotheme-record-title {
+			border-width: 0;
+			font-size: 24px;
+			font-weight: bold;
+			margin: 0;
+			padding: 0;
+		}
+
+		.audiotheme-record-subtitle {
+			border-width: 0;
+
+			em {
+				font-style: normal;
+			}
+		}
+
+		.audiotheme-record-artist {
+			font-weight: normal;
+			margin: 0;
+		}
+
+		.audiotheme-record-meta {
+			margin-top: 20px;
+			margin-left: 0;
+		}
+	}
+	.audiotheme-record-links {
+		.audiotheme-record-links-list {
+			margin-left: 0;
+		}
+
+		.audiotheme-record-links-title {
+			display: none;
+		}
+	}
+
+	.audiotheme-content {
+		margin-top: 30px;
+		width: 100%;
+	}
+}
+
+.audiotheme-record-links-list {
+	list-style: none;
+	margin: 20px 0 0 0;
+	padding: 0;
+
+	.audiotheme-record-links-item {
+		display: inline;
+
+		.audiotheme-record-link {
+			background: #333;
+			border-radius: 3px;
+			color: #fff;
+			display: inline-block;
+			font-weight: bold;
+			margin: 0 10px 10px 0;
+			padding: 4px 10px;
+			text-decoration: none;
+			transition: none;
+
+			&:hover {
+				background: #fff;
+				border: 1px solid #333;
+				color: #333;
+				padding: 3px 9px;
+			}
+		}
+	}
+}
+
+.audiotheme-tracklist-section {
+	margin: 20px 0 0 0;
+
+	.audiotheme-tracklist-title {
+		margin-bottom: 20px;
+	}
+
+	.audiotheme-tracklist {
+		margin-left: 0;
+	}
+}
+
+.audiotheme-tracklist {
+	border-color: #d3d3d3;
+	border-style: solid;
+	border-width: 1px 0 0 0;
+	counter-reset: li;
+	display: table;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 100%;
+
+	.audiotheme-track {
+		border-color: #d3d3d3;
+		border-style: solid;
+		border-width: 0 0 1px 0;
+		display: table-row;
+		position: relative;
+
+		&:before {
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
+			border-color: #d3d3d3;
+			border-style: solid;
+			border-width: 0 1px 1px 0;
+			content: counter(li);
+			counter-increment: li;
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+			width: 50px;
+		}
+
+		.audiotheme-track-cell {
+			border-color: #d3d3d3;
+			border-style: solid;
+			border-width: 0 0 1px 0;
+			display: table-cell;
+			padding: 6px 10px;
+			vertical-align: middle;
+		}
+
+		.audiotheme-track-meta {
+			display: block;
+			font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", monospace;
+
+			.jp-duration,
+			.sep-jp-duration {
+				display: none;
+			}
+
+			.audiotheme-track-download-link {
+				display: none;
+			}
+		}
+
+		.audiotheme-track-title {
+			font-weight: bold;
+		}
+
+		/* Track States */
+		&.is-playable:hover {
+			background: #f7f7f7;
+
+			&:before {
+				@extend %audiotheme-icon-play;
+
+				content: "";
+				cursor: pointer;
+				display: table-cell;
+			}
+		}
+
+		&.is-playing,
+		&.is-playing:hover {
+			background: #f7f7f7;
+
+			&:before {
+				@extend %audiotheme-icon-pause;
+
+				content: "";
+			}
+		}
+	}
+}
+
+/* Tablets + Desktop */
+.min-width-400 {
+	.audiotheme-tracklist {
+		.audiotheme-track {
+			&:before {
+				width: 40px;
+			}
+
+			.audiotheme-track-meta {
+				float: right;
+				text-align: right;
+
+				.audiotheme-track-download-link {
+					@extend %audiotheme-icon-download;
+
+					background-position: 0 0;
+					background-repeat: no-repeat;
+					display: inline-block;
+					height: 16px;
+					opacity: 0.3;
+					overflow: hidden;
+					text-indent: 100%;
+					vertical-align: middle;
+					white-space: nowrap;
+					width: 16px;
+
+					&:hover {
+						opacity: 1;
+					}
+				}
+			}
+
+			.audiotheme-track-title {
+				float: left;
+			}
+		}
+	}
+}
+
+.audiotheme-record-single.min-width-400 {
+	padding: 0 0 0 170px;
+	position: relative;
+
+	.audiotheme-record-artwork {
+		clear: none;
+		float: left;
+		margin: 0 0 0 -170px;
+		width: 140px;
+	}
+}
+
+.audiotheme-record-single.min-width-600 {
+	padding: 0 0 0 330px;
+	position: relative;
+
+	.audiotheme-record-artwork {
+		margin: 0 0 0 -330px;
+		width: 290px;
+	}
+}
+
+
+/* Single Track
+------------------------------------------------------------------------------*/
+
+.audiotheme-tracklist-single {
+	.audiotheme-track {
+		&:before {
+			display: none;
+		}
+
+		/* Track States */
+		&.is-playable {
+			&:before {
+				@extend %audiotheme-icon-play;
+
+				content: "";
+				display: table-cell;
+			}
+
+			&:hover {
+				background: #f7f7f7;
+			}
+		}
+
+		&.is-playing,
+		&.is-playing:hover {
+			&:before {
+				@extend %audiotheme-icon-pause;
+			}
+		}
+	}
+}
