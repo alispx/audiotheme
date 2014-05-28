@@ -94,7 +94,6 @@
 			<a href="http://fitvidsjs.com/" target="_blank"><?php _e( 'FitVids.JS', 'audiotheme' ); ?></a>,
 			<a href="http://www.jplayer.org/" target="_blank"><?php _e( 'jPlayer', 'audiotheme' ); ?></a>,
 			<a href="http://jquery.com/" target="_blank"><?php _e( 'jQuery', 'audiotheme' ); ?></a>,
-			<a href="https://github.com/mathiasbynens/jquery-placeholder" target="_blank"><?php _e( 'jQuery Placeholder', 'audiotheme' ); ?></a>,
 			<a href="http://jonthornton.github.com/jquery-timepicker/" target="_blank"><?php _e( 'jQuery Timepicker', 'audiotheme' ); ?></a>,
 			<a href="http://jqueryui.com/" target="_blank"><?php _e( 'jQuery UI', 'audiotheme' ); ?></a>,
 			<a href="http://lesscss.org/" target="_blank"><?php _e( 'LESS', 'audiotheme' ); ?></a>,
