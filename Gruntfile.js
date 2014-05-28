@@ -20,6 +20,7 @@ module.exports = function(grunt) {
 			dist: {
 				files: [
 					{ src: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/jquery-ui-audiotheme.min.css' },
 					{ src: 'includes/css/audiotheme.min.css' }
 				]
 			}
@@ -49,9 +50,9 @@ module.exports = function(grunt) {
 		cssmin: {
 			dist: {
 				files: [
-					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' },
 					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
-					{ src: 'admin/css/sass/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' }
+					{ src: 'admin/css/jquery-ui-audiotheme.min.css', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
 		},
@@ -62,9 +63,9 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				files: [
-					{ src: 'includes/css/sass/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' },
 					{ src: 'admin/css/sass/admin.scss', dest: 'admin/css/admin.min.css' },
-					{ src: 'admin/css/sass/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' }
+					{ src: 'admin/css/sass/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'includes/css/sass/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
 		},
