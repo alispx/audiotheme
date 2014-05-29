@@ -6,6 +6,7 @@
 	"eqnull": true,
 	"expr": true,
 	"immed": true,
+	"jquery": true,
 	"latedef": true,
 	"newcap": true,
 	"noarg": true,
@@ -14,8 +15,5 @@
 	"sub": true,
 	"trailing": true,
 	"undef": true,
-	"unused": true,
-	"globals": {
-		"jQuery": false
-	}
+	"unused": true
 }
