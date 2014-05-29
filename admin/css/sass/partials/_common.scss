@@ -164,6 +164,14 @@ body.screen-edit-audiotheme_track select[name="m"] {
 	}
 }
 
+.is-loading .audiotheme-button-load,
+.is-loading .audiotheme-button-load[disabled="disabled"] {
+	background-image: url(../images/spinner.gif) !important;
+	background-position: 5px center !important;
+	background-repeat: no-repeat !important;
+	padding-left: 30px;
+}
+
 .postbox h3.hndle i {
 	color: #999;
 	font-style: normal;
@@ -179,5 +187,19 @@ body.screen-edit-audiotheme_track select[name="m"] {
 	#toplevel_page_edit-post_type-audiotheme_record div.wp-menu-image.svg,
 	#menu-posts-audiotheme_video div.wp-menu-image.svg {
 		background-position: 50% 7px;
+	}
+}
+
+
+/* HiDPI Displays
+-------------------------------------------------------------- */
+@media print,
+  (-o-min-device-pixel-ratio: 5/4),
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 120dpi) {
+	.is-loading .audiotheme-button-load,
+	.is-loading .audiotheme-button-load[disabled="disabled"] {
+		background-image: url(../images/spinner-2x.gif) !important;
+		background-size: 20px 20px !important;
 	}
 }
