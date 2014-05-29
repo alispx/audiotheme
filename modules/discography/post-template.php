@@ -164,7 +164,8 @@ function get_audiotheme_record_links( $post_id = null ) {
  */
 function get_audiotheme_record_genre( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_audiotheme_genre', true );
+	$genre = get_post_meta( $post_id, '_audiotheme_genre', true );
+	return apply_filters( 'audiotheme_record_genre', $genre, $post_id );
 }
 
 /**
