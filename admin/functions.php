@@ -599,6 +599,10 @@ function audiotheme_system_info( $args = array() ) {
 			'label' => __( 'PHP Safe Mode', 'audiotheme' ),
 			'value' => ( ini_get( 'safe_mode' ) ) ? __( 'Yes', 'audiotheme' ) : __( 'No', 'audiotheme' ),
 		),
+		'max_input_vars' => array(
+			'label' => __( 'Max Input Vars', 'audiotheme' ),
+			'value' => ini_get( 'max_input_vars' ),
+		),
 		'user_agent' => array(
 			'label' => __( 'User Agent', 'audiotheme' ),
 			'value' => $_SERVER['HTTP_USER_AGENT'],
