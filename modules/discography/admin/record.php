@@ -329,10 +329,96 @@ function audiotheme_edit_record_tracklist() {
 function audiotheme_record_details_meta_box( $post ) {
 	// Nonce to verify intention later.
 	wp_nonce_field( 'update-record_' . $post->ID, 'audiotheme_record_nonce' );
+	do_action( 'audiotheme_record_details_meta_box', $post );
+}
 
+/**
+ * Display a field to edit the record release year.
+ *
+ * @since x.x.x
+ *
+ * @param WP_Post $post Record post object.
+ */
+function audiotheme_record_details_field_released( $post ) {
+	$released = get_audiotheme_record_release_year( $post->ID );
+	?>
+	<p class="audiotheme-field">
+		<label for="record-year"><?php _e( 'Release Year', 'audiotheme' ); ?></label>
+		<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( $released ) ; ?>" class="widefat">
+	</p>
+	<?php
+}
+
+/**
+ * Display a field to edit the record artist.
+ *
+ * @since x.x.x
+ *
+ * @param WP_Post $post Record post object.
+ */
+function audiotheme_record_details_field_artist( $post ) {
+	$artist = get_audiotheme_record_artist( $post->ID );
+	?>
+	<p class="audiotheme-field">
+		<label for="record-artist"><?php _e( 'Artist', 'audiotheme' ); ?></label>
+		<input type="text" name="artist" id="record-artist" value="<?php echo esc_attr( $artist ) ; ?>" class="widefat">
+	</p>
+	<?php
+}
+
+/**
+ * Display a field to edit the record genre.
+ *
+ * @since x.x.x
+ *
+ * @param WP_Post $post Record post object.
+ */
+function audiotheme_record_details_field_genre( $post ) {
+	$genre = get_audiotheme_record_genre( $post->ID );
+	?>
+	<p class="audiotheme-field">
+		<label for="record-genre"><?php _e( 'Genre', 'audiotheme' ); ?></label>
+		<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( $genre ) ; ?>" class="widefat">
+	</p>
+	<?php
+}
+
+/**
+ * Display a field to set the record type.
+ *
+ * @since x.x.x
+ *
+ * @param WP_Post $post Record post object.
+ */
+function audiotheme_record_details_field_types( $post ) {
 	$record_types = get_audiotheme_record_type_strings();
 	$selected_record_type = wp_get_object_terms( $post->ID, 'audiotheme_record_type', array( 'fields' => 'slugs' ) );
 
+	if ( $record_types ) {
+		?>
+		<p id="audiotheme-record-types" class="audiotheme-field">
+			<label><?php _e( 'Type', 'audiotheme' ) ?></label><br />
+			<?php
+			foreach ( $record_types as $slug => $name ) {
+				echo sprintf( '<input type="radio" name="record_type[]" id="%1$s" value="%1$s"%2$s> <label for="%1$s">%3$s</label><br />',
+					esc_attr( $slug ),
+					checked( in_array( $slug, $selected_record_type ), true, false ),
+					esc_attr( $name ) );
+			}
+			?>
+		</p>
+		<?php
+	}
+}
+
+/**
+ * Display a field to edit record links.
+ *
+ * @since x.x.x
+ *
+ * @param WP_Post $post Record post object.
+ */
+function audiotheme_record_details_field_links( $post ) {
 	$record_links = (array) get_audiotheme_record_links( $post->ID );
 	$record_links = ( empty( $record_links ) ) ? array( '' ) : $record_links;
 
@@ -340,7 +426,7 @@ function audiotheme_record_details_meta_box( $post ) {
 	$record_link_source_names = array_keys( $record_link_sources );
 	sort( $record_link_source_names );
 
-	require( AUDIOTHEME_DIR . 'modules/discography/admin/views/edit-record-details.php' );
+	require( AUDIOTHEME_DIR . 'modules/discography/admin/views/edit-record-links.php' );
 }
 
 /**

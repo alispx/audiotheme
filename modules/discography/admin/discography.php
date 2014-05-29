@@ -51,6 +51,14 @@ function audiotheme_load_discography_admin() {
 	add_filter( 'bulk_actions-edit-audiotheme_record', 'audiotheme_record_list_table_bulk_actions' );
 	add_action( 'page_row_actions', 'audiotheme_record_list_table_actions', 10, 2 );
 
+	// Edit Record screen.
+	add_action( 'add_meta_boxes_audiotheme_record', 'audiotheme_edit_record_meta_boxes' );
+	add_action( 'audiotheme_record_details_meta_box', 'audiotheme_record_details_field_released' );
+	add_action( 'audiotheme_record_details_meta_box', 'audiotheme_record_details_field_artist', 20 );
+	add_action( 'audiotheme_record_details_meta_box', 'audiotheme_record_details_field_genre', 30 );
+	add_action( 'audiotheme_record_details_meta_box', 'audiotheme_record_details_field_types', 40 );
+	add_action( 'audiotheme_record_details_meta_box', 'audiotheme_record_details_field_links', 50 );
+
 	// Tracks
 	add_action( 'save_post', 'audiotheme_track_save_post' );
 
@@ -65,6 +73,9 @@ function audiotheme_load_discography_admin() {
 	add_action( 'manage_posts_custom_column', 'audiotheme_track_display_columns', 10, 2 );
 	add_filter( 'bulk_actions-edit-audiotheme_track', 'audiotheme_track_list_table_bulk_actions' );
 	add_action( 'post_row_actions', 'audiotheme_track_list_table_actions', 10, 2 );
+
+	// Edit Track screen.
+	add_action( 'add_meta_boxes_audiotheme_track', 'audiotheme_edit_track_meta_boxes' );
 
 	// Record Archive
 	add_action( 'add_audiotheme_archive_settings_meta_box_audiotheme_record', '__return_true' );

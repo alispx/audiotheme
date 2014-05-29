@@ -1,30 +1,3 @@
-<p class="audiotheme-field">
-	<label for="record-year"><?php _e( 'Release Year', 'audiotheme' ); ?></label>
-	<input type="text" name="release_year" id="record-year" value="<?php echo esc_attr( get_audiotheme_record_release_year( $post->ID ) ) ; ?>" class="widefat">
-</p>
-<p class="audiotheme-field">
-	<label for="record-artist"><?php _e( 'Artist', 'audiotheme' ); ?></label>
-	<input type="text" name="artist" id="record-artist" value="<?php echo esc_attr( get_audiotheme_record_artist( $post->ID ) ) ; ?>" class="widefat">
-</p>
-<p class="audiotheme-field">
-	<label for="record-genre"><?php _e( 'Genre', 'audiotheme' ); ?></label>
-	<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( get_audiotheme_record_genre( $post->ID ) ) ; ?>" class="widefat">
-</p>
-
-<?php if ( $record_types ) : ?>
-	<p id="audiotheme-record-types" class="audiotheme-field">
-		<label><?php _e( 'Type', 'audiotheme' ) ?></label><br />
-		<?php
-		foreach ( $record_types as $slug => $name ) {
-			echo sprintf( '<input type="radio" name="record_type[]" id="%1$s" value="%1$s"%2$s> <label for="%1$s">%3$s</label><br />',
-				esc_attr( $slug ),
-				checked( in_array( $slug, $selected_record_type ), true, false ),
-				esc_attr( $name ) );
-		}
-		?>
-	</p>
-<?php endif; ?>
-
 <table class="audiotheme-repeater" id="record-links">
 	<thead>
 		<tr>
