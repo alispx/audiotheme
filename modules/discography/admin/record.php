@@ -466,11 +466,11 @@ function audiotheme_record_archive_settings( $post ) {
 		return;
 	}
 
-	$options = array(
+	$options = apply_filters( 'audiotheme_record_archive_orderby_choices', array(
 		'release_year' => __( 'Release Year', 'audiotheme' ),
 		'title'        => __( 'Title', 'audiotheme' ),
 		'custom'       => __( 'Custom', 'audiotheme' ),
-	);
+	) );
 
 	$orderby = get_audiotheme_archive_meta( 'orderby', true, 'release_year', 'audiotheme_record' );
 	?>
