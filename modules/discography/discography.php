@@ -230,6 +230,8 @@ function audiotheme_record_query_sort( $query ) {
 				$query->set( 'order', 'desc' );
 				add_filter( 'posts_orderby_request', 'audiotheme_record_query_sort_sql' );
 		}
+
+		do_action_ref_array( 'audiotheme_record_query_sort', array( &$query ) );
 	}
 }
 
