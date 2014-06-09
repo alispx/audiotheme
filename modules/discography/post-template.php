@@ -123,7 +123,8 @@ function get_audiotheme_record_type( $post_id = null ) {
  */
 function get_audiotheme_record_release_year( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_audiotheme_release_year', true );
+	$year = get_post_meta( $post_id, '_audiotheme_release_year', true );
+	return apply_filters( 'audiotheme_record_release_year', $year, $post_id );
 }
 
 /**
