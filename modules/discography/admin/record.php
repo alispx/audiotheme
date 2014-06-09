@@ -340,7 +340,7 @@ function audiotheme_record_details_meta_box( $post ) {
  * @param WP_Post $post Record post object.
  */
 function audiotheme_record_details_field_released( $post ) {
-	$released = get_audiotheme_record_release_year( $post->ID );
+	$released = get_post_meta( $post->ID, '_audiotheme_release_year', true );
 	?>
 	<p class="audiotheme-field">
 		<label for="record-year"><?php _e( 'Release Year', 'audiotheme' ); ?></label>
