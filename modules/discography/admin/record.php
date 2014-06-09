@@ -73,7 +73,7 @@ function audiotheme_record_register_columns( $columns ) {
  */
 function audiotheme_record_register_sortable_columns( $columns ) {
 	$columns['release_year'] = 'release_year';
-	$columns['track_count'] = 'tracks';
+	$columns['track_count']  = 'tracks';
 
 	return $columns;
 }
@@ -168,9 +168,9 @@ function audiotheme_record_list_table_bulk_actions( $actions ) {
  * @param int $post_id Post ID.
  */
 function audiotheme_record_save_post( $post_id ) {
-	$is_autosave = ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ? true : false;
+	$is_autosave = defined( 'DOING_AUTOSAVE' );
 	$is_revision = wp_is_post_revision( $post_id );
-	$is_valid_nonce = ( isset( $_POST['audiotheme_record_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_record_nonce'], 'update-record_' . $post_id ) ) ? true : false;
+	$is_valid_nonce = isset( $_POST['audiotheme_record_nonce'] ) && wp_verify_nonce( $_POST['audiotheme_record_nonce'], 'update-record_' . $post_id );
 
 	// Bail if the data shouldn't be saved or intention can't be verified.
 	if( $is_autosave || $is_revision || ! $is_valid_nonce ) {
@@ -180,7 +180,7 @@ function audiotheme_record_save_post( $post_id ) {
 	$current_user = wp_get_current_user();
 
 	// Whitelisted fields.
-	$fields = array( 'release_year', 'artist', 'genre' );
+	$fields = array( 'artist', 'genre', 'release_year' );
 	foreach( $fields as $field ) {
 		$value = ( empty( $_POST[ $field ] ) ) ? '' : $_POST[ $field ];
 		update_post_meta( $post_id, '_audiotheme_' . $field, $value );
