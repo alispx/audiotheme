@@ -82,15 +82,19 @@ function register_audiotheme_archives() {
  * @param object $query The main WP_Query object. Passed by reference.
  */
 function audiotheme_archive_query( $query ) {
-	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive() ) {
+	if ( is_admin() || ! $query->is_main_query() || ( ! is_post_type_archive() && ! is_tax( 'audiotheme_record_type' ) ) ) {
 		return;
 	}
 
-	// Determine the current post type.
-	foreach ( array( 'gig', 'record', 'track', 'video' ) as $type ) {
-		if ( is_post_type_archive( 'audiotheme_' . $type ) ) {
-			$post_type = 'audiotheme_' . $type;
-			break;
+	if ( is_tax( 'audiotheme_record_type' ) ) {
+		$post_type = 'audiotheme_record';
+	} else {
+		// Determine the current post type.
+		foreach ( array( 'gig', 'record', 'video' ) as $type ) {
+			if ( is_post_type_archive( 'audiotheme_' . $type ) ) {
+				$post_type = 'audiotheme_' . $type;
+				break;
+			}
 		}
 	}
 
@@ -120,6 +124,8 @@ function audiotheme_archive_query( $query ) {
 		// Default to three even rows.
 		$query->set( 'posts_per_archive_page', intval( $columns * 3 ) );
 	}
+
+	do_action_ref_array( 'audiotheme_record_query_sort', array( &$query, $post_type ) );
 }
 
 /**
