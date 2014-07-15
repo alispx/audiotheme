@@ -141,8 +141,16 @@ function audiotheme_discography_init() {
  * @return string
  */
 function get_audiotheme_discography_rewrite_base() {
+	global $wp_rewrite;
+
+	$front = '';
+	if ( $wp_rewrite->using_index_permalinks() ) {
+		$front = $wp_rewrite->index . '/';
+	}
+
 	$base = get_option( 'audiotheme_record_rewrite_base' );
-	return ( empty( $base ) ) ? 'music' : $base;
+	$front .= ( empty( $base ) ) ? 'music' : $base;
+	return $front;
 }
 
 /**
@@ -268,7 +276,7 @@ function audiotheme_track_query( $query ) {
 
 	// Limit requests for single tracks to the context of the parent record.
 	if ( is_single() && 'audiotheme_track' == $query->get( 'post_type' ) ) {
-		if ( get_option('permalink_structure') ) {
+		if ( get_option( 'permalink_structure' ) ) {
 			$record_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='audiotheme_record' AND post_name=%s LIMIT 1", $query->get( 'audiotheme_record' ) ) );
 			if ( $record_id ) {
 				$query->set( 'post_parent', $record_id );
