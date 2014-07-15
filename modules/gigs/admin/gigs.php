@@ -322,8 +322,8 @@ function audiotheme_gig_save_post( $post_id, $post ) {
 	}
 
 	$venue    = set_audiotheme_gig_venue( $post_id, $_POST['gig_venue'] );
-	$datetime = audiotheme_string_to_datetime( $_POST['gig_date'], $_POST['gig_time'] );
-	$time     = audiotheme_string_to_time( $_POST['gig_time'] );
+	$datetime = audiotheme_datetime_string( $_POST['gig_date'], $_POST['gig_time'] );
+	$time     = audiotheme_time_string( $_POST['gig_time'] );
 
 	// Date and time are always stored local to the venue.
 	// If GMT, or time in another locale is needed, use the venue time zone to calculate.

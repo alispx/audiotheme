@@ -464,7 +464,7 @@ function audiotheme_build_query( $data, $arg_separator = '|', $value_separator =
  * @param string $time Optional. Time string.
  * @return string Blank string if input couldn't be converted.
  */
-function audiotheme_string_to_datetime( $datetime, $time = '' ) {
+function audiotheme_datetime_string( $datetime, $time = '' ) {
 	$dt = date_parse( $datetime . ' ' . $time );
 	$datetime = '';
 
@@ -491,7 +491,7 @@ function audiotheme_string_to_datetime( $datetime, $time = '' ) {
  * @param string $time Time string.
  * @return string
  */
-function audiotheme_string_to_time( $time ) {
+function audiotheme_time_string( $time ) {
 	$t = date_parse( $time );
 
 	if ( empty( $t['errors'] ) ) {
