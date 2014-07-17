@@ -201,6 +201,20 @@ class Audiotheme_Settings {
 	}
 
 	/**
+	 * Register an option name for a settings screen after the screen has been
+	 * initialized.
+	 *
+	 * @since x.x.x
+	 *
+	 * @param string $option_name A new option name.
+	 * @return Audiotheme_Settings The main settings object.
+	 */
+	public function add_option( $option_name ) {
+		$this->get_current_screen()->option_name[] = $option_name;
+		return $this;
+	}
+
+	/**
 	 * Add a tab to a settings screen.
 	 *
 	 * Sets the current tab if the tab already exists on the current screen.
