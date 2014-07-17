@@ -63,7 +63,11 @@ function audiotheme_dashboard_register_settings() {
 	$screen = add_audiotheme_settings_screen( 'audiotheme-settings', __( 'Settings', 'audiotheme' ), array(
 		'menu_title'   => ( is_network_admin() ) ? __( 'AudioTheme', 'audiotheme' ) : __( 'Settings', 'audiotheme' ),
 		'option_group' => 'audiotheme_options',
-		'option_name'  => array( 'audiotheme_options', 'audiotheme_license_key', 'audiotheme_disable_directory_browsing' ),
+		'option_name'  => array(
+			'audiotheme_options',
+			'audiotheme_license_key',
+			'audiotheme_disable_directory_browsing',
+		),
 		'show_in_menu' => ( is_network_admin() ) ? 'settings.php' : 'audiotheme',
 		'capability'   => ( is_network_admin() ) ? 'manage_network_options' : 'manage_options',
 	) );

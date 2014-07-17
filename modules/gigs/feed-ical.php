@@ -26,7 +26,8 @@ foreach ( $wp_query->posts as $post ) {
 	$dtstart = sprintf( "DTSTART%s%s%s\n",
 		( empty( $time ) ) ? ';VALUE=DATE:' : ';TZID=GMT:',
 		$date,
-		( empty( $time ) ) ? '' : 'T' . $time );
+		( empty( $time ) ) ? '' : 'T' . $time
+	);
 	echo $dtstart;
 
 	echo "SUMMARY:" . get_audiotheme_gig_title() . "\n";
