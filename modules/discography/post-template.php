@@ -261,7 +261,8 @@ function get_audiotheme_track_artist( $post_id = null ) {
  */
 function get_audiotheme_track_file_url( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_audiotheme_file_url', true );
+	$file_url = get_post_meta( $post_id, '_audiotheme_file_url', true );
+	return apply_filters( 'audiotheme_track_file_url', $file_url, $post_id );
 }
 
 /**
