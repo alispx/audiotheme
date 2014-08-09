@@ -26,12 +26,13 @@
 					<label for="gig-venue" id="gig-venue-select" class="audiotheme-input-group-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>admin/images/arrow-down.png" width="12" height="12" title="<?php esc_attr_e( 'Select Venue', 'audiotheme' ); ?>" alt="<?php esc_attr_e( 'Select Venue', 'audiotheme' ); ?>"></label>
 				</div>
 
-				<span id="gig-venue-timezone-group" class="hide-if-js">
+				<div id="gig-venue-timezone-group" class="hide-if-js">
 					<input type="text" id="gig-venue-timezone-search" placeholder="<?php esc_attr_e( 'Search time zone by city', 'audiotheme' ); ?>" class="hide-if-no-js">
 					<select name="audiotheme_venue[timezone_string]" id="gig-venue-timezone" class="hide-if-js">
 						<?php echo audiotheme_timezone_choice( $timezone_string ); ?>
-					</select>
-				</span>
+					</select><br>
+					<em><?php _e( "Be sure to set a timezone when adding a new venue.", 'audiotheme' ); ?></em>
+				</div>
 			</td>
 		</tr>
 		<tr>

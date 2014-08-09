@@ -29,7 +29,7 @@ function audiotheme_gigs_admin_setup() {
 	add_action( 'wp_ajax_audiotheme_ajax_is_new_venue', 'audiotheme_ajax_is_new_venue' );
 
 	// Register scripts.
-	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'modules/gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'audiotheme-pointer', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
+	wp_register_script( 'audiotheme-gig-edit', AUDIOTHEME_URI . 'modules/gigs/admin/js/gig-edit.js', array( 'audiotheme-admin', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker' ) );
 	wp_localize_script( 'audiotheme-gig-edit', 'audiothemeGigsL10n', array(
 		'datepickerIcon' => AUDIOTHEME_URI . 'admin/images/calendar.png',
 		'timeFormat'     => get_option( 'time_format' ),
@@ -223,15 +223,6 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 	wp_enqueue_script( 'audiotheme-gig-edit' );
 	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 
-	if ( ! is_audiotheme_pointer_dismissed( 'at100_gigvenue_tz' ) ) {
-		wp_enqueue_style( 'wp-pointer' );
-
-		$pointer  = __( 'Be sure to set a timezone when you add new venues so you don\'t have to worry about converting dates and times.', 'audiotheme' ) . "\n\n";
-		$pointer .= __( 'It also gives your visitors the ability to subscribe to your events in their own timezones.', 'audiotheme' ) . "\n\n";
-		// $pointer_content .= '<a href="">Find out more.</a>'; // Maybe link this to a help section?
-		audiotheme_enqueue_pointer( 'at100_gigvenue_tz', __( 'Venue Timezones', 'audiotheme' ), $pointer, array( 'position' => 'top' ) );
-	}
-
 	// Add a customized submit meta box.
 	remove_meta_box( 'submitdiv', 'audiotheme_gig', 'side' );
 	add_meta_box( 'submitdiv', __( 'Publish', 'audiotheme' ), 'audiotheme_post_submit_meta_box', 'audiotheme_gig', 'side', 'high', array(
@@ -388,7 +379,8 @@ function audiotheme_gig_help() {
 			'<p>' . __( "<strong>Title</strong> - Enter a title for your gig. After you enter a title, you'll see the permalink below, which you can edit.", 'audiotheme' ) . '</p>' .
 			'<p>' . __( "<strong>Date</strong> - Choose the date of your gig or enter it in the <code>YYYY/MM/DD</code> format.", 'audiotheme' ) . '</p>' .
 			'<p>' . __( "<strong>Time</strong> - Choose the time of your gig. Leave it blank if you don't know it.", 'audiotheme' ) . '</p>' .
-			'<p>' . __( "<strong>Venue</strong> - Enter the name of a new venue, or select a saved venue. <em>It is important to select the time zone for new venues.</em> New venues will be saved to your venue database and you can update additional details on the Edit Venue screen.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "<strong>Venue</strong> - Enter the name of a new venue, or select a saved venue. New venues will be saved to your venue database and you can update additional details on the Edit Venue screen.", 'audiotheme' ) . '</p>' .
+			'<p>' . __( "<em>It is important to select the time zone for new venues</em>. It gives your visitors the ability to subscribe to your events in their own timezones and you won't have to worry about converting dates and times manually.", 'audiotheme' ) . '</p>' .
 			'<p>' . __( "<strong>Note</strong> - Enter a short note about the gig.", 'audiotheme' ) . '</p>' .
 			'<p>' . __( "<strong>Editor</strong> - Enter a longer description for your gig. There are two modes of editing: Visual and Text. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The Text mode allows you to enter HTML along with your description text. Line breaks will be converted to paragraphs automatically. You can insert media files by clicking the icons above the editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in Text mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular editor.", 'audiotheme' ) . '</p>',
 	) );

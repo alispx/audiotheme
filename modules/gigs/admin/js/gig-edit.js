@@ -11,14 +11,12 @@ jQuery(function($) {
 		lastGigDate = 'lastGigDate' in ss ? new Date( ss.lastGigDate ) : null,
 		lastGigTime = 'lastGigTime' in ss ? new Date( ss.lastGigTime ) : null;
 
-	$venueTzGroup.pointer({ audiothemeId: 'at100_gigvenue_tz' });
-
 	// Add a day to the last saved gig date.
 	if ( lastGigDate ) {
 		lastGigDate.setDate( lastGigDate.getDate() + 1 );
 	}
 
-	// Intialize the date picker.
+	// Initialize the date picker.
 	$date.datepicker({
 		dateFormat: 'yy/mm/dd',
 		defaultDate: lastGigDate,
@@ -69,17 +67,17 @@ jQuery(function($) {
 					dataType: 'json',
 					success: function( data ) {
 						if ( data.length ) {
-							$venueTzGroup.hide().pointer('close');
+							$venueTzGroup.hide();
 						} else {
-							$venueTzGroup.show().pointer('audiothemeOpen');
+							$venueTzGroup.show();
 						}
 					}
 				});
 			} else {
-				$venueTzGroup.hide().pointer('close');
+				$venueTzGroup.hide();
 			}
 		},
-		select: function() { $venueTzGroup.hide().pointer('close'); },
+		select: function() { $venueTzGroup.hide(); },
 		source: ajaxurl + '?action=audiotheme_ajax_get_venue_matches',
 		minLength: 0,
 		position:  ( 'undefined' !== typeof isRtl && isRtl ) ? { my: 'right top', at: 'right bottom', offset: '0, -1' } : { offset: '0, -1' },
