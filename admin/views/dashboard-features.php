@@ -33,6 +33,8 @@
 		</div>
 	</div>
 
+	<hr>
+
 	<div class="changelog audiotheme-feature-section">
 		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/gigs.jpg" class="stagger-right">
 
@@ -49,6 +51,8 @@
 			</p>
 		</div>
 	</div>
+
+	<hr>
 
 	<div class="changelog audiotheme-feature-section">
 		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/discography.jpg">
@@ -67,6 +71,8 @@
 		</div>
 	</div>
 
+	<hr>
+
 	<div class="changelog audiotheme-feature-section">
 		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/videos.jpg" class="stagger-right">
 
@@ -84,6 +90,8 @@
 		</div>
 	</div>
 
+	<hr>
+
 	<div class="changelog">
 		<h3><?php _e( 'Credits', 'audiotheme' ); ?></h3>
 		<p>
@@ -96,9 +104,10 @@
 			<a href="http://jquery.com/" target="_blank"><?php _e( 'jQuery', 'audiotheme' ); ?></a>,
 			<a href="http://jonthornton.github.com/jquery-timepicker/" target="_blank"><?php _e( 'jQuery Timepicker', 'audiotheme' ); ?></a>,
 			<a href="http://jqueryui.com/" target="_blank"><?php _e( 'jQuery UI', 'audiotheme' ); ?></a>,
-			<a href="http://lesscss.org/" target="_blank"><?php _e( 'LESS', 'audiotheme' ); ?></a>,
 			<a href="http://wordpress.org/extend/plugins/posts-to-posts/" target="_blank"><?php _e( 'Posts to Posts', 'audiotheme' ); ?></a>,
-			<a href="https://github.com/sanchothefat/wp-less" target="_blank"><?php _e( 'wp-less', 'audiotheme' ); ?></a>
+			<a href="http://sass-lang.com/" target="_blank">Sass</a>,
+			<a href="https://github.com/sanchothefat/wp-less" target="_blank"><?php _e( 'wp-less', 'audiotheme' ); ?></a>,
+			<a href="https://github.com/x-team/wp-jquery-ui-datepicker-skins" target="_blank">X-Team Datepicker Skins</a>
 		</p>
 
 	</div>
