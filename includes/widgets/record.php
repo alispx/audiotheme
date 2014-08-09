@@ -127,7 +127,7 @@ class Audiotheme_Widget_Record extends WP_Widget {
 		$instance = wp_parse_args( $new_instance, $old_instance );
 
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
-		$instance['text'] = wp_kses_data( $new_instance['text'] );
+		$instance['text'] = stripslashes( wp_filter_post_kses( addslashes( $new_instance['text'] ) ) );
 		$instance['link_text'] = wp_kses_data( $new_instance['link_text'] );
 
 		return $instance;
