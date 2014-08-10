@@ -2,8 +2,9 @@
 /**
  * Gig-related admin functionality.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Gigs
+ * @since 1.0.0
  */
 
 /**

@@ -4,7 +4,7 @@
  *
  * An improved recent posts widget to allow for more control over display and post type.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Widgets
  *
  * @since 1.0.0

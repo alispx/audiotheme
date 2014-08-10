@@ -4,7 +4,7 @@
  *
  * Display a list of recent tweets.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Widgets
  *
  * @since 1.0.0

@@ -7,16 +7,15 @@
  *
  * @see _wp_customize_include()
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Settings
  */
 
 /**
  * Theme Customizer textarea control.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Settings
- *
  * @since 1.0.0
  */
 class Audiotheme_Settings_Customize_Textarea_Control extends WP_Customize_Control {

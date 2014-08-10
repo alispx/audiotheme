@@ -2,8 +2,9 @@
 /**
  * Track admin functionality.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Discography
+ * @since 1.0.0
  */
 
 /**

@@ -5,8 +5,9 @@
  * These functions are duplicated in the theme drop-in, so they're wrapped in
  * 'function_exists()' checks to prevent conflicts.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Settings
+ * @since 1.0.0
  */
 
 if ( ! function_exists( 'get_audiotheme_option' ) ) :

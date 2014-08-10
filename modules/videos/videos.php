@@ -2,8 +2,9 @@
 /**
  * Set up video-related functionality in the AudioTheme framework.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Videos
+ * @since 1.0.0
  */
 
 /**

@@ -2,8 +2,9 @@
 /**
  * Discography template functions.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Template
+ * @since 1.0.0
  */
 
 /**

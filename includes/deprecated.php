@@ -1,6 +1,9 @@
 <?php
 /**
+ * Deprecated functions.
  *
+ * @package AudioTheme
+ * @since 1.6.0
  */
 
 /**

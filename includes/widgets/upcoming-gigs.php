@@ -4,7 +4,7 @@
  *
  * Display a list of upcoming gigs in a widget area.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Widgets
  *
  * @since 1.0.0

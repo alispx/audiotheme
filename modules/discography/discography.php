@@ -2,8 +2,9 @@
 /**
  * Set up discography functionality in the AudioTheme framework.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Discography
+ * @since 1.0.0
  */
 
 /**

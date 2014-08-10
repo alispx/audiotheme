@@ -1,5 +1,13 @@
 <?php
 /**
+ * AudioTheme Modules
+ *
+ * @package AudioTheme
+ * @subpackage Modules
+ * @since 2.0.0
+ */
+
+/**
  * Retrieve a list of modules.
  *
  * @since 2.0.0

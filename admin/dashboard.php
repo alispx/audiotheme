@@ -4,8 +4,9 @@
  *
  * Consists of the top-level AudioTheme menu and the various submenus.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Administration
+ * @since 1.0.0
  */
 
 /**

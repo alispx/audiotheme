@@ -2,8 +2,9 @@
 /**
  * Generic utility functions for us in the admin.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Administration
+ * @since 1.0.0
  */
 
 /**

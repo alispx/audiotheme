@@ -7,7 +7,8 @@
  * display an alert to users who mistakenly install the framework as a theme and
  * give them the option to move it automatically if possible.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
+ * @since 1.2.0
  */
 
 /**

@@ -2,8 +2,7 @@
 /**
  * The base update class for AudioTheme.
  *
- * @package AudioTheme_Framework
- *
+ * @package AudioTheme
  * @since 1.0.0
  */
 class Audiotheme_Updater {

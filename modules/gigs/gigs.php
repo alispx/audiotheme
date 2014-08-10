@@ -2,8 +2,9 @@
 /**
  * Set up gig-related functionality in the AudioTheme framework.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Gigs
+ * @since 1.0.0
  */
 
 /**

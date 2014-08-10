@@ -8,7 +8,8 @@
  * style sheet separately *after* the main style sheet has already been loaded
  * so that it won't be recompiled to prevent changes from being made live prematurely.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
+ * @since 1.0.0
  */
 
 /**

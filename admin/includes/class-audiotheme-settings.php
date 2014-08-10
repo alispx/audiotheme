@@ -3,10 +3,10 @@
  * Class to abstract and extend the WordPress Settings API and Theme
  * Customizer and provide a generic API for interacting with them.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Settings
- *
  * @since 1.0.0
+ *
  * @link http://core.trac.wordpress.org/ticket/18285
  */
 class Audiotheme_Settings {

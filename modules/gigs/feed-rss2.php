@@ -2,8 +2,9 @@
 /**
  * Gigs RSS2 feed template.
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Gigs
+ * @since 1.0.0
  */
 
 header( 'Content-Type: ' . feed_content_type( 'rss-http' ) . '; charset=' . get_option( 'blog_charset' ), true );

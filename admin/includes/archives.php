@@ -7,9 +7,8 @@
  * archives to be easily added to nav menus without using a custom link
  * (they stay updated!).
  *
- * @package AudioTheme_Framework
+ * @package AudioTheme
  * @subpackage Archives
- *
  * @since 1.0.0
  */
 
