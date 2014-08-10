@@ -4,6 +4,14 @@
  */
 
 /**
+ * Old setup method. Used to determine if AudioTheme was active.
+ *
+ * @since 1.0.0
+ * @deprecated 2.0.0
+ */
+function audiotheme_load() {}
+
+/**
  * Add widget count classes so they can be targeted based on their position.
  *
  * Adds a class to widgets containing it's position in the sidebar it belongs

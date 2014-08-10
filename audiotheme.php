@@ -49,8 +49,9 @@ if ( ! defined( 'AUDIOTHEME_URI' ) )
 	define( 'AUDIOTHEME_URI', plugin_dir_url( __FILE__ ) );
 
 /**
- * Load additional helper functions and libraries.
+ * Load functions and libraries.
  */
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme.php' );
 require( AUDIOTHEME_DIR . 'includes/archives.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
@@ -71,155 +72,10 @@ require( AUDIOTHEME_DIR . 'modules/gigs/gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/videos.php' );
 
 /**
- * AudioTheme setup.
- *
- * Begin setting up the framework during the after_setup_theme action.
- *
- * Ideally all functionality should be loaded via hooks so it can be disabled
- * or replaced by a theme or plugin if necessary.
- *
- * @since 1.0.0
+ * Initialize the plugin.
  */
-function audiotheme_load() {
-	// Default hooks.
-	add_action( 'init', 'audiotheme_register_scripts' );
-	add_action( 'init', 'audiotheme_less_setup' );
-	add_action( 'widgets_init', 'audiotheme_widgets_init' );
-	add_action( 'wp_loaded', 'audiotheme_loaded' );
-	add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
-
-	add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
-
-	// Media hooks.
-	add_action( 'init', 'audiotheme_add_default_oembed_providers' );
-	add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
-	add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
-	add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.
-
-	// Archive hooks.
-	add_action( 'init', 'register_audiotheme_archives' );
-	add_filter( 'post_type_link', 'audiotheme_archives_post_type_link', 10, 3 );
-	add_filter( 'post_type_archive_link', 'audiotheme_archives_post_type_archive_link', 10, 2 );
-	add_filter( 'post_type_archive_title', 'audiotheme_archives_post_type_archive_title' );
-
-	add_action( 'admin_bar_menu', 'audiotheme_archives_admin_bar_edit_menu', 80 );
-	add_action( 'post_updated', 'audiotheme_archives_post_updated', 10, 3 );
-	add_action( 'delete_post', 'audiotheme_archives_deleted_post' );
-
-	// Prevent the audiotheme_archive post type rules from being registered.
-	add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
-
-	// Template hooks.
-	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
-	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
-
-	// Deprecated.
-	add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
-	add_filter( 'get_pages', 'audiotheme_page_list' );
-	add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
-	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
-}
-add_action( 'after_setup_theme', 'audiotheme_load', 5 );
-
-/**
- * Load admin-specific functions and libraries.
- *
- * Has to be loaded after the Theme Customizer in order to determine if the
- * Settings API should be included while customizing a theme.
- *
- * @since 1.0.0
- */
-function audiotheme_load_admin() {
-	global $wp_customize;
-
-	if ( is_admin() || ( $wp_customize && $wp_customize->is_preview() ) ) {
-		require( AUDIOTHEME_DIR . 'admin/admin.php' );
-		audiotheme_admin_setup();
-	}
-}
-add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
-
-/**
- * Load the active modules.
- *
- * Modules are always loaded when viewing the AudioTheme Settings screen so they can be toggled with instant feedback.
- *
- * @since 2.0.0
- */
-function audiotheme_load_modules() {
-	$modules = array(
-		'discography' => array(
-			'audiotheme_discography_init',
-			'audiotheme_load_discography_admin',
-		),
-		'gigs' => array(
-			'audiotheme_gigs_init',
-			'audiotheme_gigs_admin_setup',
-		),
-		'videos' => array(
-			'audiotheme_videos_init',
-			'audiotheme_load_videos_admin',
-		),
-	);
-
-	$is_settings_screen = is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];
-
-	foreach ( $modules as $module_id => $hooks ) {
-		if ( audiotheme_is_module_active( $module_id ) || $is_settings_screen ) {
-			add_action( 'init', $hooks[0] );
-
-			if ( is_admin() ) {
-				add_action( 'init', $hooks[1] );
-			}
-		}
-	}
-}
-add_action( 'after_setup_theme', 'audiotheme_load_modules', 5 );
-
-/**
- * Additional setup during init.
- *
- * @since 1.2.0
- */
-function audiotheme_init() {
-	if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
-		// High priority so plugins filtering ouput don't get stomped. Jetpack, etc.
-		add_filter( 'post_gallery', 'audiotheme_post_gallery', 5000, 2 );
-	}
-}
-add_action( 'init', 'audiotheme_init' );
-
-/**
- * Register frontend scripts and styles for enqueuing when needed.
- *
- * @since 1.0.0
- * @link http://core.trac.wordpress.org/ticket/18909
- */
-function audiotheme_register_scripts() {
-	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-	wp_register_script( 'audiotheme', AUDIOTHEME_URI . 'includes/js/audiotheme' . $suffix . '.js', array( 'jquery', 'jquery-jplayer', 'jquery-fitvids' ), '1.0', true );
-	wp_register_script( 'jquery-fitvids', AUDIOTHEME_URI . 'includes/js/jquery.fitvids.min.js', array( 'jquery' ), '1.0', true );
-	wp_register_script( 'jquery-jplayer', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.min.js', array( 'jquery' ), '2.2.19', true );
-	wp_register_script( 'jquery-jplayer-playlist', AUDIOTHEME_URI . 'includes/js/jquery.jplayer.playlist.min.js', array( 'jquery-jplayer' ), '2.2.2', true );
-	wp_register_script( 'jquery-timepicker', AUDIOTHEME_URI . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ), '1.1', true );
-
-	wp_localize_script( 'jquery-jplayer', 'AudiothemeJplayer', array(
-		'swfPath' => AUDIOTHEME_URI . 'includes/js'
-	) );
-
-	wp_register_style( 'audiotheme', AUDIOTHEME_URI . 'includes/css/audiotheme.min.css' );
-}
-
-/**
- * Support localization for the plugin strings.
- *
- * @since 1.0.0
- */
-function audiotheme_load_textdomain() {
-	load_plugin_textdomain( 'audiotheme', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-}
-add_action( 'plugins_loaded', 'audiotheme_load_textdomain' );
+$audiotheme = new Audiotheme();
+add_action( 'plugins_loaded', array( $audiotheme, 'load_plugin' ) );
 
 /**
  * Flush the rewrite rules if needed.
