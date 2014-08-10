@@ -1,8 +1,8 @@
-jQuery(function($) {
-	var $city = $('#venue-city'),
-		$state = $('#venue-state'),
-		$country = $('#venue-country'),
-		$venueTz = $('#venue-timezone-string');
+jQuery(function( $ ) {
+	var $city = $( '#venue-city' ),
+		$state = $( '#venue-state' ),
+		$country = $( '#venue-country' ),
+		$venueTz = $( '#venue-timezone-string' );
 
 	$city.autocomplete({
 		source: function( request, response ) {
@@ -18,7 +18,7 @@ jQuery(function($) {
 				success: function( data ) {
 					response( $.map( data.geonames, function( item ) {
 						return {
-							label: item.name + (item.adminName1 ? ', ' + item.adminName1 : '') + ', ' + item.countryName,
+							label: item.name + ( item.adminName1 ? ', ' + item.adminName1 : '' ) + ', ' + item.countryName,
 							value: item.name,
 							adminCode: item.adminCode1,
 							countryName: item.countryName,
@@ -29,16 +29,16 @@ jQuery(function($) {
 			});
 		},
 		minLength: 2,
-		select: function(e, ui) {
-			if ('' === $state.val()) {
-				$state.val(ui.item.adminCode);
+		select: function( e, ui ) {
+			if ( '' === $state.val() ) {
+				$state.val( ui.item.adminCode );
 			}
 
-			if ('' === $country.val()) {
-				$country.val(ui.item.countryName);
+			if ( '' === $country.val() ) {
+				$country.val( ui.item.countryName );
 			}
 
-			$venueTz.find('option[value="' + ui.item.timezone + '"]').attr('selected','selected');
+			$venueTz.find( 'option[value="' + ui.item.timezone + '"]' ).attr( 'selected','selected' );
 		}
 	});
 });
