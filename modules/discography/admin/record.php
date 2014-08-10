@@ -308,14 +308,6 @@ function audiotheme_edit_record_tracklist() {
 		}
 	}
 
-	$thickbox_url = add_query_arg( array(
-		'post_id'   => $post->ID,
-		'type'      => 'audio',
-		'TB_iframe' => true,
-		'width'     => 640,
-		'height'    => 750,
-	), admin_url( 'media-upload.php' ) );
-
 	require( AUDIOTHEME_DIR . 'modules/discography/admin/views/edit-record-tracklist.php' );
 }
 
