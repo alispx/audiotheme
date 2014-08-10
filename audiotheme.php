@@ -59,6 +59,7 @@ require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/less.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
+require( AUDIOTHEME_DIR . 'includes/modules.php' );
 require( AUDIOTHEME_DIR . 'includes/options.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets.php' );
 
@@ -108,15 +109,6 @@ function audiotheme_load() {
 	// Prevent the audiotheme_archive post type rules from being registered.
 	add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
 
-	// Load discography.
-	add_action( 'init', 'audiotheme_discography_init' );
-
-	// Load gigs.
-	add_action( 'init', 'audiotheme_gigs_init' );
-
-	// Load videos.
-	add_action( 'init', 'audiotheme_videos_init' );
-
 	// Template hooks.
 	add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
 	add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
@@ -128,19 +120,6 @@ function audiotheme_load() {
 	add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
 }
 add_action( 'after_setup_theme', 'audiotheme_load', 5 );
-
-/**
- * Additional setup during init.
- *
- * @since 1.2.0
- */
-function audiotheme_init() {
-	if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
-		// High priority so plugins filtering ouput don't get stomped. Jetpack, etc.
-		add_filter( 'post_gallery', 'audiotheme_post_gallery', 5000, 2 );
-	}
-}
-add_action( 'init', 'audiotheme_init' );
 
 /**
  * Load admin-specific functions and libraries.
@@ -157,19 +136,58 @@ function audiotheme_load_admin() {
 		require( AUDIOTHEME_DIR . 'admin/admin.php' );
 		audiotheme_admin_setup();
 	}
-
-	if ( is_admin() ) {
-		// Load discography admin.
-		add_action( 'init', 'audiotheme_load_discography_admin' );
-
-		// Load gigs admin.
-		add_action( 'init', 'audiotheme_gigs_admin_setup' );
-
-		// Load videos admin.
-		add_action( 'init', 'audiotheme_load_videos_admin' );
-	}
 }
 add_action( 'after_setup_theme', 'audiotheme_load_admin', 5 );
+
+/**
+ * Load the active modules.
+ *
+ * Modules are always loaded when viewing the AudioTheme Settings screen so they can be toggled with instant feedback.
+ *
+ * @since 2.0.0
+ */
+function audiotheme_load_modules() {
+	$modules = array(
+		'discography' => array(
+			'audiotheme_discography_init',
+			'audiotheme_load_discography_admin',
+		),
+		'gigs' => array(
+			'audiotheme_gigs_init',
+			'audiotheme_gigs_admin_setup',
+		),
+		'videos' => array(
+			'audiotheme_videos_init',
+			'audiotheme_load_videos_admin',
+		),
+	);
+
+	$is_settings_screen = is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];
+
+	foreach ( $modules as $module_id => $hooks ) {
+		if ( audiotheme_is_module_active( $module_id ) || $is_settings_screen ) {
+			add_action( 'init', $hooks[0] );
+
+			if ( is_admin() ) {
+				add_action( 'init', $hooks[1] );
+			}
+		}
+	}
+}
+add_action( 'after_setup_theme', 'audiotheme_load_modules', 5 );
+
+/**
+ * Additional setup during init.
+ *
+ * @since 1.2.0
+ */
+function audiotheme_init() {
+	if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
+		// High priority so plugins filtering ouput don't get stomped. Jetpack, etc.
+		add_filter( 'post_gallery', 'audiotheme_post_gallery', 5000, 2 );
+	}
+}
+add_action( 'init', 'audiotheme_init' );
 
 /**
  * Register frontend scripts and styles for enqueuing when needed.

@@ -1,0 +1,45 @@
+.audiotheme-modules {
+	&:before,
+	&:after {
+		content: " ";
+		display: table;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+.audiotheme-module {
+	background: #f5f5f5;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+	color: #6e818a;
+	cursor: pointer;
+	float: left;
+	margin: 0 10px 10px 0;
+	opacity: 0.5;
+	padding: 1em 1.07143em 1.07143em;
+	position: relative;
+	text-align: center;
+	width: 180px;
+
+	&:hover {
+		background: #fff;
+	}
+
+	> :last-child {
+		margin-bottom: 0;
+	}
+
+	&.is-active {
+		opacity: 1;
+	}
+}
+
+.audiotheme-module-title {
+	color: #697b84;
+	font-size: 16px;
+	font-weight: 800;
+	margin: 0;
+}

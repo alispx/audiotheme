@@ -20,12 +20,14 @@ function audiotheme_dashboard_init() {
 	add_action( 'admin_menu', 'audiotheme_dashboard_admin_menu' );
 	add_action( 'admin_init', 'audiotheme_dashboard_sort_menu' );
 
+	add_action( 'wp_ajax_audiotheme_ajax_toggle_module', 'audiotheme_ajax_toggle_module' );
 	add_action( 'wp_ajax_audiotheme_ajax_activate_license', 'audiotheme_ajax_activate_license' );
 
 	add_action( 'audiotheme_update_response_error', 'audiotheme_license_clear_status' );
 	add_action( 'update_option_audiotheme_license_key', 'audiotheme_license_key_option_update', 10, 2 );
 
 	add_action( 'load-audiotheme_page_audiotheme-settings', 'audiotheme_dashboard_settings_help' );
+	add_action( 'audiotheme_options_audiotheme-settings_fields_before', 'audiotheme_dashboard_modules_section' );
 }
 
 /**
@@ -76,7 +78,16 @@ function audiotheme_dashboard_register_settings() {
 		return;
 	}
 
-	$screen->add_section( 'directory_browsing', __( 'Directory Browsing', 'audiotheme' ), array(
+	$screen->add_section( 'license', __( 'License', 'audiotheme' ), array(
+		'priority' => 1,
+		'callback' => 'audiotheme_dashboard_settings_license_section',
+	) );
+
+		$screen->add_field( 'audiotheme_license_key', __( 'License Key', 'audiotheme' ), 'audiotheme_dashboard_license_input', array(
+			'option_name' => 'audiotheme_license_key',
+		) );
+
+	$screen->add_section( 'directory_browsing', '', array(
 		'priority' => 50,
 	) );
 
@@ -85,15 +96,6 @@ function audiotheme_dashboard_register_settings() {
 			'choices'     => array(
 				'1' => 'Disable directory browsing?',
 			),
-		) );
-
-	$screen->add_section( 'license', __( 'License', 'audiotheme' ), array(
-		'priority' => 0,
-		'callback' => 'audiotheme_dashboard_settings_license_section',
-	) );
-
-		$screen->add_field( 'audiotheme_license_key', __( 'License Key', 'audiotheme' ), 'audiotheme_dashboard_license_input', array(
-			'option_name' => 'audiotheme_license_key',
 		) );
 
 
@@ -232,6 +234,73 @@ function audiotheme_dashboard_sort_menu() {
 
 		audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
 	}
+}
+
+/**
+ * Display the list of modules.
+ *
+ * @since 2.0.0
+ */
+function audiotheme_dashboard_modules_section() {
+	$modules          = audiotheme_get_modules();
+	$inactive_modules = audiotheme_get_inactive_modules();
+	?>
+	<div class="audiotheme-modules">
+		<h3><?php _e( 'Modules', 'audiotheme' ); ?></h3>
+
+		<?php
+		foreach ( $modules as $module_id => $module ) :
+			$classes = array( 'audiotheme-module' );
+			if ( $module['is_active'] ) {
+				$classes[] = 'is-active';
+			}
+			$nonce   = wp_create_nonce( 'toggle-module_' . $module_id );
+			?>
+			<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
+				data-module="<?php echo esc_attr( $module_id ); ?>"
+				data-toggle-nonce="<?php echo esc_attr( $nonce ); ?>">
+				<h3 class="audiotheme-module-title"><?php echo esc_html( $module['name'] ); ?></h3>
+				<p>
+					A description.
+				</p>
+			</div>
+		<?php endforeach; ?>
+	</div>
+	<?php
+	// Hide menu items for inactive modules on initial load.
+	$styles = '';
+	foreach ( $inactive_modules as $id => $module ) {
+		$styles .= sprintf( '#%s { display: none;}', $module['admin_menu_id'] );
+	}
+	printf( '<style type="text/css">%s</style>', $styles );
+}
+
+/**
+ * AJAX callback to toggle a module's status.
+ *
+ * @since 2.0.0
+ */
+function audiotheme_ajax_toggle_module() {
+	if ( empty( $_POST['module'] ) ) {
+		wp_send_json_error();
+	}
+
+	$module = $_POST['module'];
+
+	check_ajax_referer( 'toggle-module_' . $module, 'nonce' );
+
+	$is_module_active = audiotheme_is_module_active( $module );
+
+	if ( $is_module_active ) {
+		audiotheme_deactivate_module( $module );
+	} else {
+		audiotheme_activate_module( $module );
+	}
+
+	wp_send_json_success( array(
+		'isActive' => ! $is_module_active,
+		'module'   => audiotheme_get_module( $module ),
+	) );
 }
 
 /**

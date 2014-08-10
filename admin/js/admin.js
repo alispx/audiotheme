@@ -10,6 +10,24 @@ jQuery(function($) {
 	});
 });
 
+
+jQuery(function( $ ) {
+	$( '.audiotheme-module' ).on( 'click', function() {
+		var $this = $( this ),
+			module = $this.data( 'module' );
+
+		wp.ajax.post( 'audiotheme_ajax_toggle_module', {
+			module: module,
+			nonce: $this.data( 'toggle-nonce' )
+		}).done(function( data ) {
+			$this.toggleClass( 'is-active', data.isActive );
+			$( '#' + data.module.admin_menu_id ).toggle( data.isActive );
+		}).fail(function() {
+
+		});
+	});
+});
+
 /**
  * Media Popup Helper
  *
