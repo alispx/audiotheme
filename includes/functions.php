@@ -471,3 +471,11 @@ function audiotheme_time_string( $time ) {
 
 	return $time;
 }
+
+/**
+ * Old setup method. Used to determine if AudioTheme was active.
+ *
+ * @since 1.0.0
+ * @deprecated 2.0.0
+ */
+function audiotheme_load() {}

@@ -13,6 +13,12 @@
  * @since 2.0.0
  */
 class Audiotheme {
+	protected $plugin_file;
+
+	public function __construct() {
+		$this->plugin_file = dirname( dirname( __FILE__ ) ) . '/audiotheme.php';
+	}
+
 	/**
 	 * Load the plugin.
 	 *
@@ -23,6 +29,9 @@ class Audiotheme {
 		add_action( 'after_setup_theme', array( $this, 'load_modules' ), 5 );
 		add_action( 'after_setup_theme', array( $this, 'load_admin' ), 5 );
 		add_action( 'after_setup_theme', array( $this, 'attach_hooks' ), 5 );
+
+		register_activation_hook( $this->plugin_file, 'activate' );
+		register_deactivation_hook( $this->plugin_file, 'deactivate' );
 	}
 
 	/**
@@ -31,7 +40,7 @@ class Audiotheme {
 	 * @since 1.0.0
 	 */
 	protected function load_textdomain() {
-		load_plugin_textdomain( 'audiotheme', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages' );
+		load_plugin_textdomain( 'audiotheme', false, dirname( plugin_basename( $this->plugin_file ) ) . '/languages' );
 	}
 
 	/**
@@ -59,7 +68,7 @@ class Audiotheme {
 	public function attach_hooks() {
 		// Default hooks.
 		add_action( 'widgets_init', 'audiotheme_widgets_init' );
-		add_action( 'wp_loaded', 'audiotheme_loaded' );
+		add_action( 'wp_loaded', array( $this, 'maybe_flush_rewrite_rules' ) );
 		add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ), 0 );
 
@@ -150,5 +159,41 @@ class Audiotheme {
 		wp_register_script( 'jquery-timepicker', $base_url . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ), '1.1', true );
 
 		wp_register_style( 'audiotheme', $base_url . 'includes/css/audiotheme.min.css' );
+	}
+
+	/**
+	 * Flush the rewrite rules if needed.
+	 *
+	 * @since 1.0.0
+	 */
+	public function maybe_flush_rewrite_rules() {
+		if ( ! is_network_admin() && 'no' != get_option( 'audiotheme_flush_rewrite_rules' ) ) {
+			update_option( 'audiotheme_flush_rewrite_rules', 'no' );
+			flush_rewrite_rules();
+		}
+	}
+
+	/**
+	 * Activation routine.
+	 *
+	 * Occurs too late to flush rewrite rules, so set an option to flush the
+	 * rewrite rules on the next request.
+	 *
+	 * @since 1.0.0
+	 */
+	public function activate() {
+		update_option( 'audiotheme_flush_rewrite_rules', 'yes' );
+	}
+
+	/**
+	 * Deactivation routine.
+	 *
+	 * Deleting the rewrite rules option should force them to be regenerated the
+	 * next time they're needed.
+	 *
+	 * @since 1.0.0
+	 */
+	public function deactivate() {
+		delete_option( 'rewrite_rules' );
 	}
 }
