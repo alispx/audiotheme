@@ -16,15 +16,13 @@ class Audiotheme {
 	/**
 	 * Load the plugin.
 	 *
-	 * Most of the set up occurs in the 'after_setup_theme' hook.
-	 *
 	 * @since 1.0.0
 	 */
 	public function load_plugin() {
 		$this->load_textdomain();
-		add_action( 'after_setup_theme', array( $this, 'attach_hooks' ), 5 );
 		add_action( 'after_setup_theme', array( $this, 'load_modules' ), 5 );
 		add_action( 'after_setup_theme', array( $this, 'load_admin' ), 5 );
+		add_action( 'after_setup_theme', array( $this, 'attach_hooks' ), 5 );
 	}
 
 	/**
@@ -34,6 +32,23 @@ class Audiotheme {
 	 */
 	protected function load_textdomain() {
 		load_plugin_textdomain( 'audiotheme', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages' );
+	}
+
+	/**
+	 * Load administration functions and libraries.
+	 *
+	 * Has to be loaded after the Theme Customizer in order to determine if the
+	 * Settings API should be included while customizing a theme.
+	 *
+	 * @since 1.0.0
+	 */
+	public function load_admin() {
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		$admin = new AudioTheme_Admin();
+		$admin->load();
 	}
 
 	/**
@@ -79,23 +94,6 @@ class Audiotheme {
 		add_filter( 'get_pages', 'audiotheme_page_list' );
 		add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
 		add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
-	}
-
-	/**
-	 * Load administration functions and libraries.
-	 *
-	 * Has to be loaded after the Theme Customizer in order to determine if the
-	 * Settings API should be included while customizing a theme.
-	 *
-	 * @since 1.0.0
-	 */
-	public function load_admin() {
-		global $wp_customize;
-
-		if ( is_admin() || ( $wp_customize && $wp_customize->is_preview() ) ) {
-			require( AUDIOTHEME_DIR . 'admin/admin.php' );
-			audiotheme_admin_setup();
-		}
 	}
 
 	/**
@@ -147,7 +145,7 @@ class Audiotheme {
 	}
 
 	/**
-	 * Register frontend scripts and styles for enqueuing when needed.
+	 * Register frontend scripts and styles for enqueuing on-demand.
 	 *
 	 * @since 1.0.0
 	 * @link http://core.trac.wordpress.org/ticket/18909

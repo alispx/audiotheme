@@ -61,7 +61,6 @@ require( AUDIOTHEME_DIR . 'includes/less.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/media.php' );
 require( AUDIOTHEME_DIR . 'includes/modules.php' );
-require( AUDIOTHEME_DIR . 'includes/options.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets.php' );
 
 /**
@@ -70,6 +69,17 @@ require( AUDIOTHEME_DIR . 'includes/widgets.php' );
 require( AUDIOTHEME_DIR . 'modules/discography/discography.php' );
 require( AUDIOTHEME_DIR . 'modules/gigs/gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/videos.php' );
+
+if ( is_admin() ) {
+	/**
+	 * Load admin functions and libraries.
+	 */
+	require( AUDIOTHEME_DIR . 'admin/includes/ajax.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/archives.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/functions.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-admin.php' );
+	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-admin-screen-settings.php' );
+}
 
 /**
  * Initialize the plugin.
