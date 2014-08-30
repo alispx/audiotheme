@@ -15,7 +15,6 @@
 require( AUDIOTHEME_DIR . 'includes/widgets/recent-posts.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/record.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/track.php' );
-// require( AUDIOTHEME_DIR . 'includes/widgets/twitter.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/upcoming-gigs.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets/video.php' );
 
@@ -35,7 +34,6 @@ function audiotheme_widgets_init() {
 		'recent-posts'  => 'Audiotheme_Widget_Recent_Posts',
 		'record'        => 'Audiotheme_Widget_Record',
 		'track'         => 'Audiotheme_Widget_Track',
-		// 'twitter'       => 'Audiotheme_Widget_Twitter',
 		'upcoming-gigs' => 'Audiotheme_Widget_Upcoming_Gigs',
 		'video'         => 'Audiotheme_Widget_Video',
 	);
