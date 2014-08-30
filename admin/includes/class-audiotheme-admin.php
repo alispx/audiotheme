@@ -14,7 +14,7 @@ class AudioTheme_Admin {
 	public function load() {
 		add_action( 'init', 'audiotheme_archives_init_admin', 50 );
 
-		add_action( 'admin_menu', array( $this, 'add_menu_item' ) );
+		add_action( 'admin_menu', array( $this, 'add_menu_items' ) );
 		add_action( 'admin_init', array( $this, 'sort_admin_menu' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ), 9 );
@@ -49,7 +49,7 @@ class AudioTheme_Admin {
 	 *
 	 * @since 2.0.0
 	 */
-	public function add_menu_item() {
+	public function add_menu_items() {
 		add_menu_page(
 			__( 'AudioTheme', 'audiotheme' ),
 			__( 'AudioTheme', 'audiotheme' ),
