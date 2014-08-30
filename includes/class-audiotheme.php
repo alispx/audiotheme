@@ -88,12 +88,6 @@ class Audiotheme {
 		// Template hooks.
 		add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
 		add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
-
-		// Deprecated.
-		add_filter( 'dynamic_sidebar_params', 'audiotheme_widget_count_class' );
-		add_filter( 'get_pages', 'audiotheme_page_list' );
-		add_filter( 'page_css_class', 'audiotheme_page_list_classes', 10, 2 );
-		add_filter( 'nav_menu_css_class', 'audiotheme_nav_menu_name_class', 10, 2 );
 	}
 
 	/**

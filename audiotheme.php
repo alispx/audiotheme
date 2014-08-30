@@ -54,7 +54,6 @@ if ( ! defined( 'AUDIOTHEME_URI' ) )
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme.php' );
 require( AUDIOTHEME_DIR . 'includes/archives.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
-require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
 require( AUDIOTHEME_DIR . 'includes/less.php' );
@@ -124,3 +123,11 @@ function audiotheme_deactivate() {
 	delete_option( 'rewrite_rules' );
 }
 register_deactivation_hook( __FILE__, 'audiotheme_deactivate' );
+
+/**
+ * Old setup method. Used to determine if AudioTheme was active.
+ *
+ * @since 1.0.0
+ * @deprecated 2.0.0
+ */
+function audiotheme_load() {}
