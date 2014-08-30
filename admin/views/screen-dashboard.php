@@ -96,9 +96,7 @@
 			<a href="http://jquery.com/" target="_blank"><?php _e( 'jQuery', 'audiotheme' ); ?></a>,
 			<a href="http://jonthornton.github.com/jquery-timepicker/" target="_blank"><?php _e( 'jQuery Timepicker', 'audiotheme' ); ?></a>,
 			<a href="http://jqueryui.com/" target="_blank"><?php _e( 'jQuery UI', 'audiotheme' ); ?></a>,
-			<a href="http://lesscss.org/" target="_blank"><?php _e( 'LESS', 'audiotheme' ); ?></a>,
-			<a href="http://wordpress.org/extend/plugins/posts-to-posts/" target="_blank"><?php _e( 'Posts to Posts', 'audiotheme' ); ?></a>,
-			<a href="https://github.com/sanchothefat/wp-less" target="_blank"><?php _e( 'wp-less', 'audiotheme' ); ?></a>
+			<a href="http://wordpress.org/extend/plugins/posts-to-posts/" target="_blank"><?php _e( 'Posts to Posts', 'audiotheme' ); ?></a>
 		</p>
 
 	</div>

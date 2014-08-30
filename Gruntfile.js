@@ -121,11 +121,7 @@ module.exports = function(grunt) {
 							'!Gruntfile.js',
 							'!package.json',
 							'!phpunit.xml',
-							'!README.md',
-							'!includes/vendor/lessphp/**',
-							'!includes/vendor/wp-less/**',
-							'includes/vendor/lessphp/lessc.inc.php',
-							'includes/vendor/wp-less/wp-less.php'
+							'!README.md'
 						],
 						dest: '<%= pkg.name %>/'
 					}

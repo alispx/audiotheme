@@ -59,7 +59,6 @@ class Audiotheme {
 	public function attach_hooks() {
 		// Default hooks.
 		add_action( 'widgets_init', 'audiotheme_widgets_init' );
-		add_action( 'init', 'audiotheme_less_setup' );
 		add_action( 'wp_loaded', 'audiotheme_loaded' );
 		add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ), 0 );
