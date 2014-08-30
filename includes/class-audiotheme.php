@@ -154,16 +154,7 @@ class Audiotheme {
 		$suffix   = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 		$base_url = set_url_scheme( AUDIOTHEME_URI );
 
-		wp_register_script( 'audiotheme', $base_url . 'includes/js/audiotheme' . $suffix . '.js', array( 'jquery', 'jquery-jplayer', 'jquery-fitvids' ), '1.0', true );
-		wp_register_script( 'jquery-fitvids', $base_url . 'includes/js/jquery.fitvids.min.js', array( 'jquery' ), '1.0', true );
-		wp_register_script( 'jquery-jplayer', $base_url . 'includes/js/jquery.jplayer.min.js', array( 'jquery' ), '2.2.19', true );
-		wp_register_script( 'jquery-jplayer-playlist', $base_url . 'includes/js/jquery.jplayer.playlist.min.js', array( 'jquery-jplayer' ), '2.2.2', true );
-		wp_register_script( 'jquery-placeholder', $base_url . 'includes/js/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7', true );
 		wp_register_script( 'jquery-timepicker', $base_url . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ), '1.1', true );
-
-		wp_localize_script( 'jquery-jplayer', 'AudiothemeJplayer', array(
-			'swfPath' => $base_url . 'includes/js'
-		) );
 
 		wp_register_style( 'audiotheme', $base_url . 'includes/css/audiotheme.min.css' );
 	}
