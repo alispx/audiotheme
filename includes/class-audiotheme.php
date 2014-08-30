@@ -74,12 +74,6 @@ class Audiotheme {
 
 		add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 
-		// Media hooks.
-		add_action( 'init', 'audiotheme_add_default_oembed_providers' );
-		add_filter( 'embed_oembed_html', 'audiotheme_oembed_html', 10, 4 );
-		add_filter( 'embed_handler_html', 'audiotheme_oembed_html', 10, 4 );
-		add_filter( 'video_embed_html', 'audiotheme_oembed_html', 10 ); // Jetpack compat.
-
 		// Archive hooks.
 		add_action( 'init', 'register_audiotheme_archives' );
 		add_filter( 'post_type_link', 'audiotheme_archives_post_type_link', 10, 3 );
@@ -131,18 +125,6 @@ class Audiotheme {
 					add_action( 'init', $hooks[1] );
 				}
 			}
-		}
-	}
-
-	/**
-	 * Additional setup during init.
-	 *
-	 * @since 1.2.0
-	 */
-	public function init() {
-		if ( current_theme_supports( 'audiotheme-post-gallery' ) ) {
-			// High priority so plugins filtering ouput don't get stomped. Jetpack, etc.
-			add_filter( 'post_gallery', 'audiotheme_post_gallery', 5000, 2 );
 		}
 	}
 
