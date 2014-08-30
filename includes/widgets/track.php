@@ -32,7 +32,7 @@ class Audiotheme_Widget_Track extends WP_Widget {
 	function widget( $args, $instance ) {
 		extract( $args );
 
-		$instance['title_raw'] = $instance['title'];
+		$instance['title_raw'] = empty( $instance['title'] ) ? '' : $instance['title'];
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? get_the_title( $instance['post_id'] ) : $instance['title'], $instance, $this->id_base );
 		$instance['title'] = apply_filters( 'audiotheme_widget_title', $instance['title'], $instance, $args, $this->id_base );
 

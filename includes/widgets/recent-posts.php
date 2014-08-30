@@ -46,7 +46,7 @@ class Audiotheme_Widget_Recent_Posts extends WP_Widget {
 		$instance['post_type'] = ( empty( $instance['post_type'] ) ) ? 'post' : $instance['post_type'];
 		$instance['number'] = ( empty( $instance['number'] ) || ! absint( $instance['number'] ) ) ? 5 : absint( $instance['number'] );
 
-		$instance['title_raw'] = $instance['title'];
+		$instance['title_raw'] = empty( $instance['title'] ) ? '' : $instance['title'];
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Recent Posts', 'audiotheme' ) : $instance['title'], $instance, $this->id_base );
 
 		$instance['date_format'] = apply_filters( 'audiotheme_widget_recent_posts_date_format', get_option( 'date_format' ), $instance, $this->id_base );

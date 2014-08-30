@@ -35,7 +35,7 @@ class Audiotheme_Widget_Twitter extends WP_Widget {
 	function widget( $args, $instance ) {
 		extract( $args );
 
-		$instance['title_raw'] = $instance['title'];
+		$instance['title_raw'] = empty( $instance['title'] ) ? '' : $instance['title'];
 		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
 		$tweets = $this->fetch_tweets( $instance );
