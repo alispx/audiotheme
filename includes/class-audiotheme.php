@@ -70,7 +70,8 @@ class Audiotheme {
 		add_action( 'widgets_init', 'audiotheme_widgets_init' );
 		add_action( 'wp_loaded', array( $this, 'maybe_flush_rewrite_rules' ) );
 		add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ), 0 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ), 1 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ), 1 );
 
 		add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 
@@ -134,8 +135,8 @@ class Audiotheme {
 	 * @since 1.0.0
 	 * @link http://core.trac.wordpress.org/ticket/18909
 	 */
-	public function register_scripts() {
-		$suffix   = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+	public function register_assets() {
+		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$base_url = set_url_scheme( AUDIOTHEME_URI );
 
 		wp_register_script( 'jquery-timepicker', $base_url . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ), '1.1', true );

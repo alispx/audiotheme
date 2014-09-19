@@ -220,9 +220,7 @@ function audiotheme_gigs_manage_screen() {
  */
 function audiotheme_gig_edit_screen_setup( $post ) {
 	audiotheme_gig_help();
-
-	wp_enqueue_script( 'audiotheme-gig-edit' );
-	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
+	add_action( 'admin_enqueue_scripts', 'audiotheme_gig_edit_screen_enqueue_assets' );
 
 	// Add a customized submit meta box.
 	remove_meta_box( 'submitdiv', 'audiotheme_gig', 'side' );
@@ -238,6 +236,16 @@ function audiotheme_gig_edit_screen_setup( $post ) {
 
 	// Display the main gig fields after the title.
 	add_action( 'edit_form_after_title', 'audiotheme_edit_gig_fields' );
+}
+
+/**
+ * Enqueue assets for the gig Edit screen.
+ *
+ * @since 2.0.0
+ */
+function audiotheme_gig_edit_screen_enqueue_assets() {
+	wp_enqueue_script( 'audiotheme-gig-edit' );
+	wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 }
 
 /**

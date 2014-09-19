@@ -17,7 +17,7 @@ class AudioTheme_Admin {
 		add_action( 'admin_menu', array( $this, 'add_menu_items' ) );
 		add_action( 'admin_init', array( $this, 'sort_admin_menu' ) );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ), 9 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ), 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'admin_body_class', array( $this, 'admin_body_classes' ) );
 
