@@ -32,7 +32,7 @@
  * @link http://audiotheme.com/
  * @copyright Copyright 2012 AudioTheme
  * @license GPL-2.0+
-*/
+ */
 
 /**
  * The AudioTheme version.
