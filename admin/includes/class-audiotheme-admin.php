@@ -23,7 +23,7 @@ class AudioTheme_Admin {
 
 		add_filter( 'user_contactmethods', array( $this, 'register_user_contact_methods' ) );
 		add_action( 'manage_pages_custom_column', array( $this, 'display_custom_columns' ), 10, 2 );
-		add_action( 'manage_posts_custom_column', array( $this, 'display_custom_columsn' ), 10, 2 );
+		add_action( 'manage_posts_custom_column', array( $this, 'display_custom_columns' ), 10, 2 );
 
 		add_action( 'admin_init', array( $this, 'upgrade' ) );
 
