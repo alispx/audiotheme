@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: AudioTheme Framework
- * Plugin URI: http://audiotheme.com/view/audiotheme/
+ * Plugin URI: https://audiotheme.com/view/audiotheme/
  * Description: A platform for music-oriented websites, allowing for easy management of gigs, discography, videos and more.
  * Version: 1.6.2
  * Author: AudioTheme
- * Author URI: http://audiotheme.com/
+ * Author URI: https://audiotheme.com/
  * Requires at least: 3.8
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -29,7 +29,7 @@
  * @package AudioTheme
  * @version 1.6.2
  * @author AudioTheme
- * @link http://audiotheme.com/
+ * @link https://audiotheme.com/
  * @copyright Copyright 2012 AudioTheme
  * @license GPL-2.0+
  */
@@ -42,11 +42,13 @@ define( 'AUDIOTHEME_VERSION', '1.6.2' );
 /**
  * Framework path and URL.
  */
-if ( ! defined( 'AUDIOTHEME_DIR' ) )
+if ( ! defined( 'AUDIOTHEME_DIR' ) ) {
 	define( 'AUDIOTHEME_DIR', plugin_dir_path( __FILE__ ) );
+}
 
-if ( ! defined( 'AUDIOTHEME_URI' ) )
+if ( ! defined( 'AUDIOTHEME_URI' ) ) {
 	define( 'AUDIOTHEME_URI', plugin_dir_url( __FILE__ ) );
+}
 
 /**
  * Load functions and libraries.
