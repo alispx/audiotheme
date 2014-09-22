@@ -54,6 +54,7 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
  * Load functions and libraries.
  */
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-theme-compat.php' );
 require( AUDIOTHEME_DIR . 'includes/archives.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
@@ -82,7 +83,24 @@ if ( is_admin() ) {
 }
 
 /**
+ * Retrieve the AudioTheme plugin instance.
+ *
+ * @since 2.0.0
+ *
+ * @return AudioTheme
+ */
+function audiotheme() {
+	static $instance;
+
+	if ( null == $instance ) {
+		$instance = new Audiotheme();
+		add_action( 'plugins_loaded', array( $instance, 'load_plugin' ) );
+	}
+
+	return $instance;
+}
+
+/**
  * Initialize the plugin.
  */
-$audiotheme = new Audiotheme();
-add_action( 'plugins_loaded', array( $audiotheme, 'load_plugin' ) );
+audiotheme();

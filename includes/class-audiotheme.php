@@ -13,10 +13,30 @@
  * @since 2.0.0
  */
 class Audiotheme {
+	/**
+	 * Theme compatibility class.
+	 *
+	 * @since 2.0.0
+	 * @type Audiotheme_Theme_Compat
+	 */
+	public $theme_compat;
+
+	/**
+	 * Path to the main plugin file.
+	 *
+	 * @since 2.0.0
+	 * @type string
+	 */
 	protected $plugin_file;
 
+	/**
+	 * Constructor method.
+	 *
+	 * @since 2.0.0
+	 */
 	public function __construct() {
 		$this->plugin_file = dirname( dirname( __FILE__ ) ) . '/audiotheme.php';
+		$this->theme_compat = new AudioTheme_Theme_Compat();
 	}
 
 	/**
@@ -26,6 +46,7 @@ class Audiotheme {
 	 */
 	public function load_plugin() {
 		$this->load_textdomain();
+
 		add_action( 'after_setup_theme', array( $this, 'load_modules' ), 5 );
 		add_action( 'after_setup_theme', array( $this, 'load_admin' ), 5 );
 		add_action( 'after_setup_theme', array( $this, 'attach_hooks' ), 5 );
