@@ -120,9 +120,9 @@ function audiotheme_discography_init() {
 	add_filter( 'request', 'audiotheme_record_type_request' );
 
 	// Separated so they can be unhooked individually if needed.
+	add_action( 'pre_get_posts', 'audiotheme_record_query_posts_per_page', 9 );
 	add_action( 'pre_get_posts', 'audiotheme_record_query_sort' );
 	add_action( 'pre_get_posts', 'audiotheme_track_query' );
-	add_action( 'pre_get_posts', 'audiotheme_record_default_template_query' );
 
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );
 	add_action( 'template_include', 'audiotheme_discography_template_include' );
@@ -196,6 +196,29 @@ function audiotheme_record_type_request( $query_vars ) {
 	}
 
 	return $query_vars;
+}
+
+/**
+ * Set posts per page for record archives.
+ *
+ * The default record archive template uses a 4-column grid, so the
+ * 'posts_per_archive_page' query var is set to a multiple of 4.
+ *
+ * This hook should either be removed or the value should be updated by theme's
+ * where necessary.
+ *
+ * @since 2.0.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
+ */
+function audiotheme_record_query_posts_per_page( $query ) {
+	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_record' ) ) {
+		return;
+	}
+
+	if ( '' == $query->get( 'posts_per_archive_page' ) ) {
+		$query->set( 'posts_per_archive_page', 12 );
+	}
 }
 
 /**
@@ -289,29 +312,6 @@ function audiotheme_track_query( $query ) {
 }
 
 /**
- * Set posts per page for record archives if the default templates are being
- * loaded.
- *
- * The default record archive template uses a 4-column grid. If it's loaded from
- * the plugin, set the posts per page arg to a multiple of 4.
- *
- * @since 1.3.0
- *
- * @param object $query The main WP_Query object. Passed by reference.
- */
-function audiotheme_record_default_template_query( $query ) {
-	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_record' ) ) {
-		return;
-	}
-
-	if ( is_audiotheme_default_template( audiotheme_locate_template( 'archive-record.php' ) ) ) {
-		if ( '' == $query->get( 'posts_per_archive_page' ) ) {
-			$query->set( 'posts_per_archive_page', 12 );
-		}
-	}
-}
-
-/**
  * Load discography templates.
  *
  * Templates should be included in an /audiotheme/ directory within the theme.
@@ -322,6 +322,9 @@ function audiotheme_record_default_template_query( $query ) {
  * @return string
  */
 function audiotheme_discography_template_include( $template ) {
+	$original_template = $template;
+	$compat            = audiotheme()->theme_compat;
+
 	if ( is_post_type_archive( array( 'audiotheme_record', 'audiotheme_track' ) ) || is_tax( 'audiotheme_record_type' ) ) {
 		if ( is_post_type_archive( 'audiotheme_track' ) ) {
 			$templates[] = 'archive-track.php';
@@ -336,13 +339,32 @@ function audiotheme_discography_template_include( $template ) {
 		}
 
 		$templates[] = 'archive-record.php';
+
 		$template = audiotheme_locate_template( $templates );
-		do_action( 'audiotheme_template_include', $template );
+
+		$compat->set_title( get_audiotheme_post_type_archive_title() );
+		$compat->set_loop_template_part( 'parts/loop-archive', 'record' );
 	} elseif ( is_singular( 'audiotheme_record' ) ) {
-		$template = audiotheme_locate_template( 'single-record.php' );
-		do_action( 'audiotheme_template_include', $template );
+		$templates = array( 'single-record.php' );
+
+		$template = audiotheme_locate_template( $templates );
+
+		$compat->set_title( '' );
+		$compat->set_loop_template_part( 'parts/loop-single', 'record' );
 	} elseif ( is_singular( 'audiotheme_track' ) ) {
 		$template = audiotheme_locate_template( 'single-track.php' );
+
+		$compat->set_title( '' );
+		$compat->set_loop_template_part( 'parts/loop-single', 'track' );
+	}
+
+	if ( $template !== $original_template ) {
+		// Enable theme compatibility.
+		if ( ! $compat->is_template_compatible( $template ) ) {
+			$compat->enable();
+			$template = $compat->get_template();
+		}
+
 		do_action( 'audiotheme_template_include', $template );
 	}
 

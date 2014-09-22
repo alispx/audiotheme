@@ -60,6 +60,12 @@ function audiotheme_locate_template( $template_names, $load = false, $require_on
  * @param bool $require_once Optional. Whether to require_once or require. Default false.
  */
 function audiotheme_load_template( $template_file, $data = array(), $locate = false, $require_once = false ) {
+	global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
+
+	if ( is_array( $wp_query->query_vars ) ) {
+		extract( $wp_query->query_vars, EXTR_SKIP );
+	}
+
 	if ( is_array( $data ) && ! empty( $data ) ) {
 		extract( $data, EXTR_SKIP );
 		unset( $data );
@@ -78,15 +84,48 @@ function audiotheme_load_template( $template_file, $data = array(), $locate = fa
 }
 
 /**
- * Determine if a template file is being loaded from the plugin.
+ * Load a template part into a template.
  *
- * @since 1.2.0
+ * @since 2.0.0
  *
- * @param string $template Template path.
+ * @param string $slug The slug name for the generic template.
+ * @param string $name The name of the specialised template.
+ */
+function get_audiotheme_template_part( $slug, $name = null ) {
+	/**
+	 * Fires before the specified template part file is loaded.
+	 *
+	 * The dynamic portion of the hook name, $slug, refers to the slug name
+	 * for the generic template part.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $slug The slug name for the generic template.
+	 * @param string $name The name of the specialized template.
+	 */
+	do_action( "get_template_part_{$slug}", $slug, $name );
+
+	$templates = array();
+	$name = (string) $name;
+	if ( '' !== $name ) {
+		$templates[] = "{$slug}-{$name}.php";
+	}
+
+	$templates[] = "{$slug}.php";
+
+	$template_file = audiotheme_locate_template( $templates, false, false );
+	audiotheme_load_template( $template_file, array(), false, false );
+}
+
+/**
+ * Whether theme compatibility mode is active.
+ *
+ * @since 2.0.0
+ *
  * @return bool
  */
-function is_audiotheme_default_template( $template ) {
-	return ( false !== strpos( $template, AUDIOTHEME_DIR ) );
+function is_audiotheme_theme_compat_active() {
+	return audiotheme()->theme_compat->is_active();
 }
 
 /**
@@ -202,7 +241,7 @@ function audiotheme_archive_nav() {
 
 	if ( $wp_query->max_num_pages > 1 ) :
 		?>
-		<div class="audiotheme-paged-nav audiotheme-clearfix" role="navigation">
+		<div class="audiotheme-paged-nav" role="navigation">
 			<?php if ( get_previous_posts_link() ) : ?>
 				<span class="audiotheme-paged-nav-prev"><?php previous_posts_link( __( '&larr; Previous', 'audiotheme' ) ); ?></span>
 			<?php endif; ?>

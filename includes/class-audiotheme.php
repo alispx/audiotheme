@@ -90,9 +90,9 @@ class Audiotheme {
 		// Default hooks.
 		add_action( 'widgets_init', 'audiotheme_widgets_init' );
 		add_action( 'wp_loaded', array( $this, 'maybe_flush_rewrite_rules' ) );
-		add_action( 'audiotheme_template_include', 'audiotheme_template_setup' );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ), 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ), 1 );
+		add_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_assets' );
 
 		add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
 
@@ -110,8 +110,8 @@ class Audiotheme {
 		add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
 
 		// Template hooks.
-		add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content' );
-		add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content' );
+		add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content', 15 );
+		add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content', 5 );
 	}
 
 	/**
@@ -160,6 +160,8 @@ class Audiotheme {
 		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$base_url = set_url_scheme( AUDIOTHEME_URI );
 
+		wp_register_script( 'audiotheme', $base_url . 'includes/js/audiotheme.js', array( 'jquery', 'audiotheme-media-classes' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme-media-classes', $base_url . 'includes/js/audiotheme-media-classes.js', array( 'jquery' ), AUDIOTHEME_VERSION, true );
 		wp_register_script( 'jquery-timepicker', $base_url . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ), '1.1', true );
 
 		wp_register_style( 'audiotheme', $base_url . 'includes/css/audiotheme.min.css' );

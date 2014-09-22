@@ -298,11 +298,28 @@ function audiotheme_gig_template_redirect() {
  * @return string
  */
 function audiotheme_gig_template_include( $template ) {
+	$original_template = $template;
+	$compat            = audiotheme()->theme_compat;
+
 	if ( is_post_type_archive( 'audiotheme_gig' ) ) {
 		$template = audiotheme_locate_template( 'archive-gig.php' );
-		do_action( 'audiotheme_template_include', $template );
+
+		$compat->set_title( get_audiotheme_post_type_archive_title() );
+		$compat->set_loop_template_part( 'parts/loop-archive', 'gig' );
 	} elseif ( is_singular( 'audiotheme_gig' ) ) {
 		$template = audiotheme_locate_template( 'single-gig.php' );
+
+		$compat->set_title( '' );
+		$compat->set_loop_template_part( 'parts/loop-single', 'gig' );
+	}
+
+	if ( $template !== $original_template ) {
+		// Enable theme compatibility.
+		if ( ! $compat->is_template_compatible( $template ) ) {
+			$compat->enable();
+			$template = $compat->get_template();
+		}
+
 		do_action( 'audiotheme_template_include', $template );
 	}
 

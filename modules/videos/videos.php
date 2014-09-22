@@ -61,8 +61,8 @@ function audiotheme_videos_init() {
 		'taxonomies'             => array( 'post_tag' ),
 	) );
 
+	add_action( 'pre_get_posts', 'audiotheme_video_query_posts_per_page', 9 );
 	add_action( 'pre_get_posts', 'audiotheme_video_query_sort' );
-	add_action( 'pre_get_posts', 'audiotheme_video_default_template_query' );
 
 	add_action( 'template_include', 'audiotheme_video_template_include' );
 	add_action( 'delete_attachment', 'audiotheme_video_delete_attachment' );
@@ -79,6 +79,29 @@ function audiotheme_videos_init() {
 function get_audiotheme_videos_rewrite_base() {
 	$base = get_option( 'audiotheme_video_rewrite_base' );
 	return ( empty( $base ) ) ? 'videos' : $base;
+}
+
+/**
+ * Set posts per page for video archives.
+ *
+ * The default record archive template uses a 4-column grid, so the
+ * 'posts_per_archive_page' query var is set to a multiple of 4.
+ *
+ * This hook should either be removed or the value should be updated by theme's
+ * where necessary.
+ *
+ * @since 2.0.0
+ *
+ * @param object $query The main WP_Query object. Passed by reference.
+ */
+function audiotheme_video_query_posts_per_page( $query ) {
+	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_video' ) ) {
+		return;
+	}
+
+	if ( '' == $query->get( 'posts_per_archive_page' ) ) {
+		$query->set( 'posts_per_archive_page', 12 );
+	}
 }
 
 /**
@@ -119,33 +142,6 @@ function audiotheme_video_query_sort( $query ) {
 }
 
 /**
- * Set posts per page for video archives if the default templates are being
- * loaded.
- *
- * The default video archive template uses a 4-column grid. If it's loaded from
- * the plugin, set the posts per page arg to a multiple of 4.
- *
- * @since 1.3.0
- *
- * @param object $query The main WP_Query object. Passed by reference.
- */
-function audiotheme_video_default_template_query( $query ) {
-	global $wpdb;
-
-	if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_video' ) ) {
-		return;
-	}
-
-	// The default video archive template uses a 4-column grid.
-	// If it's being loaded from the plugin, set the posts per page arg to a multiple of 4.
-	if ( is_audiotheme_default_template( audiotheme_locate_template( 'archive-video.php' ) ) ) {
-		if ( '' == $query->get( 'posts_per_archive_page' ) ) {
-			$query->set( 'posts_per_archive_page', 12 );
-		}
-	}
-}
-
-/**
  * Load video templates.
  *
  * Templates should be included in an /audiotheme/ directory within the theme.
@@ -156,11 +152,28 @@ function audiotheme_video_default_template_query( $query ) {
  * @return string
  */
 function audiotheme_video_template_include( $template ) {
+	$original_template = $template;
+	$compat            = audiotheme()->theme_compat;
+
 	if ( is_post_type_archive( 'audiotheme_video' ) ) {
 		$template = audiotheme_locate_template( 'archive-video.php' );
-		do_action( 'audiotheme_template_include', $template );
+
+		$compat->set_title( get_audiotheme_post_type_archive_title() );
+		$compat->set_loop_template_part( 'parts/loop-archive', 'video' );
 	} elseif ( is_singular( 'audiotheme_video' ) ) {
 		$template = audiotheme_locate_template( 'single-video.php' );
+
+		$compat->set_title( '' );
+		$compat->set_loop_template_part( 'parts/loop-single', 'video' );
+	}
+
+	if ( $template !== $original_template ) {
+		// Enable theme compatibility.
+		if ( ! $compat->is_template_compatible( $template ) ) {
+			$compat->enable();
+			$template = $compat->get_template();
+		}
+
 		do_action( 'audiotheme_template_include', $template );
 	}
 

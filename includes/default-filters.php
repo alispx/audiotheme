@@ -140,15 +140,14 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 }
 
 /**
- * Set up AudioTheme templates when they're loaded.
+ * Enqueue scripts and styles.
  *
- * Limits default scripts and styles to load only for AudioTheme templates.
- *
- * @since 1.2.0
+ * @since 2.0.0
  */
-function audiotheme_template_setup( $template ) {
-	if ( is_audiotheme_default_template( $template ) ) {
-		add_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_scripts' );
+function audiotheme_enqueue_assets() {
+	if ( apply_filters( 'audiotheme_enqueue_assets', '__return_true' ) ) {
+		wp_enqueue_script( 'audiotheme' );
+		wp_enqueue_style( 'audiotheme' );
 	}
 }
 
