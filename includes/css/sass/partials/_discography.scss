@@ -11,6 +11,10 @@
 	line-height: 1.5;
 
 	.audiotheme_record {
+		border-width: 0;
+		box-shadow: none;
+		padding: 0;
+
 		.audiotheme-record-artwork {
 			margin: 0 0 10px 0;
 			position: relative;
@@ -64,6 +68,9 @@
 
 .audiotheme-record-single {
 	@extend .audiotheme-clearfix;
+	border-width: 0;
+	box-shadow: none;
+	padding: 0;
 
 	line-height: 1.5;
 	width: auto;

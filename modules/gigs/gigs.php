@@ -83,6 +83,11 @@ function audiotheme_gigs_init() {
 		'supports'               => array( '' ),
 	) );
 
+	// Register the archive.
+	audiotheme()->archives->add_post_type_archive( 'audiotheme_gig', array(
+		'admin_menu_parent' => 'audiotheme-gigs',
+	) );
+
 	// Register the relationship between gigs and venues.
 	p2p_register_connection_type( array(
         'name'        => 'audiotheme_venue_to_gig',

@@ -14,6 +14,14 @@
  */
 class Audiotheme {
 	/**
+	 * Archive CPT class.
+	 *
+	 * @since 2.0.0
+	 * @type Audiotheme_Archives
+	 */
+	public $archives;
+
+	/**
 	 * Theme compatibility class.
 	 *
 	 * @since 2.0.0
@@ -36,7 +44,10 @@ class Audiotheme {
 	 */
 	public function __construct() {
 		$this->plugin_file = dirname( dirname( __FILE__ ) ) . '/audiotheme.php';
-		$this->theme_compat = new AudioTheme_Theme_Compat();
+		$this->theme_compat = new Audiotheme_Theme_Compat();
+
+		$this->archives = new Audiotheme_Archives();
+		$this->archives->load();
 	}
 
 	/**
@@ -95,16 +106,6 @@ class Audiotheme {
 		add_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_assets' );
 
 		add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
-
-		// Archive hooks.
-		add_action( 'init', 'register_audiotheme_archives' );
-		add_filter( 'post_type_link', 'audiotheme_archives_post_type_link', 10, 3 );
-		add_filter( 'post_type_archive_link', 'audiotheme_archives_post_type_archive_link', 10, 2 );
-		add_filter( 'post_type_archive_title', 'audiotheme_archives_post_type_archive_title' );
-
-		add_action( 'admin_bar_menu', 'audiotheme_archives_admin_bar_edit_menu', 80 );
-		add_action( 'post_updated', 'audiotheme_archives_post_updated', 10, 3 );
-		add_action( 'delete_post', 'audiotheme_archives_deleted_post' );
 
 		// Prevent the audiotheme_archive post type rules from being registered.
 		add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );

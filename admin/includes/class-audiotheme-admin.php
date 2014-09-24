@@ -12,8 +12,6 @@ class AudioTheme_Admin {
 	 * @since 2.0.0
 	 */
 	public function load() {
-		add_action( 'init', 'audiotheme_archives_init_admin', 50 );
-
 		add_action( 'admin_menu', array( $this, 'add_menu_items' ) );
 		add_action( 'admin_init', array( $this, 'sort_admin_menu' ) );
 
@@ -198,6 +196,21 @@ class AudioTheme_Admin {
 
 		if ( version_compare( $saved_version, '2.0.0', '<' ) ) {
 			delete_option( 'audiotheme_disable_directory_browsing' );
+
+			// Add the archive post type to its metadata and delete the inactive option.
+			if ( $archives = get_option( 'audiotheme_archives_inactive' ) ) {
+				foreach ( $archives as $post_type => $post_id ) {
+					update_post_meta( $post_id, 'post_type', $post_type );
+				}
+				delete_option( 'audiotheme_archives_inactive' );
+			}
+
+			// Add the archive post type to its metadata.
+			if ( $archives = get_option( 'audiotheme_archives' ) ) {
+				foreach ( $archives as $post_type => $post_id ) {
+					update_post_meta( $post_id, 'post_type', $post_type );
+				}
+			}
 		}
 
 		if ( '0' == $saved_version || audiotheme_version_compare( $saved_version, $current_version, '<' ) ) {

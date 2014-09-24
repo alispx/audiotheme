@@ -54,8 +54,9 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
  * Load functions and libraries.
  */
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme.php' );
+require( AUDIOTHEME_DIR . 'includes/class-audiotheme-archives.php' );
 require( AUDIOTHEME_DIR . 'includes/class-audiotheme-theme-compat.php' );
-require( AUDIOTHEME_DIR . 'includes/archives.php' );
+require( AUDIOTHEME_DIR . 'includes/archive-template.php' );
 require( AUDIOTHEME_DIR . 'includes/default-filters.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );
@@ -76,7 +77,6 @@ if ( is_admin() ) {
 	 * Load admin functions and libraries.
 	 */
 	require( AUDIOTHEME_DIR . 'admin/includes/ajax.php' );
-	require( AUDIOTHEME_DIR . 'admin/includes/archives.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/functions.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-admin.php' );
 	require( AUDIOTHEME_DIR . 'admin/includes/class-audiotheme-admin-screen-settings.php' );

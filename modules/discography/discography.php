@@ -117,12 +117,16 @@ function audiotheme_discography_init() {
 		'show_in_nav_menus'              => false,
 	) );
 
+	// Register the archive.
+	audiotheme()->archives->add_post_type_archive( 'audiotheme_record' );
+
 	add_filter( 'request', 'audiotheme_record_type_request' );
 
-	// Separated so they can be unhooked individually if needed.
+	// Split into separate hooks so they can be unhooked individually if needed.
 	add_action( 'pre_get_posts', 'audiotheme_record_query_posts_per_page', 9 );
 	add_action( 'pre_get_posts', 'audiotheme_record_query_sort' );
 	add_action( 'pre_get_posts', 'audiotheme_track_query' );
+	add_action( 'pre_get_posts', 'audiotheme_record_type_query', 9 );
 
 	add_filter( 'generate_rewrite_rules', 'audiotheme_discography_generate_rewrite_rules' );
 	add_action( 'template_include', 'audiotheme_discography_template_include' );
@@ -279,6 +283,19 @@ function audiotheme_record_query_sort_sql( $orderby ) {
 	global $wpdb;
 
 	return $orderby . ", {$wpdb->posts}.post_title ASC";
+}
+
+/**
+ * Set record type requests to use the same archive settings as records.
+ *
+ * @since 2.0.0
+ */
+function audiotheme_record_type_query( $query ) {
+	if ( is_admin() || ! $query->is_main_query() || ! is_tax( 'audiotheme_record_type' ) ) {
+		return;
+	}
+
+	audiotheme()->archives->set_current_archive_post_type( 'audiotheme_record' );
 }
 
 /**

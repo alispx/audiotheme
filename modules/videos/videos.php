@@ -61,6 +61,9 @@ function audiotheme_videos_init() {
 		'taxonomies'             => array( 'post_tag' ),
 	) );
 
+	// Register the archive.
+	audiotheme()->archives->add_post_type_archive( 'audiotheme_video' );
+
 	add_action( 'pre_get_posts', 'audiotheme_video_query_posts_per_page', 9 );
 	add_action( 'pre_get_posts', 'audiotheme_video_query_sort' );
 
