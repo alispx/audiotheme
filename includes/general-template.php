@@ -67,7 +67,7 @@ function audiotheme_load_template( $template_file, $data = array(), $locate = fa
 	}
 
 	if ( is_array( $data ) && ! empty( $data ) ) {
-		extract( $data, EXTR_SKIP );
+		extract( $data, EXTR_OVERWRITE );
 		unset( $data );
 	}
 
