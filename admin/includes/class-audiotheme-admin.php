@@ -213,7 +213,7 @@ class AudioTheme_Admin {
 			}
 		}
 
-		if ( '0' == $saved_version || audiotheme_version_compare( $saved_version, $current_version, '<' ) ) {
+		if ( '0' == $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
 			update_option( 'audiotheme_version', AUDIOTHEME_VERSION );
 		}
 	}

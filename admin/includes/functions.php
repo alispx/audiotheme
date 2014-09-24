@@ -330,18 +330,10 @@ function audiotheme_admin_spinner( $args = array() ) {
 		'echo'  => true,
 	) );
 
-	if ( audiotheme_version_compare( 'wp', '3.5-beta-1', '<' ) ) {
-		$spinner = sprintf( '<img src="%1$s" id="%2$s" class="spinner %3$s" alt="">',
-			esc_url( admin_url( 'images/wpspin_light.gif' ) ),
-			esc_attr( $args['id'] ),
-			esc_attr( $args['class'] )
-		);
-	} else {
-		$spinner = sprintf( '<span id="%1$s" class="spinner %2$s"></span>',
-			esc_attr( $args['id'] ),
-			esc_attr( $args['class'] )
-		);
-	}
+	$spinner = sprintf( '<span id="%1$s" class="spinner %2$s"></span>',
+		esc_attr( $args['id'] ),
+		esc_attr( $args['class'] )
+	);
 
 	if ( $args['echo'] ) {
 		echo $spinner;

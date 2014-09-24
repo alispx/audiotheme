@@ -30,49 +30,6 @@ function audiotheme_image_size_names() {
 }
 
 /**
- * Compare two version numbers.
- *
- * This function abstracts the logic for determining the current version
- * number for various packages, so the only version number that needs to be
- * known is the one to compare against.
- *
- * Basically serves as a wrapper for the native PHP version_compare()
- * function, but allows a known package to be passed as the first parameter.
- *
- * @since 1.0.0
- * @see PHP docs for version_compare()
- * @uses version_compare()
- *
- * @param string $version A package identifier or version number to compare against.
- * @param string $version2 The version number to compare to.
- * @param string $operator Optional. Relationship to test. <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne
- * @return mixed True or false if operator is supplied. -1, 0, or 1 if operator is empty.
- */
-function audiotheme_version_compare( $version, $version2, $operator = null ) {
-	switch( $version ) {
-		case 'audiotheme' :
-			$version = AUDIOTHEME_VERSION;
-			break;
-		case 'php' :
-			$version = phpversion();
-			break;
-		case 'stylesheet' : // Child theme if it exists, otherwise same as template.
-			$theme = wp_get_theme();
-			$version = $theme->get( 'Version' );
-			break;
-		case 'template' : // Parent theme.
-			$theme = wp_get_theme( get_template() );
-			$version = $theme->get( 'Version' );
-			break;
-		case 'wp' :
-			$version = get_bloginfo( 'version' );
-			break;
-	}
-
-	return version_compare( $version, $version2, $operator );
-}
-
-/**
  * Sort an array of objects by an objects properties.
  *
  * Ex: sort_objects( $gigs, array( 'venue', 'name' ), 'asc', true, 'gig_datetime' );
