@@ -14,12 +14,14 @@ class AudioTheme_Module_Admin extends Audiotheme_Module {
 	 * @param array $args Array of properties to set on initialization.
 	 */
 	public function __construct( $args = array() ) {
-		parent::__construct( $args );
+		$args = wp_parse_args( array(
+			'module_id'          => 'admin',
+			'module_name'        => __( 'Admin', 'audiotheme' ),
+			'module_description' => __( '', 'audiotheme' ),
+			'is_core_module'     => true,
+		), $args );
 
-		$this->module_id          = 'admin';
-		$this->module_name        = __( 'Admin', 'audiotheme' );
-		$this->module_description = __( '', 'audiotheme' );
-		$this->is_core_module     = true;
+		parent::__construct( $args );
 	}
 
 	/**

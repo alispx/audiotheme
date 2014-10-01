@@ -14,20 +14,12 @@
  */
 class Audiotheme {
 	/**
-	 * Archive CPT class.
+	 * Modules API.
 	 *
 	 * @since 2.0.0
-	 * @type Audiotheme_Archives
+	 * @type Audiotheme_Modules
 	 */
-	public $archives;
-
-	/**
-	 * Theme compatibility class.
-	 *
-	 * @since 2.0.0
-	 * @type Audiotheme_Theme_Compat
-	 */
-	public $theme_compat;
+	protected $modules;
 
 	/**
 	 * Path to the main plugin file.
@@ -38,16 +30,57 @@ class Audiotheme {
 	protected $plugin_file;
 
 	/**
+	 * Theme compatibility class.
+	 *
+	 * @since 2.0.0
+	 * @type Audiotheme_Theme_Compat
+	 */
+	protected $theme_compat;
+
+	/**
 	 * Constructor method.
 	 *
 	 * @since 2.0.0
 	 */
-	public function __construct() {
-		$this->plugin_file = dirname( dirname( __FILE__ ) ) . '/audiotheme.php';
-		$this->theme_compat = new Audiotheme_Theme_Compat();
+	public function __construct( $args = array() ) {
+		$keys = array_keys( get_object_vars( $this ) );
+		foreach ( $keys as $key ) {
+			if ( isset( $args[ $key ] ) ) {
+				$this->$key = $args[ $key ];
+			}
+		}
+	}
 
-		$this->archives = new Audiotheme_Archives();
-		$this->archives->load();
+	/**
+	 * Magic getter.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $name Property name.
+	 * @return mixed Property value.
+	 */
+	public function __get( $name ) {
+		switch ( $name ) {
+			case 'modules' :
+			case 'plugin_file' :
+			case 'theme_compat' :
+				return $this->{$name};
+		}
+	}
+
+	/**
+	 * Magic setter.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $name Property name.
+	 * @param mixed $value Property value.
+	 */
+	public function __set( $name, $value ) {
+		switch ( $name ) {
+			default :
+				$this->{$name} = $value;
+		}
 	}
 
 	/**
@@ -57,10 +90,8 @@ class Audiotheme {
 	 */
 	public function load_plugin() {
 		$this->load_textdomain();
-
-		add_action( 'after_setup_theme', array( $this, 'load_modules' ), 5 );
-		add_action( 'after_setup_theme', array( $this, 'load_admin' ), 5 );
-		add_action( 'after_setup_theme', array( $this, 'attach_hooks' ), 5 );
+		$this->load_active_modules();
+		$this->register_hooks();
 
 		register_activation_hook( $this->plugin_file, 'activate' );
 		register_deactivation_hook( $this->plugin_file, 'deactivate' );
@@ -72,24 +103,28 @@ class Audiotheme {
 	 * @since 1.0.0
 	 */
 	protected function load_textdomain() {
-		load_plugin_textdomain( 'audiotheme', false, dirname( plugin_basename( $this->plugin_file ) ) . '/languages' );
+		$plugin_rel_path = dirname( plugin_basename( $this->plugin_file ) ) . '/languages';
+		load_plugin_textdomain( 'audiotheme', false, $plugin_rel_path );
 	}
 
 	/**
-	 * Load administration functions and libraries.
+	 * Load the active modules.
 	 *
-	 * Has to be loaded after the Theme Customizer in order to determine if the
-	 * Settings API should be included while customizing a theme.
+	 * Modules are always loaded when viewing the AudioTheme Settings screen so
+	 * they can be toggled with instant feedback.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
-	public function load_admin() {
-		if ( ! is_admin() ) {
-			return;
-		}
+	protected function load_active_modules() {
+		$is_settings_screen = is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];
 
-		$admin = new AudioTheme_Admin();
-		$admin->load();
+		foreach ( $this->modules->get_all() as $module_id => $module ) {
+			if ( ! $module->is_active() && ! $is_settings_screen ) {
+				continue;
+			}
+
+			$module->load();
+		}
 	}
 
 	/**
@@ -97,73 +132,38 @@ class Audiotheme {
 	 *
 	 * @since 1.0.0
 	 */
-	public function attach_hooks() {
+	protected function register_hooks() {
 		// Default hooks.
-		add_action( 'widgets_init', 'audiotheme_widgets_init' );
-		add_action( 'wp_loaded', array( $this, 'maybe_flush_rewrite_rules' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ), 1 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ), 1 );
-		add_action( 'wp_enqueue_scripts', 'audiotheme_enqueue_assets' );
-
-		add_filter( 'wp_nav_menu_objects', 'audiotheme_nav_menu_classes', 10, 3 );
+		add_action( 'widgets_init',                 'audiotheme_widgets_init' );
+		add_action( 'wp_loaded',                    array( $this, 'maybe_flush_rewrite_rules' ) );
+		add_action( 'wp_enqueue_scripts',           array( $this, 'register_assets' ), 1 );
+		add_action( 'admin_enqueue_scripts',        array( $this, 'register_assets' ), 1 );
+		add_action( 'wp_enqueue_scripts',           'audiotheme_enqueue_assets' );
+		add_filter( 'wp_nav_menu_objects',          'audiotheme_nav_menu_classes', 10, 3 );
+		add_filter( 'wp_prepare_attachment_for_js', 'audiotheme_wp_prepare_audio_attachment_for_js', 10, 3 );
 
 		// Prevent the audiotheme_archive post type rules from being registered.
 		add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
 
 		// Template hooks.
-		add_action( 'audiotheme_before_main_content', 'audiotheme_before_main_content', 15 );
-		add_action( 'audiotheme_after_main_content', 'audiotheme_after_main_content', 5 );
-	}
-
-	/**
-	 * Load the active modules.
-	 *
-	 * Modules are always loaded when viewing the AudioTheme Settings screen so they can be toggled with instant feedback.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load_modules() {
-		$modules = array(
-			'discography' => array(
-				'audiotheme_discography_init',
-				'audiotheme_load_discography_admin',
-			),
-			'gigs' => array(
-				'audiotheme_gigs_init',
-				'audiotheme_gigs_admin_setup',
-			),
-			'videos' => array(
-				'audiotheme_videos_init',
-				'audiotheme_load_videos_admin',
-			),
-		);
-
-		$is_settings_screen = is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];
-
-		foreach ( $modules as $module_id => $hooks ) {
-			if ( audiotheme_is_module_active( $module_id ) || $is_settings_screen ) {
-				add_action( 'init', $hooks[0] );
-
-				if ( is_admin() ) {
-					add_action( 'init', $hooks[1] );
-				}
-			}
-		}
+		add_action( 'audiotheme_before_main_content',   'audiotheme_before_main_content', 15 );
+		add_action( 'audiotheme_after_main_content',    'audiotheme_after_main_content', 5 );
 	}
 
 	/**
 	 * Register frontend scripts and styles for enqueuing on-demand.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @link http://core.trac.wordpress.org/ticket/18909
 	 */
 	public function register_assets() {
-		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$base_url = set_url_scheme( AUDIOTHEME_URI );
+		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script( 'audiotheme', $base_url . 'includes/js/audiotheme.js', array( 'jquery', 'audiotheme-media-classes' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme',               $base_url . 'includes/js/audiotheme.js',               array( 'jquery', 'audiotheme-media-classes' ), AUDIOTHEME_VERSION, true );
 		wp_register_script( 'audiotheme-media-classes', $base_url . 'includes/js/audiotheme-media-classes.js', array( 'jquery' ), AUDIOTHEME_VERSION, true );
-		wp_register_script( 'jquery-timepicker', $base_url . 'includes/js/jquery.timepicker.min.js', array( 'jquery' ), '1.1', true );
+		wp_register_script( 'jquery-timepicker',        $base_url . 'includes/js/jquery.timepicker.min.js',    array( 'jquery' ), '1.1', true );
 
 		wp_register_style( 'audiotheme', $base_url . 'includes/css/audiotheme.min.css' );
 	}

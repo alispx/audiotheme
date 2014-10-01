@@ -44,12 +44,14 @@ class Audiotheme_Module_Archives extends Audiotheme_Module {
 	 *
 	 */
 	public function __construct( $args = array() ) {
-		parent::__construct( $args );
+		$args = wp_parse_args( array(
+			'module_id'          => 'archives',
+			'module_name'        => __( 'Archives', 'audiotheme' ),
+			'module_description' => __( '', 'audiotheme' ),
+			'is_core_module'     => true,
+		), $args );
 
-		$this->module_id          = 'archives';
-		$this->module_name        = __( 'Archives', 'audiotheme' );
-		$this->module_description = __( '', 'audiotheme' );
-		$this->is_core_module     = true;
+		parent::__construct( $args );
 	}
 
 	/**

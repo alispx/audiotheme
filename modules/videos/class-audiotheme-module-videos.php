@@ -19,14 +19,16 @@ class AudioTheme_Module_Videos extends Audiotheme_Module {
 	 * @since 2.0.0
 	 */
 	public function __construct( $args = array() ) {
-		parent::__construct( $args );
+		$args = wp_parse_args( array(
+			'module_id'          => 'videos',
+			'module_name'        => __( 'Videos', 'audiotheme' ),
+			'module_description' => __( '', 'audiotheme' ),
+			'is_core_module'     => true,
+			'is_togglable'       => true,
+			'admin_menu_id'      => 'menu-posts-audiotheme_video',
+		), $args );
 
-		$this->module_id          = 'videos';
-		$this->module_name        = __( 'Videos', 'audiotheme' );
-		$this->module_description = __( '', 'audiotheme' );
-		$this->is_core_module     = true;
-		$this->is_togglable       = true;
-		$this->admin_menu_id      = 'menu-posts-audiotheme_video';
+		parent::__construct( $args );
 	}
 
 	/**

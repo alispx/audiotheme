@@ -5,14 +5,16 @@ class AudioTheme_Module_Gigs extends Audiotheme_Module {
 	 *
 	 */
 	public function __construct( $args = array() ) {
-		parent::__construct( $args );
+		$args = wp_parse_args( array(
+			'module_id'          => 'gigs',
+			'module_name'        => __( 'Gigs', 'audiotheme' ),
+			'module_description' => __( '', 'audiotheme' ),
+			'is_core_module'     => true,
+			'is_togglable'       => true,
+			'admin_menu_id'      => 'toplevel_page_audiotheme-gigs',
+		), $args );
 
-		$this->module_id          = 'gigs';
-		$this->module_name        = __( 'Gigs', 'audiotheme' );
-		$this->module_description = __( '', 'audiotheme' );
-		$this->is_core_module     = true;
-		$this->is_togglable       = true;
-		$this->admin_menu_id      = 'toplevel_page_audiotheme-gigs';
+		parent::__construct( $args );
 	}
 
 	public function load() {

@@ -5,14 +5,16 @@ class AudioTheme_Module_Discography extends Audiotheme_Module {
 	 *
 	 */
 	public function __construct( $args = array() ) {
-		parent::__construct( $args );
+		$args = wp_parse_args( array(
+			'module_id'          => 'discography',
+			'module_name'        => __( 'Discography', 'audiotheme' ),
+			'module_description' => __( '', 'audiotheme' ),
+			'is_core_module'     => true,
+			'is_togglable'       => true,
+			'admin_menu_id'      => 'toplevel_page_edit-post_type-audiotheme_record',
+		), $args );
 
-		$this->module_id          = 'discography';
-		$this->module_name        = __( 'Discography', 'audiotheme' );
-		$this->module_description = __( '', 'audiotheme' );
-		$this->is_core_module     = true;
-		$this->is_togglable       = true;
-		$this->admin_menu_id      = 'toplevel_page_edit-post_type-audiotheme_record';
+		parent::__construct( $args );
 	}
 
 	public function load() {
