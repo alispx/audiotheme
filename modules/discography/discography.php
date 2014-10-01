@@ -118,7 +118,7 @@ function audiotheme_discography_init() {
 	) );
 
 	// Register the archive.
-	audiotheme()->archives->add_post_type_archive( 'audiotheme_record' );
+	audiotheme()->modules->archives->add_post_type_archive( 'audiotheme_record' );
 
 	add_filter( 'request', 'audiotheme_record_type_request' );
 
@@ -295,7 +295,7 @@ function audiotheme_record_type_query( $query ) {
 		return;
 	}
 
-	audiotheme()->archives->set_current_archive_post_type( 'audiotheme_record' );
+	audiotheme()->modules->archives->set_current_archive_post_type( 'audiotheme_record' );
 }
 
 /**

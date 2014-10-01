@@ -117,7 +117,7 @@ function audiotheme_discography_admin_menu() {
 		'edit_posts',
 		'edit.php?post_type=audiotheme_record',
 		null,
-		audiotheme_encode_svg( 'admin/images/dashicons/discography.svg' ),
+		audiotheme_encode_svg( 'modules/admin/images/dashicons/discography.svg' ),
 		513
 	);
 }
