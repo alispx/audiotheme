@@ -7,18 +7,23 @@
 
 			<?php
 			foreach ( $modules as $module_id => $module ) :
+				if ( ! $module->is_core() || ! $module->is_togglable() ) {
+					continue;
+				}
+
 				$classes = array( 'audiotheme-module' );
-				if ( $module['is_active'] ) {
+				if ( $module->is_active() ) {
 					$classes[] = 'is-active';
 				}
-				$nonce   = wp_create_nonce( 'toggle-module_' . $module_id );
+
+				$nonce = wp_create_nonce( 'toggle-module_' . $module_id );
 				?>
 				<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
-					data-module="<?php echo esc_attr( $module_id ); ?>"
+					data-module-id="<?php echo esc_attr( $module_id ); ?>"
 					data-toggle-nonce="<?php echo esc_attr( $nonce ); ?>">
-					<h3 class="audiotheme-module-title"><?php echo esc_html( $module['name'] ); ?></h3>
+					<h3 class="audiotheme-module-title"><?php echo esc_html( $module->module_name ); ?></h3>
 					<p>
-						A description.
+						<?php echo $module->module_description; ?>
 					</p>
 				</div>
 			<?php endforeach; ?>

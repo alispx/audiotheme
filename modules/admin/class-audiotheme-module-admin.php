@@ -5,32 +5,57 @@
  * @package AudioTheme\Administration
  * @since 2.0.0
  */
-class AudioTheme_Admin {
+class AudioTheme_Module_Admin extends Audiotheme_Module {
+	/**
+	 * Constructor method.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $args Array of properties to set on initialization.
+	 */
+	public function __construct( $args = array() ) {
+		parent::__construct( $args );
+
+		$this->module_id          = 'admin';
+		$this->module_name        = __( 'Admin', 'audiotheme' );
+		$this->module_description = __( '', 'audiotheme' );
+		$this->is_core_module     = true;
+	}
+
 	/**
 	 * Load administration functionality.
 	 *
 	 * @since 2.0.0
 	 */
 	public function load() {
-		add_action( 'admin_menu', array( $this, 'add_menu_items' ) );
-		add_action( 'admin_init', array( $this, 'sort_admin_menu' ) );
+		if ( ! is_admin() ) {
+			return;
+		}
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ), 1 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-		add_action( 'admin_body_class', array( $this, 'admin_body_classes' ) );
-
-		add_filter( 'user_contactmethods', array( $this, 'register_user_contact_methods' ) );
-		add_action( 'manage_pages_custom_column', array( $this, 'display_custom_columns' ), 10, 2 );
-		add_action( 'manage_posts_custom_column', array( $this, 'display_custom_columns' ), 10, 2 );
-
-		add_action( 'admin_init', array( $this, 'upgrade' ) );
+		$this->register_hooks();
+		$this->register_ajax_actions();
 
 		if ( ! is_multisite() || is_network_admin() ) {
 			$settings_screen = new AudioTheme_Admin_Screen_Settings();
 			$settings_screen->load();
 		}
+	}
 
-		$this->register_ajax_actions();
+	/**
+	 * Register module hooks.
+	 *
+	 * @since 2.0.0
+	 */
+	public function register_hooks() {
+		add_action( 'admin_menu',                 array( $this, 'add_menu_items' ) );
+		add_action( 'admin_init',                 array( $this, 'sort_admin_menu' ) );
+		add_action( 'admin_enqueue_scripts',      array( $this, 'register_assets' ), 1 );
+		add_action( 'admin_enqueue_scripts',      array( $this, 'enqueue_assets' ) );
+		add_action( 'admin_body_class',           array( $this, 'admin_body_classes' ) );
+		add_filter( 'user_contactmethods',        array( $this, 'register_user_contact_methods' ) );
+		add_action( 'manage_pages_custom_column', array( $this, 'display_custom_columns' ), 10, 2 );
+		add_action( 'manage_posts_custom_column', array( $this, 'display_custom_columns' ), 10, 2 );
+		add_action( 'admin_init',                 array( $this, 'upgrade' ) );
 	}
 
 	/**
@@ -54,7 +79,7 @@ class AudioTheme_Admin {
 			'edit_posts',
 			'audiotheme',
 			array( $this, 'render_dashboard_screen' ),
-			audiotheme_encode_svg( 'admin/images/dashicons/audiotheme.svg' ),
+			audiotheme_encode_svg( 'modules/admin/images/dashicons/audiotheme.svg' ),
 			3.901
 		);
 
@@ -97,20 +122,21 @@ class AudioTheme_Admin {
 	 * @since 2.0.0
 	 */
 	public function register_assets() {
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$base_url = set_url_scheme( AUDIOTHEME_URI . 'modules/admin/' );
+		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/js/admin' . $suffix . '.js', array( 'jquery-ui-sortable', 'wp-util' ) );
-		wp_register_script( 'audiotheme-media', AUDIOTHEME_URI . 'admin/js/media' . $suffix . '.js', array( 'jquery' ) );
-
-		wp_register_style( 'audiotheme-admin', AUDIOTHEME_URI . 'admin/css/admin.min.css' );
-		wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
-		wp_register_style( 'jquery-ui-theme-audiotheme', AUDIOTHEME_URI . 'admin/css/jquery-ui-audiotheme.min.css', array( 'jquery-ui-theme-smoothness' ) );
-
+		wp_register_script( 'audiotheme-admin', $base_url . 'js/admin' . $suffix . '.js', array( 'jquery-ui-sortable', 'wp-util' ) );
+		wp_register_script( 'audiotheme-media', $base_url . 'js/media' . $suffix . '.js', array( 'jquery' ) );
+		
 		wp_localize_script( 'audiotheme-media', 'AudiothemeMediaControl', array(
 			'audioFiles'      => __( 'Audio files', 'audiotheme' ),
 			'frameTitle'      => __( 'Choose an Attachment', 'audiotheme' ),
 			'frameUpdateText' => __( 'Update Attachment', 'audiotheme' ),
 		) );
+
+		wp_register_style( 'audiotheme-admin',           $base_url . 'css/admin.min.css' );
+		wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
+		wp_register_style( 'jquery-ui-theme-audiotheme', $base_url . 'css/jquery-ui-audiotheme.min.css', array( 'jquery-ui-theme-smoothness' ) );
 	}
 
 	/**
@@ -149,7 +175,7 @@ class AudioTheme_Admin {
 	 * @since 2.0.0
 	 */
 	public function render_dashboard_screen() {
-		include( AUDIOTHEME_DIR . 'admin/views/screen-dashboard.php' );
+		include( AUDIOTHEME_DIR . 'modules/admin/views/screen-dashboard.php' );
 	}
 
 	/**

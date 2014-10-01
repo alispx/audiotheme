@@ -326,7 +326,7 @@ function audiotheme_post_submit_meta_box( $post, $metabox ) {
 function audiotheme_admin_spinner( $args = array() ) {
 	$args = wp_parse_args( $args, array(
 		'id'    => '',
-		'class' => 'ajax-loading',
+		'class' => '',
 		'echo'  => true,
 	) );
 

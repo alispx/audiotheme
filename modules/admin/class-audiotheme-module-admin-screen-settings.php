@@ -60,15 +60,15 @@ class AudioTheme_Admin_Screen_Settings {
 	 * @since 1.0.0
 	 */
 	public function render_screen() {
-		$modules          = audiotheme_get_modules();
-		$inactive_modules = audiotheme_get_inactive_modules();
+		$modules          = audiotheme()->modules->get_all();
+		$inactive_modules = audiotheme()->modules->get_inactive();
 
 		// Hide menu items for inactive modules on initial load.
 		$styles = '';
 		foreach ( $inactive_modules as $id => $module ) {
-			$styles .= sprintf( '#%s { display: none;}', $module['admin_menu_id'] );
+			$styles .= sprintf( '#%s { display: none;}', $module->admin_menu_id );
 		}
-		
-		include( AUDIOTHEME_DIR . 'admin/views/screen-settings.php' );
+
+		include( AUDIOTHEME_DIR . 'modules/admin/views/screen-settings.php' );
 	}
 }

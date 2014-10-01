@@ -34,7 +34,7 @@
 	</div>
 
 	<div class="changelog audiotheme-feature-section">
-		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/gigs.jpg" class="stagger-right">
+		<img src="<?php echo AUDIOTHEME_URI; ?>modules/admin/images/screenshots/gigs.jpg" class="stagger-right">
 
 		<h3><?php _e( 'Gigs &amp; Venues', 'audiotheme' ); ?></h3>
 		<div class="feature-section">
@@ -51,7 +51,7 @@
 	</div>
 
 	<div class="changelog audiotheme-feature-section">
-		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/discography.jpg">
+		<img src="<?php echo AUDIOTHEME_URI; ?>modules/admin/images/screenshots/discography.jpg">
 
 		<h3><?php _e( 'Discography', 'audiotheme' ); ?></h3>
 		<div class="feature-section">
@@ -68,7 +68,7 @@
 	</div>
 
 	<div class="changelog audiotheme-feature-section">
-		<img src="<?php echo AUDIOTHEME_URI; ?>admin/images/screenshots/videos.jpg" class="stagger-right">
+		<img src="<?php echo AUDIOTHEME_URI; ?>modules/admin/images/screenshots/videos.jpg" class="stagger-right">
 
 		<h3><?php _e( 'Videos', 'audiotheme' ); ?></h3>
 		<div class="feature-section">

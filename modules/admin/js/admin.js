@@ -14,14 +14,14 @@ jQuery(function( $ ) {
 jQuery(function( $ ) {
 	$( '.audiotheme-module' ).on( 'click', function() {
 		var $this = $( this ),
-			module = $this.data( 'module' );
+			moduleId = $this.data( 'moduleId' );
 
 		wp.ajax.post( 'audiotheme_ajax_toggle_module', {
-			module: module,
+			module: moduleId,
 			nonce: $this.data( 'toggle-nonce' )
-		}).done(function( data ) {
-			$this.toggleClass( 'is-active', data.isActive );
-			$( '#' + data.module.admin_menu_id ).toggle( data.isActive );
+		}).done(function( response ) {
+			$this.toggleClass( 'is-active', response.isActive );
+			$( '#' + response.adminMenuId ).toggle( response.isActive );
 		}).fail(function() {
 
 		});
