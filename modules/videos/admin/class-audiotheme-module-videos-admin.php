@@ -35,7 +35,7 @@ class AudioTheme_Module_Videos_Admin {
 		add_action( 'save_post',                                   array( $this, 'on_save_video' ), 10, 2 );
 		add_action( 'add_meta_boxes_audiotheme_video',             array( $this, 'register_meta_boxes' ) );
 		add_filter( 'admin_post_thumbnail_html',                   array( $this, 'post_thumbnail_html' ), 10, 2 );
-		add_filter( 'post_updated_messages',                       array( $this, 'updated_messages' ) );
+		add_filter( 'post_updated_messages',                       array( $this, 'post_updated_messages' ) );
 
 		// Videos Archive
 		add_action( 'add_audiotheme_archive_settings_meta_box_audiotheme_video', '__return_true' );
@@ -282,7 +282,7 @@ class AudioTheme_Module_Videos_Admin {
 	 * @param array $messages The array of existing post update messages.
 	 * @return array
 	 */
-	public function updated_messages( $messages ) {
+	public function post_updated_messages( $messages ) {
 		$post             = get_post();
 		$post_type        = get_post_type( $post );
 		$post_type_object = get_post_type_object( $post_type );
