@@ -354,3 +354,30 @@ function enqueue_audiotheme_tracks( $track, $list = 'tracks' ) {
 
 	$audiotheme_enqueued_tracks[ $key ] = array_merge( $audiotheme_enqueued_tracks[ $key ], (array) $track );
 }
+
+/**
+ * Convert a track into the format expected by the Cue plugin.
+ *
+ * @since 1.5.0
+ *
+ * @param int|WP_Post $post Post object or ID.
+ * @return object Track object expected by Cue.
+ */
+function get_audiotheme_playlist_track( $post = 0 ) {
+	$post  = get_post( $post );
+	$track = new stdClass;
+
+	$track->id       = $post->ID;
+	$track->artist   = get_audiotheme_track_artist( $post->ID );
+	$track->audioUrl = get_audiotheme_track_file_url( $post->ID );
+	$track->title    = get_the_title( $post->ID );
+
+	if ( $thumbnail_id = get_audiotheme_track_thumbnail_id( $post->ID ) ) {
+		$size  = apply_filters( 'cue_artwork_size', array( 300, 300 ) );
+		$image = image_downsize( $thumbnail_id, $size );
+
+		$track->artworkUrl = $image[0];
+	}
+
+	return $track;
+}

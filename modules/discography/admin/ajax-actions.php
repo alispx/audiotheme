@@ -54,8 +54,8 @@ function audiotheme_ajax_get_playlist_tracks() {
 function audiotheme_ajax_get_playlist_records() {
 	global $wpdb;
 
-	$data = array();
-	$page = isset( $_POST['paged'] ) ? absint( $_POST['paged'] ) : 1;
+	$data           = array();
+	$page           = isset( $_POST['paged'] ) ? absint( $_POST['paged'] ) : 1;
 	$posts_per_page = isset( $_POST['posts_per_page'] ) ? absint( $_POST['posts_per_page'] ) : 2;
 
 	$records = new WP_Query( array(
@@ -109,7 +109,7 @@ function audiotheme_ajax_get_playlist_records() {
 	}
 
 	$send['maxNumPages'] = $records->max_num_pages;
-	$send['records'] = array_values( $data );
+	$send['records']     = array_values( $data );
 
 	wp_send_json_success( $send );
 }
