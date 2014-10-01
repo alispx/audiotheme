@@ -70,7 +70,7 @@ function audiotheme_gigs_admin_menu() {
 		'edit_posts',
 		'audiotheme-gigs',
 		'audiotheme_gigs_manage_screen',
-		audiotheme_encode_svg( 'admin/images/dashicons/gigs.svg' ),
+		audiotheme_encode_svg( 'modules/admin/images/dashicons/gigs.svg' ),
 		512
 	);
 		add_submenu_page( 'audiotheme-gigs', $gig_object->labels->name, $gig_object->labels->all_items, 'edit_posts', 'audiotheme-gigs', 'audiotheme_gigs_manage_screen' );

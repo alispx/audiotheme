@@ -84,7 +84,7 @@ function audiotheme_gigs_init() {
 	) );
 
 	// Register the archive.
-	audiotheme()->archives->add_post_type_archive( 'audiotheme_gig', array(
+	audiotheme()->modules->archives->add_post_type_archive( 'audiotheme_gig', array(
 		'admin_menu_parent' => 'audiotheme-gigs',
 	) );
 
