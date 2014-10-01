@@ -7,6 +7,36 @@
  */
 
 /**
+ * Enqueue scripts and styles.
+ *
+ * @since 2.0.0
+ */
+function audiotheme_enqueue_assets() {
+	if ( apply_filters( 'audiotheme_enqueue_assets', '__return_true' ) ) {
+		wp_enqueue_script( 'audiotheme' );
+		wp_enqueue_style( 'audiotheme' );
+	}
+}
+
+/**
+ * Add wrapper open tags in default templates for theme compatibility.
+ *
+ * @since 1.2.0
+ */
+function audiotheme_before_main_content() {
+	echo '<div class="audiotheme">';
+}
+
+/**
+ * Add wrapper close tags in default templates for theme compatibility.
+ *
+ * @since 1.2.0
+ */
+function audiotheme_after_main_content() {
+	echo '</div>';
+}
+
+/**
  * Add helpful nav menu item classes.
  *
  * @since 1.0.0
@@ -68,31 +98,21 @@ function audiotheme_nav_menu_classes( $items, $args ) {
 }
 
 /**
- * Enqueue scripts and styles.
+ * Add audio metadata to attachment response objects.
  *
- * @since 2.0.0
+ * @since 1.4.4
+ *
+ * @param array $response Attachment data to send as JSON.
+ * @param WP_Post $attachment Attachment object.
+ * @param array $meta Attachment meta.
+ * @return array
  */
-function audiotheme_enqueue_assets() {
-	if ( apply_filters( 'audiotheme_enqueue_assets', '__return_true' ) ) {
-		wp_enqueue_script( 'audiotheme' );
-		wp_enqueue_style( 'audiotheme' );
+function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, $meta ) {
+	if ( 'audio' !== $response['type'] ) {
+		return $response;
 	}
-}
 
-/**
- * Add wrapper open tags in default templates for theme compatibility.
- *
- * @since 1.2.0
- */
-function audiotheme_before_main_content() {
-	echo '<div class="audiotheme">';
-}
+	$response['audiotheme'] = $meta;
 
-/**
- * Add wrapper close tags in default templates for theme compatibility.
- *
- * @since 1.2.0
- */
-function audiotheme_after_main_content() {
-	echo '</div>';
+	return $response;
 }
