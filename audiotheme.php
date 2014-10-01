@@ -108,10 +108,10 @@ function audiotheme() {
 	static $instance;
 
 	if ( null == $instance ) {
-		$instance = new Audiotheme( array(
-			'modules'      => new Audiotheme_Modules(),
+		$instance = new AudioTheme( array(
+			'modules'      => new AudioTheme_Modules(),
 			'plugin_file'  => __FILE__,
-			'theme_compat' => new Audiotheme_Theme_Compat(),
+			'theme_compat' => new AudioTheme_Theme_Compat(),
 		) );
 	}
 
@@ -129,8 +129,8 @@ add_action( 'plugins_loaded', array( $audiotheme, 'load_plugin' ) );
  *
  * @since 2.0.0
  */
-$audiotheme->modules->register( new Audiotheme_Module_Admin );
-$audiotheme->modules->register( new Audiotheme_Module_Archives );
-$audiotheme->modules->register( new Audiotheme_Module_Discography );
-$audiotheme->modules->register( new Audiotheme_Module_Gigs );
-$audiotheme->modules->register( new Audiotheme_Module_Videos );
+$audiotheme->modules->register( new AudioTheme_Module_Admin );
+$audiotheme->modules->register( new AudioTheme_Module_Archives );
+$audiotheme->modules->register( new AudioTheme_Module_Discography );
+$audiotheme->modules->register( new AudioTheme_Module_Gigs );
+$audiotheme->modules->register( new AudioTheme_Module_Videos );

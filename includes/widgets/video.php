@@ -9,7 +9,7 @@
  *
  * @since 1.0.0
  */
-class Audiotheme_Widget_Video extends WP_Widget {
+class AudioTheme_Widget_Video extends WP_Widget {
 	/**
 	 * Setup widget options.
 	 *

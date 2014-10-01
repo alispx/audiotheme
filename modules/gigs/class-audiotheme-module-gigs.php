@@ -1,6 +1,6 @@
 <?php
 
-class AudioTheme_Module_Gigs extends Audiotheme_Module {
+class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	/**
 	 *
 	 */

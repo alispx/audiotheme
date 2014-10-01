@@ -523,7 +523,7 @@ function audiotheme_gig_post_class( $classes, $class, $post_id ) {
  * @since 1.0.0
  * @link http://bradt.ca/blog/extending-wp_query/
  */
-class Audiotheme_Gig_Query extends WP_Query {
+class AudioTheme_Gig_Query extends WP_Query {
 	/**
 	 * Build the query args.
 	 *

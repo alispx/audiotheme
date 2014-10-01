@@ -12,7 +12,7 @@
  * @package AudioTheme\Modules
  * @since 2.0.0
  */
-abstract class Audiotheme_Module {
+abstract class AudioTheme_Module {
 	/**
 	 * Module identifier.
 	 *

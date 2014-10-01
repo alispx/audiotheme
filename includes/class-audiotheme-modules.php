@@ -12,7 +12,7 @@
  * @package AudioTheme\Modules
  * @since 2.0.0
  */
-class Audiotheme_Modules {
+class AudioTheme_Modules {
 	/**
 	 * List of instantiated modules.
 	 *

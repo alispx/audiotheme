@@ -12,7 +12,7 @@
  * @package AudioTheme\Videos
  * @since 2.0.0
  */
-class AudioTheme_Module_Videos extends Audiotheme_Module {
+class AudioTheme_Module_Videos extends AudioTheme_Module {
 	/**
 	 * Constructor method.
 	 *

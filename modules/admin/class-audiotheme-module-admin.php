@@ -5,7 +5,7 @@
  * @package AudioTheme\Administration
  * @since 2.0.0
  */
-class AudioTheme_Module_Admin extends Audiotheme_Module {
+class AudioTheme_Module_Admin extends AudioTheme_Module {
 	/**
 	 * Constructor method.
 	 *

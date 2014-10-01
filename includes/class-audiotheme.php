@@ -12,12 +12,12 @@
  * @package AudioTheme
  * @since 2.0.0
  */
-class Audiotheme {
+class AudioTheme {
 	/**
 	 * Modules API.
 	 *
 	 * @since 2.0.0
-	 * @type Audiotheme_Modules
+	 * @type AudioTheme_Modules
 	 */
 	protected $modules;
 
@@ -33,7 +33,7 @@ class Audiotheme {
 	 * Theme compatibility class.
 	 *
 	 * @since 2.0.0
-	 * @type Audiotheme_Theme_Compat
+	 * @type AudioTheme_Theme_Compat
 	 */
 	protected $theme_compat;
 

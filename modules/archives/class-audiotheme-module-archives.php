@@ -15,7 +15,7 @@
  * @package AudioTheme\Archives
  * @since 2.0.0
  */
-class Audiotheme_Module_Archives extends Audiotheme_Module {
+class AudioTheme_Module_Archives extends AudioTheme_Module {
 	/**
 	 * Archive post type name.
 	 *
@@ -354,7 +354,7 @@ class Audiotheme_Module_Archives extends Audiotheme_Module {
 	 *
 	 * @param array|string $post_types Optional. A post type name or array of
 	 *                                 post type names. Defaults to all archives
-	 *                                 registered via Audiotheme_Archives::add_post_type_archive().
+	 *                                 registered via AudioTheme_Archives::add_post_type_archive().
 	 * @return bool
 	 */
 	public function is_post_type_archive( $post_types = array() ) {

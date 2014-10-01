@@ -31,11 +31,11 @@ require( AUDIOTHEME_DIR . 'includes/widgets/video.php' );
  */
 function audiotheme_widgets_init() {
 	$widgets = array(
-		'recent-posts'  => 'Audiotheme_Widget_Recent_Posts',
-		'record'        => 'Audiotheme_Widget_Record',
-		'track'         => 'Audiotheme_Widget_Track',
-		'upcoming-gigs' => 'Audiotheme_Widget_Upcoming_Gigs',
-		'video'         => 'Audiotheme_Widget_Video',
+		'recent-posts'  => 'AudioTheme_Widget_Recent_Posts',
+		'record'        => 'AudioTheme_Widget_Record',
+		'track'         => 'AudioTheme_Widget_Track',
+		'upcoming-gigs' => 'AudioTheme_Widget_Upcoming_Gigs',
+		'video'         => 'AudioTheme_Widget_Video',
 	);
 
 	if ( $support = get_theme_support( 'audiotheme-widgets' ) ) {

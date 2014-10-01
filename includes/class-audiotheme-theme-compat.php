@@ -26,7 +26,7 @@
  * @package AudioTheme
  * @since 2.0.0
  */
-class Audiotheme_Theme_Compat {
+class AudioTheme_Theme_Compat {
 	/**
 	 * Whether theme compat mode is enabled.
 	 *

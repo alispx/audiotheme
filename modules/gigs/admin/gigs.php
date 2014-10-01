@@ -190,7 +190,7 @@ function audiotheme_gigs_manage_screen_setup() {
 
 	require_once( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-gigs-list-table.php' );
 
-	$gigs_list_table = new Audiotheme_Gigs_List_Table();
+	$gigs_list_table = new AudioTheme_Gigs_List_Table();
 	$gigs_list_table->process_actions();
 }
 
@@ -202,7 +202,7 @@ function audiotheme_gigs_manage_screen_setup() {
 function audiotheme_gigs_manage_screen() {
 	$post_type_object = get_post_type_object( 'audiotheme_gig' );
 
-	$gigs_list_table = new Audiotheme_Gigs_List_Table();
+	$gigs_list_table = new AudioTheme_Gigs_List_Table();
 	$gigs_list_table->prepare_items();
 
 	require( AUDIOTHEME_DIR . 'modules/gigs/admin/views/list-gigs.php' );

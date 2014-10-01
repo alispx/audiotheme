@@ -24,7 +24,7 @@ function audiotheme_venues_manage_screen_setup() {
 
 	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-venues-list-table.php' );
 
-	$venues_list_table = new Audiotheme_Venues_List_Table();
+	$venues_list_table = new AudioTheme_Venues_List_Table();
 	$venues_list_table->process_actions();
 
 	#add_action( 'admin_notices', 'audiotheme_venues_manage_screen_notices' );
@@ -36,7 +36,7 @@ function audiotheme_venues_manage_screen_setup() {
  * @since 1.0.0
  */
 function audiotheme_venues_manage_screen() {
-	$venues_list_table = new Audiotheme_Venues_List_Table();
+	$venues_list_table = new AudioTheme_Venues_List_Table();
 	$venues_list_table->prepare_items();
 
 	$post_type_object = get_post_type_object( 'audiotheme_venue' );
