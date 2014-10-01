@@ -15,7 +15,7 @@
  * @package AudioTheme\Archives
  * @since 2.0.0
  */
-class Audiotheme_Archives {
+class Audiotheme_Module_Archives extends Audiotheme_Module {
 	/**
 	 * Archive post type name.
 	 *
@@ -41,32 +41,49 @@ class Audiotheme_Archives {
 	protected $current_archive_post_type = '';
 
 	/**
+	 *
+	 */
+	public function __construct( $args = array() ) {
+		parent::__construct( $args );
+
+		$this->module_id          = 'archives';
+		$this->module_name        = __( 'Archives', 'audiotheme' );
+		$this->module_description = __( '', 'audiotheme' );
+		$this->is_core_module     = true;
+	}
+
+	/**
 	 * Load archive functionality.
 	 *
 	 * @since 2.0.0
 	 */
 	public function load() {
+		$this->register_hooks();
+	}
+
+	/**
+	 *
+	 */
+	public function register_hooks() {
 		// Register early so archives can be registered when other post types are registered.
-		add_action( 'init', array( $this, 'register_post_type' ), 5 );
-
-		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
-		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
-		add_filter( 'post_type_link', array( $this, 'post_type_link' ), 10, 3 );
-		add_filter( 'post_type_archive_link', array( $this, 'post_type_archive_link' ), 10, 2 );
-		add_filter( 'post_type_archive_title', array( $this, 'post_type_archive_title' ) );
-		add_action( 'admin_bar_menu', array( $this, 'admin_bar_edit_menu' ), 80 );
-		add_action( 'post_updated', array( $this, 'on_archive_update' ), 10, 3 );
-		add_action( 'delete_post', array( $this, 'delete_post_type_archive' ) );
-
+		add_action( 'init',                        array( $this, 'register_post_type' ), 5 );
+		add_filter( 'post_updated_messages',       array( $this, 'updated_messages' ) );
+		add_action( 'pre_get_posts',               array( $this, 'pre_get_posts' ) );
+		add_filter( 'post_type_link',              array( $this, 'post_type_link' ), 10, 3 );
+		add_filter( 'post_type_archive_link',      array( $this, 'post_type_archive_link' ), 10, 2 );
+		add_filter( 'post_type_archive_title',     array( $this, 'post_type_archive_title' ) );
+		add_action( 'admin_bar_menu',              array( $this, 'admin_bar_edit_menu' ), 80 );
+		add_action( 'post_updated',                array( $this, 'on_archive_update' ), 10, 3 );
+		add_action( 'delete_post',                 array( $this, 'delete_post_type_archive' ) );
 		add_filter( 'get_audiotheme_archive_meta', array( $this, 'sanitize_columns_setting' ), 10, 5 );
 
 		if ( is_admin() ) {
 			// High priority makes archive links appear last in submenus.
-			add_action( 'admin_menu', array( $this, 'admin_menu' ), 100 );
-			add_action( 'parent_file', array( $this, 'parent_file' ) );
-			add_action( 'add_meta_boxes_' . self::POST_TYPE, array( $this, 'add_meta_boxes' ) );
+			add_action( 'admin_menu',                           array( $this, 'admin_menu' ), 100 );
+			add_action( 'parent_file',                          array( $this, 'parent_file' ) );
+			add_action( 'add_meta_boxes_' . self::POST_TYPE,    array( $this, 'add_meta_boxes' ) );
 			add_action( 'audiotheme_archive_settings_meta_box', array( $this, 'settings_meta_box_fields' ), 15, 3 );
-			add_action( 'save_post', array( $this, 'save_archive_settings' ), 10, 2 );
+			add_action( 'save_post',                            array( $this, 'save_archive_settings' ), 10, 2 );
 		}
 	}
 
@@ -787,6 +804,10 @@ class Audiotheme_Archives {
 		$post             = get_post();
 		$post_type        = self::POST_TYPE;
 		$post_type_object = get_post_type_object( $post_type );
+
+		if ( self::POST_TYPE != $post_type ) {
+			return;
+		}
 
 		$messages[ self::POST_TYPE ] = array(
 			0  => '', // Unused. Messages start at index 1.
