@@ -2,8 +2,7 @@
 /**
  * Load registered widgets.
  *
- * @package AudioTheme
- * @subpackage Widgets
+ * @package AudioTheme\Widgets
  * @since 1.0.0
  */
 

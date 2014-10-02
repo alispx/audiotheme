@@ -2,8 +2,7 @@
 /**
  * Settings administration screen.
  *
- * @package AudioTheme
- * @subpackage Administration
+ * @package AudioTheme\Administration
  * @since 1.0.0
  */
 

@@ -2,8 +2,7 @@
 /**
  * Class to list gigs on the Manage Gigs screen.
  *
- * @package AudioTheme
- * @subpackage Gigs
+ * @package AudioTheme\Gigs
  * @since 1.0.0
  */
 

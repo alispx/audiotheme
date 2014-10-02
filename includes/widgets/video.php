@@ -4,9 +4,7 @@
  *
  * Display a selected video in a widget area.
  *
- * @package AudioTheme
- * @subpackage Widgets
- *
+ * @package AudioTheme\Widgets
  * @since 1.0.0
  */
 class AudioTheme_Widget_Video extends WP_Widget {

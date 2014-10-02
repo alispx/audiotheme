@@ -4,9 +4,7 @@
  *
  * An improved recent posts widget to allow for more control over display and post type.
  *
- * @package AudioTheme
- * @subpackage Widgets
- *
+ * @package AudioTheme\Widgets
  * @since 1.0.0
  */
 class AudioTheme_Widget_Recent_Posts extends WP_Widget {

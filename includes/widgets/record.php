@@ -4,9 +4,7 @@
  *
  * Display a selected record in a widget area.
  *
- * @package AudioTheme
- * @subpackage Widgets
- *
+ * @package AudioTheme\Widgets
  * @since 1.0.0
  */
 class AudioTheme_Widget_Record extends WP_Widget {

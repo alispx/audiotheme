@@ -2,8 +2,7 @@
 /**
  * Gigs JSON feed template.
  *
- * @package AudioTheme
- * @subpackage Gigs
+ * @package AudioTheme\Gigs
  * @since 1.0.0
  */
 

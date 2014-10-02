@@ -4,9 +4,7 @@
  *
  * Display a list of upcoming gigs in a widget area.
  *
- * @package AudioTheme
- * @subpackage Widgets
- *
+ * @package AudioTheme\Widgets
  * @since 1.0.0
  */
 class AudioTheme_Widget_Upcoming_Gigs extends WP_Widget {
