@@ -1,5 +1,4 @@
 <div class="wrap">
-	<div id="icon-audiotheme-venues" class="icon32"><br></div>
 	<h2>
 		<?php
 		echo $post_type_object->labels->name;
@@ -51,9 +50,9 @@
 
 	<form action="" method="get">
 		<input type="hidden" name="page" value="audiotheme-venues">
-		<?php $venues_list_table->search_box( $post_type_object->labels->search_items, $post_type_object->name ); ?>
+		<?php $list_table->search_box( $post_type_object->labels->search_items, $post_type_object->name ); ?>
 
-		<?php $venues_list_table->display(); ?>
+		<?php $list_table->display(); ?>
 	</form>
 
 </div><!--end div.wrap-->

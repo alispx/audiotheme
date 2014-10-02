@@ -1,9 +1,12 @@
 <div class="wrap columns-2" id="venue-edit">
-	<div id="icon-audiotheme-venues" class="icon32"><br></div>
 	<h2><?php
 		if ( 'edit' == $action ) {
-			echo $post_type_object->labels->edit_item;
-			echo sprintf( ' <a class="add-new-h2" href="%s">%s</a>', esc_url( get_audiotheme_venue_admin_url() ), esc_html( $post_type_object->labels->add_new ) );
+			printf(
+				'%s <a class="add-new-h2" href="%s">%s</a>',
+				$post_type_object->labels->edit_item,
+				esc_url( get_audiotheme_venue_admin_url() ),
+				esc_html( $post_type_object->labels->add_new )
+			);
 		} else {
 			echo $post_type_object->labels->add_new_item;
 		}

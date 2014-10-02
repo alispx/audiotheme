@@ -77,9 +77,7 @@ module.exports = function(grunt) {
 			dist: {
 				files: [
 					{ src: 'modules/admin/js/admin.js', dest: 'modules/admin/js/admin.min.js' },
-					{ src: 'modules/admin/js/media.js', dest: 'modules/admin/js/media.min.js' },
-					{ src: 'modules/gigs/admin/js/gig-edit.js', dest: 'modules/gigs/admin/js/gig-edit.min.js' },
-					{ src: 'modules/gigs/admin/js/venue-edit.js', dest: 'modules/gigs/admin/js/venue-edit.min.js' }
+					{ src: 'modules/admin/js/media.js', dest: 'modules/admin/js/media.min.js' }
 				]
 			}
 		},

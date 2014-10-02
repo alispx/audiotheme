@@ -1,5 +1,4 @@
 <div class="wrap">
-	<div id="icon-audiotheme-gigs" class="icon32"><br></div>
 	<h2>
 		<?php
 		echo $post_type_object->labels->name;
@@ -62,16 +61,16 @@
 		</div>
 	<?php } ?>
 
-	<?php $gigs_list_table->views(); ?>
+	<?php $list_table->views(); ?>
 
 	<form action="" method="get">
-		<?php $gigs_list_table->search_box( $post_type_object->labels->search_items, $post_type_object->name ); ?>
+		<?php $list_table->search_box( $post_type_object->labels->search_items, $post_type_object->name ); ?>
 
 		<input type="hidden" name="page" value="audiotheme-gigs">
 		<input type="hidden" name="post_status" value="<?php echo ! empty( $_REQUEST['post_status'] ) ? esc_attr( $_REQUEST['post_status'] ) : 'any'; ?>">
 		<input type="hidden" name="post_type" value="<?php echo $post_type_object->name; ?>">
 
-		<?php if ( 'upcoming' == $gigs_list_table->current_view || 'past' == $gigs_list_table->current_view ) : ?>
+		<?php if ( 'upcoming' == $list_table->current_view || 'past' == $list_table->current_view ) : ?>
 			<input type="hidden" name="gig_date" value="<?php echo esc_attr( current_time( 'mysql' ) ); ?>">
 		<?php endif; ?>
 
@@ -79,6 +78,6 @@
 			<input type="hidden" name="compare" value="<?php echo esc_attr( $_REQUEST['compare'] ); ?>">
 		<?php endif; ?>
 
-		<?php $gigs_list_table->display(); ?>
+		<?php $list_table->display(); ?>
 	</form>
 </div><!--end div.wrap-->

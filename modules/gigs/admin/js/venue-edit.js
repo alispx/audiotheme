@@ -1,32 +1,50 @@
-jQuery(function( $ ) {
+/*global _:false, wp:false */
+
+(function( window, $, _, wp, undefined ) {
+	'use strict';
+
 	var $city = $( '#venue-city' ),
 		$state = $( '#venue-state' ),
 		$country = $( '#venue-country' ),
-		$venueTz = $( '#venue-timezone-string' );
+		$timezone = $( '#venue-timezone-string' );
+
+	function searchPlace( q ) {
+		return $.ajax({
+			url: 'http://api.geonames.org/search',
+			data: {
+				name_startsWith: q,
+				featureClass: 'P',
+				maxRows: 12,
+				style: 'FULL',
+				type: 'json'
+			},
+			dataType: 'jsonp'
+		});
+	}
 
 	$city.autocomplete({
-		source: function( request, response ) {
-			$.ajax({
-				url: 'http://ws.geonames.org/searchJSON',
-				data: {
-					featureClass: 'P',
-					style: 'full',
-					maxRows: 12,
-					name_startsWith: request.term
-				},
-				dataType: 'jsonp',
-				success: function( data ) {
-					response( $.map( data.geonames, function( item ) {
-						return {
-							label: item.name + ( item.adminName1 ? ', ' + item.adminName1 : '' ) + ', ' + item.countryName,
-							value: item.name,
-							adminCode: item.adminCode1,
-							countryName: item.countryName,
-							timezone: item.timezone.timeZoneId
-						};
-					}));
-				}
-			});
+		source: function( request, callback ) {
+			searchPlace( request.term )
+				.done(function( response ) {
+					var data;
+
+					if ( 'geonames' in response ) {
+						data = $.map( response.geonames, function( item ) {
+							return {
+								label: item.name + ( item.adminName1 ? ', ' + item.adminName1 : '' ) + ', ' + item.countryName,
+								value: item.name,
+								adminCode: item.adminCode1,
+								countryName: item.countryName,
+								timezone: item.timezone.timeZoneId
+							};
+						});
+					}
+
+					callback( data );
+				})
+				.fail(function() {
+					callback();
+				});
 		},
 		minLength: 2,
 		select: function( e, ui ) {
@@ -38,7 +56,8 @@ jQuery(function( $ ) {
 				$country.val( ui.item.countryName );
 			}
 
-			$venueTz.find( 'option[value="' + ui.item.timezone + '"]' ).attr( 'selected','selected' );
+			$timezone.find( 'option[value="' + ui.item.timezone + '"]' ).attr( 'selected','selected' );
 		}
 	});
-});
+
+})( window, jQuery, _, wp );

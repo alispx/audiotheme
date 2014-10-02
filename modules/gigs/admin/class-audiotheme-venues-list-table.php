@@ -8,13 +8,6 @@
  */
 
 /**
- * Include the WP_List_Table depedency if it doesn't exist.
- */
-if( ! class_exists( 'WP_List_Table' ) ) {
-    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
-}
-
-/**
  * Venues list table class.
  *
  * @since 1.0.0
@@ -27,7 +20,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	 *
 	 * @since 1.0.0
 	 */
-	function __construct() {
+	public function __construct() {
 		parent::__construct( array(
 			'singular' => 'venue',
 			'plural'   => 'venues',
@@ -43,18 +36,17 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	 *
 	 * @since 1.0.0
 	 */
-	function prepare_items() {
+	public function prepare_items() {
 		global $wp_query, $wpdb;
 
-		$screen = get_current_screen();
-
+		$screen   = get_current_screen();
 		$per_page = get_user_option( 'gigs_page_audiotheme_venues_per_page' );
 		$per_page = ( empty( $per_page ) ) ? 20 : $per_page;
 
 		// Set up column headers.
-		$columns = $this->get_columns();
-		$hidden = get_hidden_columns( $screen->id );
-		$sortable = $this->get_sortable_columns();
+		$columns               = $this->get_columns();
+		$hidden                = get_hidden_columns( $screen->id );
+		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		// Compile the WP_Query args based on the current view and user options.
@@ -116,7 +108,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	function get_columns() {
+	public function get_columns() {
 		$columns = array(
 			'cb'            => '<input type="checkbox">',
 			'name'          => __( 'Name', 'audiotheme' ),
@@ -144,7 +136,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	function get_sortable_columns() {
+	public function get_sortable_columns() {
 		$sortable_columns = array(
 			'name'          => array( 'title', true ), // True means its already sorted.
 			'city'          => array( 'city', false ),
@@ -168,7 +160,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	function get_bulk_actions() {
+	public function get_bulk_actions() {
 		$actions = array(
 			'delete' => __( 'Delete Permanently', 'audiotheme' ),
 		);
@@ -182,11 +174,11 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	 * @since 1.0.0
 	 * @see wp-admin/edit.php
 	 */
-	function process_actions() {
+	public function process_actions() {
 		global $wpdb;
 
-		$action = '';
-		$current_user = wp_get_current_user();
+		$action           = '';
+		$current_user     = wp_get_current_user();
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
 
 		$sendback = remove_query_arg( array( 'deleted', 'ids', 'message', 'venue_id' ), wp_get_referer() );
@@ -266,7 +258,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	 * @param WP_Post $item Venue post object.
 	 * @return string Column value.
 	 */
-	function column_cb( $item ) {
+	public function column_cb( $item ) {
 		return sprintf( '<input type="checkbox" name="ids[]" value="%s">', $item->ID );
 	}
 
@@ -278,7 +270,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	 * @param WP_Post $item Venue post object.
 	 * @return string Column value.
 	 */
-	function column_name( $item ) {
+	public function column_name( $item ) {
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
 
 		$output = sprintf( '<strong><a href="%s" class="row-title">%s</a></strong><br>',
@@ -307,14 +299,14 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 	 * @param string $column_name The column id to display.
 	 * @return string Column value for display.
 	 */
-	function column_default( $item, $column_name ) {
+	public function column_default( $item, $column_name ) {
 		switch($column_name){
 			case 'gigs':
 				$count = get_post_meta( $item->ID, '_audiotheme_gig_count', true );
 				$admin_url = get_audiotheme_gig_admin_url( array( 'post_type' => 'audiotheme_gig', 'post_status' => 'any', 'venue' => $item->ID ) );
 				return ( empty( $count ) ) ? $count : sprintf( '<a href="%s">%d</a>', $admin_url, $count );
 			case 'website':
-				return ( ! empty( $item->website ) ) ? sprintf( ' <a href="%s" class="venue-website-link" target="_blank"><img src="' . AUDIOTHEME_URI . 'admin/images/link.png" width="16" height="16" alt="%s"></a>', esc_url( $item->website ), esc_attr( __( 'Visit venue website', 'audiotheme' ) ) ) : '';
+				return ( ! empty( $item->website ) ) ? sprintf( ' <a href="%s" class="venue-website-link" target="_blank"><img src="' . AUDIOTHEME_URI . 'modules/admin/images/link.png" width="16" height="16" alt="%s"></a>', esc_url( $item->website ), esc_attr( __( 'Visit venue website', 'audiotheme' ) ) ) : '';
 			default:
 				return ( isset( $item->{$column_name} ) ) ? $item->{$column_name} : '';
 		}

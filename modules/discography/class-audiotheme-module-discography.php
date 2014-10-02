@@ -63,14 +63,12 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		add_action( 'init', array( $this, 'register_post_types' ) );
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 
-		// Split into separate hooks so they can be unhooked individually if needed.
-		add_action( 'pre_get_posts', array( $this, 'record_query_posts_per_page' ), 9 );
-		add_action( 'pre_get_posts', array( $this, 'record_query_sort' ) );
-		add_action( 'pre_get_posts', array( $this, 'track_query' ) );
-		add_action( 'pre_get_posts', array( $this, 'record_type_query' ), 9 );
-
 		add_filter( 'request',                 array( $this, 'record_type_request' ) );
 		add_filter( 'generate_rewrite_rules',  array( $this, 'generate_rewrite_rules' ) );
+		add_action( 'pre_get_posts',           array( $this, 'record_query_posts_per_page' ), 9 );
+		add_action( 'pre_get_posts',           array( $this, 'record_query_sort' ) );
+		add_action( 'pre_get_posts',           array( $this, 'track_query' ) );
+		add_action( 'pre_get_posts',           array( $this, 'record_type_query' ), 9 );
 		add_action( 'template_include',        array( $this, 'template_include' ) );
 		add_filter( 'post_type_link',          array( $this, 'post_permalinks' ), 10, 4 );
 		add_filter( 'post_type_archive_link',  array( $this, 'archive_permalink' ), 10, 2 );

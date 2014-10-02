@@ -71,8 +71,8 @@ require( AUDIOTHEME_DIR . 'modules/archives/class-audiotheme-module-archives.php
 require( AUDIOTHEME_DIR . 'modules/archives/post-template.php' );
 require( AUDIOTHEME_DIR . 'modules/discography/class-audiotheme-module-discography.php' );
 require( AUDIOTHEME_DIR . 'modules/discography/post-template.php' );
-require( AUDIOTHEME_DIR . 'modules/gigs/gigs.php' );
 require( AUDIOTHEME_DIR . 'modules/gigs/class-audiotheme-module-gigs.php' );
+require( AUDIOTHEME_DIR . 'modules/gigs/post-template.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/class-audiotheme-module-videos.php' );
 require( AUDIOTHEME_DIR . 'modules/videos/post-template.php' );
 
@@ -93,6 +93,13 @@ if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'modules/discography/admin/class-audiotheme-module-discography-admin-screen-managerecords.php' );
 	require( AUDIOTHEME_DIR . 'modules/discography/admin/class-audiotheme-module-discography-admin-screen-managetracks.php' );
 	require( AUDIOTHEME_DIR . 'modules/discography/admin/ajax-actions.php' );
+
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-module-gigs-admin.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-module-gigs-admin-screen-editgig.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-module-gigs-admin-screen-editvenue.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-module-gigs-admin-screen-managegigs.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/class-audiotheme-module-gigs-admin-screen-managevenues.php' );
+	require( AUDIOTHEME_DIR . 'modules/gigs/admin/ajax-actions.php' );
 
 	require( AUDIOTHEME_DIR . 'modules/videos/admin/class-audiotheme-module-videos-admin.php' );
 }

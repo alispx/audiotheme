@@ -25,5 +25,5 @@ function audiotheme_ajax_is_new_venue() {
 	$sql   = $wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE post_type='audiotheme_venue' AND post_title=%s ORDER BY post_title ASC LIMIT 1", stripslashes( $_GET['name'] ) );
 	$venue = $wpdb->get_col( $sql );
 
-	wp_send_json( $venue );
+	wp_send_json_success( empty( $venue ) );
 }
