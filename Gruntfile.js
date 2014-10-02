@@ -7,7 +7,6 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		config: grunt.file.readJSON('config.json'),
 		version: '<%= pkg.version %>',
 
 		/**
@@ -179,27 +178,6 @@ module.exports = function(grunt) {
 					}
 				]
 			}
-		},
-
-		/**
-		 * Upload a release build to the production server.
-		 */
-		sftp: {
-			release: {
-				options: {
-					path: '<%= config.production.releasePath %>',
-					srcBasePath: 'release/',
-					host: '<%= config.production.host %>',
-					username: '<%= config.production.username %>',
-					password: '<%= config.production.password %>'
-				},
-				files: [
-					{
-						src: ['release/<%= pkg.name %>-plugin-<%= version %>.zip'],
-						dest: './'
-					}
-				]
-			}
 		}
 
 	});
@@ -249,31 +227,6 @@ module.exports = function(grunt) {
 		grunt.config.set('version', version);
 		grunt.task.run('build:' + version);
 		grunt.task.run('string-replace:release');
-		// @todo git tag, commit, and push to origin
-		grunt.task.run('sftp:release');
-	});
-
-	/**
-	 * PHP Code Sniffer using WordPress Coding Standards.
-	 *
-	 * @link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
-	 */
-	grunt.registerTask('phpcs', function() {
-		var done = this.async();
-
-		grunt.util.spawn({
-			cmd: 'phpcs',
-			args: [
-				'-p',
-				'-s',
-				'--standard=WordPress',
-				'--extensions=php',
-				'--ignore=*/node_modules/*,*/release/*,*/includes/vendor/*',
-				'--report-file=release/codesniffs.txt',
-				'.'
-			],
-			opts: { stdio: 'inherit' }
-		}, done);
 	});
 
 };
