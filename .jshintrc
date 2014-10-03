@@ -8,7 +8,7 @@
 	"immed": true,
 	"jquery": true,
 	"latedef": true,
-	"newcap": true,
+	"newcap": false,
 	"noarg": true,
 	"quotmark": "single",
 	"smarttabs": true,

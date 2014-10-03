@@ -18,8 +18,8 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: [
-					{ src: 'modules/admin/css/admin.min.css' },
-					{ src: 'modules/admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/jquery-ui-audiotheme.min.css' },
 					{ src: 'includes/css/audiotheme.min.css' }
 				]
 			}
@@ -34,10 +34,10 @@ module.exports = function(grunt) {
 			},
 			all: [
 				'Gruntfile.js',
-				'modules/admin/js/*.js',
-				'!modules/admin/js/*.min.js',
-				'modules/gigs/admin/js/*.js',
-				'!modules/gigs/admin/js/*.min.js',
+				'admin/js/*.js',
+				'!admin/js/*.min.js',
+				'admin/js/*.js',
+				'!admin/js/*.min.js',
 				'includes/js/*.js',
 				'!includes/js/*.min.js'
 			]
@@ -49,8 +49,8 @@ module.exports = function(grunt) {
 		cssmin: {
 			dist: {
 				files: [
-					{ src: 'modules/admin/css/admin.min.css', dest: 'modules/admin/css/admin.min.css' },
-					{ src: 'modules/admin/css/jquery-ui-audiotheme.min.css', dest: 'modules/admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/jquery-ui-audiotheme.min.css', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
 					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
@@ -62,8 +62,8 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				files: [
-					{ src: 'modules/admin/css/sass/admin.scss', dest: 'modules/admin/css/admin.min.css' },
-					{ src: 'modules/admin/css/sass/jquery-ui-audiotheme.scss', dest: 'modules/admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'admin/css/sass/admin.scss', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/sass/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
 					{ src: 'includes/css/sass/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
@@ -75,8 +75,8 @@ module.exports = function(grunt) {
 		uglify: {
 			dist: {
 				files: [
-					{ src: 'modules/admin/js/admin.js', dest: 'modules/admin/js/admin.min.js' },
-					{ src: 'modules/admin/js/media.js', dest: 'modules/admin/js/media.min.js' }
+					{ src: 'admin/js/admin.js', dest: 'admin/js/admin.min.js' },
+					{ src: 'admin/js/media.js', dest: 'admin/js/media.min.js' }
 				]
 			}
 		},
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
 				tasks: ['jshint', 'uglify']
 			},
 			sass: {
-				files: ['includes/css/**/*.scss', 'modules/admin/css/**/*.scss'],
+				files: ['includes/css/**/*.scss', 'admin/css/**/*.scss'],
 				tasks: ['sass', 'autoprefixer', 'cssmin']
 			}
 		},

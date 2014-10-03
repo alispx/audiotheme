@@ -14,44 +14,12 @@
  */
 abstract class AudioTheme_Module {
 	/**
-	 * Module identifier.
+	 * Admininistration class.
 	 *
 	 * @since 2.0.0
-	 * @type string
+	 * @type object
 	 */
-	protected $module_id;
-
-	/**
-	 * Module name.
-	 *
-	 * @since 2.0.0
-	 * @type string
-	 */
-	protected $module_name;
-
-	/**
-	 * Module description.
-	 *
-	 * @since 2.0.0
-	 * @type string
-	 */
-	protected $module_description;
-
-	/**
-	 * Whether the module is a core module.
-	 *
-	 * @since 2.0.0
-	 * @type bool
-	 */
-	protected $is_core_module = false;
-
-	/**
-	 * Whether the module's status can be toggled.
-	 *
-	 * @since 2.0.0
-	 * @type bool
-	 */
-	protected $is_togglable = false;
+	protected $admin;
 
 	/**
 	 * Admin menu item HTML id.
@@ -62,6 +30,54 @@ abstract class AudioTheme_Module {
 	 * @type string
 	 */
 	protected $admin_menu_id;
+
+	/**
+	 * Archives class.
+	 *
+	 * @since 2.0.0
+	 * @type object
+	 */
+	protected $archives;
+
+	/**
+	 * Module identifier.
+	 *
+	 * @since 2.0.0
+	 * @type string
+	 */
+	protected $id;
+
+	/**
+	 * Module name.
+	 *
+	 * @since 2.0.0
+	 * @type string
+	 */
+	protected $name;
+
+	/**
+	 * Module description.
+	 *
+	 * @since 2.0.0
+	 * @type string
+	 */
+	protected $description;
+
+	/**
+	 * Whether the module is a core module.
+	 *
+	 * @since 2.0.0
+	 * @type bool
+	 */
+	protected $is_core_module = false;
+
+	/**
+	 * Theme compatability class.
+	 *
+	 * @since 2.0.0
+	 * @type AudioTheme_Theme_Compat
+	 */
+	protected $theme_compat;
 
 	/**
 	 * Constructor method.
@@ -89,11 +105,31 @@ abstract class AudioTheme_Module {
 	 */
 	public function __get( $name ) {
 		switch ( $name ) {
-			case 'module_id' :
-			case 'module_name' :
-			case 'module_description' :
+			case 'admin' :
 			case 'admin_menu_id' :
+			case 'archives' :
+			case 'description' :
+			case 'id' :
+			case 'name' :
+			case 'theme_compat' :
 				return $this->{$name};
+		}
+	}
+
+	/**
+	 * Magic setter.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $name Property name.
+	 * @param mixed $value Property value.
+	 */
+	public function __set( $name, $value ) {
+		switch ( $name ) {
+			case 'admin' :
+			case 'archives' :
+			case 'theme_compat' :
+				$this->{$name} = $value;
 		}
 	}
 
@@ -115,7 +151,7 @@ abstract class AudioTheme_Module {
 	 */
 	public function is_active() {
 		$active_modules = get_option( 'audiotheme_inactive_modules', array() );
-		return ! in_array( $this->module_id, $active_modules );
+		return ! in_array( $this->id, $active_modules );
 	}
 
 	/**
@@ -127,16 +163,5 @@ abstract class AudioTheme_Module {
 	 */
 	public function is_core() {
 		return (bool) $this->is_core_module;
-	}
-
-	/**
-	 * Whether the module's status can be toggled.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return bool
-	 */
-	public function is_togglable() {
-		return (bool) $this->is_togglable;
 	}
 }

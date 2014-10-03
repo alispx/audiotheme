@@ -14,6 +14,22 @@
  */
 class AudioTheme {
 	/**
+	 * Administration API.
+	 *
+	 * @since 2.0.0
+	 * @type AudioTheme_Admin
+	 */
+	protected $admin;
+
+	/**
+	 * Archives API.
+	 *
+	 * @since 2.0.0
+	 * @type AudioTheme_Archives
+	 */
+	protected $archives;
+
+	/**
 	 * Modules API.
 	 *
 	 * @since 2.0.0
@@ -61,6 +77,8 @@ class AudioTheme {
 	 */
 	public function __get( $name ) {
 		switch ( $name ) {
+			case 'admin' :
+			case 'archives' :
 			case 'modules' :
 			case 'plugin_file' :
 			case 'theme_compat' :
@@ -90,8 +108,13 @@ class AudioTheme {
 	 */
 	public function load_plugin() {
 		$this->load_textdomain();
-		$this->load_active_modules();
+		$this->archives->load();
 		$this->register_hooks();
+		$this->load_active_modules();
+
+		if ( is_admin() ) {
+			$this->admin->load();
+		}
 
 		register_activation_hook( $this->plugin_file, 'activate' );
 		register_deactivation_hook( $this->plugin_file, 'deactivate' );
@@ -111,16 +134,22 @@ class AudioTheme {
 	 * Load the active modules.
 	 *
 	 * Modules are always loaded when viewing the AudioTheme Settings screen so
-	 * they can be toggled with instant feedback.
+	 * they can be toggled with instant access.
 	 *
 	 * @since 2.0.0
 	 */
 	protected function load_active_modules() {
-		$is_settings_screen = is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];
-
 		foreach ( $this->modules->get_all() as $module_id => $module ) {
-			if ( ! $module->is_active() && ! $is_settings_screen ) {
+			if ( ! $module->is_active() && ! $this->is_settings_screen() ) {
 				continue;
+			}
+
+			if ( empty( $module->archives ) ) {
+				$module->archives = $this->archives;
+			}
+
+			if ( empty( $module->theme_compat ) ) {
+				$module->theme_compat = $this->theme_compat;
 			}
 
 			$module->load();
@@ -166,6 +195,13 @@ class AudioTheme {
 		wp_register_script( 'jquery-timepicker',        $base_url . 'includes/js/jquery.timepicker.min.js',    array( 'jquery' ), '1.1', true );
 
 		wp_register_style( 'audiotheme', $base_url . 'includes/css/audiotheme.min.css' );
+	}
+
+	/**
+	 *
+	 */
+	public function is_settings_screen() {
+		return is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];
 	}
 
 	/**

@@ -12,79 +12,21 @@
  * @package AudioTheme\Modules
  * @since 2.0.0
  */
-class AudioTheme_Modules {
-	/**
-	 * List of instantiated modules.
-	 *
-	 * @since 2.0.0
-	 * @type array
-	 */
-	protected $modules = array();
-
-	/**
-	 * Magic getter.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param string $name Property name.
-	 * @return mixed Property value.
-	 */
-	public function __get( $name ) {
-		if ( isset( $this->modules[ $name ] ) ) {
-			return $this->modules[ $name ];
-		}
-	}
-
-	/**
-	 * Register a module.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param string $id Module identifier.
-	 * @param array $data Module data.
-	 */
-	public function register( $module ) {
-		$this->modules[ $module->module_id ] = $module;
-	}
-
-	/**
-	 * Retrieve all modules.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return array
-	 */
-	public function get_all() {
-		return $this->modules;
-	}
-
-	/**
-	 * Retrieve data for a single module.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param string $module A module identifier.
-	 * @return array
-	 */
-	public function get( $module_id ) {
-		$modules = $this->get_all();
-		return $modules[ $module_id ];
-	}
-
+class AudioTheme_Modules extends AudioTheme_Collection {
 	/**
 	 * Whether a module is active.
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param string $module A module identifier.
+	 * @param string $id Module identifier.
 	 * @return bool
 	 */
-	public function is_active( $module_id ) {
-		return $this->modules[ $module_id ]->is_active();
+	public function is_active( $id ) {
+		return $this->items[ $id ]->is_active();
 	}
 
 	/**
-	 * Retrieve a list of active modules.
+	 * Retrieve all active modules.
 	 *
 	 * @since 2.0.0
 	 *
@@ -92,18 +34,18 @@ class AudioTheme_Modules {
 	 */
 	public function get_active() {
 		$active = array();
-		foreach ( $this->modules as $module_id => $module ) {
+		foreach ( $this->items as $id => $module ) {
 			if ( ! $module->is_active() ) {
 				continue;
 			}
 
-			$active[ $module_id ] = $module;
+			$active[ $id ] = $module;
 		}
 		return $active;
 	}
 
 	/**
-	 * Retrieve a list of inactive modules.
+	 * Retrieve inactive modules.
 	 *
 	 * @since 2.0.0
 	 *
@@ -111,12 +53,12 @@ class AudioTheme_Modules {
 	 */
 	public function get_inactive() {
 		$inactive = array();
-		foreach ( $this->modules as $module_id => $module ) {
+		foreach ( $this->items as $id => $module ) {
 			if ( $module->is_active() ) {
 				continue;
 			}
 
-			$inactive[ $module_id ] = $module;
+			$inactive[ $id ] = $module;
 		}
 		return $inactive;
 	}
@@ -126,7 +68,7 @@ class AudioTheme_Modules {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param string $module A module identifier.
+	 * @param string $module Module identifier.
 	 */
 	public function activate( $module ) {
 		$modules = array_keys( $this->get_inactive() );
@@ -139,7 +81,7 @@ class AudioTheme_Modules {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param string $module A module identifier.
+	 * @param string $module Module identifier.
 	 */
 	public function deactivate( $module ) {
 		$modules = array_keys( $this->get_inactive() );
