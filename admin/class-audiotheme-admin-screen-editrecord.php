@@ -131,14 +131,14 @@ class AudioTheme_Admin_Screen_EditRecord {
 		include( AUDIOTHEME_DIR . 'admin/views/templates-record.php' );
 
 		wp_enqueue_script(
-			'audiotheme-tracklist-editor',
-			AUDIOTHEME_URI . 'admin/js/tracklist-editor.js',
+			'audiotheme-record-edit',
+			AUDIOTHEME_URI . 'admin/js/record-edit.js',
 			array( 'audiotheme-admin', 'audiotheme-media' ),
 			'1.0.0',
 			true
 		);
 
-		wp_localize_script( 'audiotheme-tracklist-editor', '_audiothemeTracklistSettings', array(
+		wp_localize_script( 'audiotheme-record-edit', '_audiothemeTracklistSettings', array(
 			'postId' => $post->ID,
 			'tracks' => empty( $tracks ) ? null : json_encode( $tracks ),
 			'nonce'  => wp_create_nonce( 'get-default-track_' . $post->ID ),
