@@ -60,7 +60,6 @@ class AudioTheme_Admin_Gigs {
 		);
 
 		wp_localize_script( 'audiotheme-gig-edit', '_audiothemeGigEditSettings', array(
-			'datepickerIcon' => AUDIOTHEME_URI . 'admin/images/calendar.png',
 			'timeFormat'     => get_option( 'time_format' ),
 		) );
 

@@ -36,6 +36,7 @@
 		}
 
 		.audiotheme-repeater-remove-item {
+			color: #808080;
 			opacity: 0.2;
 
 			&:hover {
@@ -47,6 +48,7 @@
 	.column-track-info {
 		font-size: 12px;
 		vertical-align: middle;
+		white-space: nowrap;
 		width: 48px;
 
 		span {

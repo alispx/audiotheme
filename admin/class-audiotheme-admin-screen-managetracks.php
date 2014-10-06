@@ -137,7 +137,7 @@ class AudioTheme_Admin_Screen_ManageTracks {
 
 			case 'download' :
 				if ( is_audiotheme_track_downloadable( $post_id ) ) {
-					echo '<img src="' . AUDIOTHEME_URI . 'admin/images/download.png" width="16" height="16">';
+					echo '<span class="dashicons dashicons-download"></span>';
 				}
 				break;
 
@@ -146,7 +146,7 @@ class AudioTheme_Admin_Screen_ManageTracks {
 				if ( $url ) {
 					printf( '<a href="%1$s" target="_blank">%2$s</a>',
 						esc_url( $url ),
-						'<img src="' . AUDIOTHEME_URI . 'admin/images/music-note.png" width="16" height="16">'
+						'<span class="dashicons dashicons-format-audio"></span>'
 					);
 				}
 				break;
@@ -154,7 +154,7 @@ class AudioTheme_Admin_Screen_ManageTracks {
 			case 'purchase' :
 				$url = get_audiotheme_track_purchase_url( $post_id );
 				if ( $url ) {
-					printf( '<a href="%1$s" target="_blank"><img src="' . AUDIOTHEME_URI . 'admin/images/link.png" width="16" height="16"></a>',
+					printf( '<a href="%1$s" target="_blank" class="dashicons dashicons-admin-links"></a>',
 						esc_url( $url )
 					);
 				}

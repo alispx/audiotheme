@@ -119,7 +119,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 			'contact_phone' => __( 'Contact Phone', 'audiotheme' ),
 			'contact_email' => __( 'Contact Email', 'audiotheme' ),
 			'gigs'          => __( 'Gigs', 'audiotheme' ),
-			'website'       => sprintf( '<span class="audiotheme-column-icon">%s</span>', __( 'Website', 'audiotheme' ) ),
+			'website'       => sprintf( '<span class="audiotheme-column-icon dashicons dashicons-admin-links">%s</span>', __( 'Website', 'audiotheme' ) ),
 		);
 
 		// The screen id is used when managing column visibility.
@@ -305,7 +305,7 @@ class AudioTheme_Venues_List_Table extends WP_List_Table {
 				$admin_url = get_audiotheme_gig_admin_url( array( 'post_type' => 'audiotheme_gig', 'post_status' => 'any', 'venue' => $item->ID ) );
 				return ( empty( $count ) ) ? $count : sprintf( '<a href="%s">%d</a>', $admin_url, $count );
 			case 'website':
-				return ( ! empty( $item->website ) ) ? sprintf( ' <a href="%s" class="venue-website-link" target="_blank"><img src="' . AUDIOTHEME_URI . 'admin/images/link.png" width="16" height="16" alt="%s"></a>', esc_url( $item->website ), esc_attr( __( 'Visit venue website', 'audiotheme' ) ) ) : '';
+				return ( ! empty( $item->website ) ) ? sprintf( ' <a href="%s" class="venue-website-link dashicons dashicons-admin-links" target="_blank"></a>', esc_url( $item->website ), esc_attr( __( 'Visit venue website', 'audiotheme' ) ) ) : '';
 			default:
 				return ( isset( $item->{$column_name} ) ) ? $item->{$column_name} : '';
 		}

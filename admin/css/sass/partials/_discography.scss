@@ -51,8 +51,8 @@
 		}
 	}
 
-	.column-action {
-		padding: 0 0 0 5px;
+	td.column-action {
+		padding-left: 5px;
 	}
 }
 
@@ -69,6 +69,22 @@
 -------------------------------------------------------------- */
 
 #record-tracklist.audiotheme-repeater {
+	input {
+		height: 34px;
+	}
+
+	tbody td {
+		padding: 3px 5px;
+	}
+
+	tbody tr:first-child td {
+		padding-top: 7px;
+	}
+
+	tbody tr:last-child td {
+		padding-bottom: 7px;
+	}
+
 	tbody tr.audiotheme-repeater-active-item td {
 		background: #ececec;
 		border-top-color: #eee;
@@ -88,5 +104,16 @@
 	.ui-sortable-helper td {
 		border-bottom-width: 0;
 		border-top-width: 0;
+	}
+
+	.audiotheme-input-group {
+		.audiotheme-input-group-field,
+		input.audiotheme-input-group-field {
+			height: 34px;
+		}
+
+		.audiotheme-input-group-trigger {
+			width: 34px;
+		}
 	}
 }

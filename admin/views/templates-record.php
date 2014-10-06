@@ -15,22 +15,22 @@
 				data-target=".track-file-url"
 				data-return-property="url">
 				<input type="text" name="audiotheme_tracks[__i__][file_url]" id="track-file-url-__i__" placeholder="<?php esc_attr_e( 'File URL', 'audiotheme' ) ?>" value="{{ data.fileUrl }}" class="track-file-url audiotheme-input-group-field widefat audiotheme-clear-on-add">
-				<a href="#" class="audiotheme-media-control-choose audiotheme-input-group-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>modules/admin/images/music-note.png" width="12" height="12" alt="<?php esc_attr_e( 'Choose MP3', 'audiotheme' ); ?>"></a>
+				<a href="#" class="audiotheme-media-control-choose audiotheme-input-group-trigger dashicons dashicons-format-audio"></a>
 			</div>
 		</td>
 		<td class="column-track-info">
 			<# if ( data.downloadable ) { #>
-				<span class="has-download audiotheme-remove-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>modules/admin/images/download.png" width="12" height="12"></span>
+				<span class="has-download audiotheme-remove-on-add dashicons dashicons-download"></span>
 			<# } #>
 
 			<# if ( data.purchaseUrl ) { #>
-				<span class="has-purchase-url audiotheme-remove-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>modules/admin/images/buy.png" width="12" height="12"></span>
+				<span class="has-purchase-url audiotheme-remove-on-add dashicons dashicons-cart"></span>
 			<# } #>
 			&nbsp;
 		</td>
 		<td class="column-action">
 			<a href="<?php echo admin_url( 'post.php' ); ?>?post={{ data.id }}&amp;action=edit" class="audiotheme-remove-on-add"><?php esc_html_e( 'Edit', 'audiotheme' ); ?></a>
-			<a class="audiotheme-repeater-remove-item audiotheme-show-on-add"><img src="<?php echo AUDIOTHEME_URI; ?>modules/admin/images/delete.png" width="16" height="16" alt="<?php esc_attr_e( 'Delete Item', 'audiotheme' ) ?>" title="<?php esc_attr_e( 'Delete Item', 'audiotheme' ) ?>" class="icon-delete"></a>
+			<a class="audiotheme-repeater-remove-item audiotheme-show-on-add"><span class="dashicons dashicons-trash"></span></a>
 		</td>
 	</tr>
 </script>

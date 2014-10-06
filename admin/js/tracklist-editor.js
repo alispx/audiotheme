@@ -7,7 +7,7 @@
 
 	$( document ).ready(function() {
 		$( '#record-tracklist' )
-			.audiothemeRepeater({ items: settings.tracks })
+			.audiothemeRepeater({ items: JSON.parse( settings.tracks ) })
 			.on('addItem.audiotheme', function( e, track ) {
 				wp.ajax.post( 'audiotheme_ajax_get_default_track', {
 					record: settings.postId,

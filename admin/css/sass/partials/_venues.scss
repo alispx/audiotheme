@@ -16,9 +16,17 @@ body.screen-gigs_page_audiotheme-venues {
 	width: 4em;
 
 	a span.audiotheme-column-icon {
-		background: url(../images/link.png) 0 0 no-repeat;
-		text-indent: -9999px;
-		width: 16px;
+		overflow: hidden;
+		position: relative;
+		text-indent: 100%;
+		width: 20px;
+
+		&:before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			text-indent: 0;
+		}
 	}
 }
 

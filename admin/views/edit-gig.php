@@ -14,7 +14,7 @@
 			<td>
 				<div class="audiotheme-input-group">
 					<input type="text" name="gig_time" id="gig-time" value="<?php echo esc_attr( $gig_time ); ?>" placeholder="HH:MM" class="audiotheme-input-group-field ui-autocomplete-input">
-					<label for="gig-time" id="gig-time-select" class="audiotheme-input-group-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>modules/admin/images/clock.png" width="12" height="12"></label>
+					<label for="gig-time" id="gig-time-select" class="audiotheme-input-group-trigger dashicons dashicons-clock"></label>
 				</div>
 			</td>
 		</tr>
@@ -23,7 +23,7 @@
 			<td>
 				<div class="audiotheme-input-group">
 					<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>" class="audiotheme-input-group-field">
-					<label for="gig-venue" id="gig-venue-select" class="audiotheme-input-group-trigger"><img src="<?php echo AUDIOTHEME_URI; ?>modules/admin/images/arrow-down.png" width="12" height="12" title="<?php esc_attr_e( 'Select Venue', 'audiotheme' ); ?>" alt="<?php esc_attr_e( 'Select Venue', 'audiotheme' ); ?>"></label>
+					<label for="gig-venue" id="gig-venue-select" class="audiotheme-input-group-trigger dashicons dashicons-arrow-down-alt2"></label>
 				</div>
 
 				<div id="gig-venue-timezone-group" class="hide-if-js">

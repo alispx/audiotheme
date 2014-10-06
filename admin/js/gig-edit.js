@@ -24,8 +24,8 @@
 		dateFormat: 'yy/mm/dd',
 		defaultDate: lastGigDate,
 		showOn: 'both',
-		buttonImage: settings.datepickerIcon
-	}).next( 'button' ).wrap( '<span class="audiotheme-input-group-trigger">' );
+		buttonText: ''
+	}).next( 'button' ).addClass( 'dashicons dashicons-calendar-alt' ).wrap( '<span class="audiotheme-input-group-trigger"/>' );
 
 	// Initialize the time picker.
 	$time.timepicker({

@@ -91,6 +91,17 @@ body.screen-edit-audiotheme_track select[name="m"] {
 		font-size: 1.2em;
 		padding: 5px 5px 5px 8px;
 	}
+
+	.audiotheme-input-group {
+		.audiotheme-input-group-field,
+		input.audiotheme-input-group-field {
+			height: 34px;
+		}
+
+		.audiotheme-input-group-trigger {
+			width: 34px;
+		}
+	}
 }
 
 .audiotheme-edit-after-editor {
@@ -136,6 +147,7 @@ body.screen-edit-audiotheme_track select[name="m"] {
 		border-bottom-right-radius: 3px;
 		box-shadow: inset 0 1px 0 #fff;
 		box-sizing: border-box;
+		color: #727272;
 		cursor: pointer;
 		display: table-cell;
 		margin: 0;
@@ -148,6 +160,14 @@ body.screen-edit-audiotheme_track select[name="m"] {
 		&:hover {
 			background: #fafafa;
 			border-color: #999;
+			color: #222;
+		}
+
+		&:active {
+			background: #eee;
+			border-color: #999;
+			color: #333;
+			box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, 0.5);
 		}
 
 		img {
@@ -160,6 +180,7 @@ body.screen-edit-audiotheme_track select[name="m"] {
 			border-width: 0;
 			height: 100%;
 			margin: 0;
+			padding: 0;
 			outline: 0;
 			width: 100%;
 		}
