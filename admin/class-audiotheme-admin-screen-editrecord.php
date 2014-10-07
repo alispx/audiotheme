@@ -42,8 +42,7 @@ class AudioTheme_Admin_Screen_EditRecord {
 		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_released' ) );
 		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_artist' ), 20 );
 		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_genre' ), 30 );
-		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_types' ), 40 );
-		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_links' ), 50 );
+		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_links' ), 40 );
 		add_action( 'save_post',                          array( $this, 'on_record_save' ) );
 	}
 
@@ -209,34 +208,6 @@ class AudioTheme_Admin_Screen_EditRecord {
 	}
 
 	/**
-	 * Display a field to set the record type.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param WP_Post $post Record post object.
-	 */
-	public function display_field_types( $post ) {
-		$record_types         = get_audiotheme_record_type_strings();
-		$selected_record_type = wp_get_object_terms( $post->ID, 'audiotheme_record_type', array( 'fields' => 'slugs' ) );
-
-		if ( $record_types ) {
-			?>
-			<p id="audiotheme-record-types" class="audiotheme-field">
-				<label><?php _e( 'Type', 'audiotheme' ) ?></label><br />
-				<?php
-				foreach ( $record_types as $slug => $name ) {
-					echo sprintf( '<input type="radio" name="record_type[]" id="%1$s" value="%1$s"%2$s> <label for="%1$s">%3$s</label><br />',
-						esc_attr( $slug ),
-						checked( in_array( $slug, $selected_record_type ), true, false ),
-						esc_attr( $name ) );
-				}
-				?>
-			</p>
-			<?php
-		}
-	}
-
-	/**
 	 * Display a field to edit record links.
 	 *
 	 * @since 2.0.0
@@ -293,10 +264,6 @@ class AudioTheme_Admin_Screen_EditRecord {
 			}
 		}
 		update_post_meta( $post_id, '_audiotheme_record_links', $record_links );
-
-		// Update record type.
-		$record_types = ( empty( $_POST['record_type'] ) ) ? '' : $_POST['record_type'];
-		wp_set_object_terms( $post_id, $record_types, 'audiotheme_record_type' );
 
 		// Update tracklist.
 		if ( ! empty( $_POST['audiotheme_tracks'] ) ) {

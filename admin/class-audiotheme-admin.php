@@ -74,6 +74,7 @@ class AudioTheme_Admin {
 		add_filter( 'user_contactmethods',        array( $this, 'register_user_contact_methods' ) );
 		add_action( 'manage_pages_custom_column', array( $this, 'display_custom_columns' ), 10, 2 );
 		add_action( 'manage_posts_custom_column', array( $this, 'display_custom_columns' ), 10, 2 );
+		add_action( 'save_post',                  array( $this, 'update_post_terms' ), 10, 2 );
 		add_action( 'admin_init',                 array( $this, 'upgrade' ) );
 	}
 
@@ -84,6 +85,7 @@ class AudioTheme_Admin {
 	 */
 	public function register_ajax_actions() {
 		add_action( 'wp_ajax_audiotheme_ajax_toggle_module', 'audiotheme_ajax_toggle_module' );
+		add_action( 'wp_ajax_audiotheme_ajax_insert_term',   'audiotheme_ajax_insert_term' );
 	}
 
 	/**
@@ -217,6 +219,34 @@ class AudioTheme_Admin {
 	}
 
 	/**
+	 * Save custom taxonomy terms when a post is saved.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param int $post_id Post ID.
+	 * @param WP_Post $post Post object.
+	 */
+	public function update_post_terms( $post_id, $post ) {
+		$is_autosave  = defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE;
+		$is_revision  = wp_is_post_revision( $post_id );
+
+		// Bail if the data shouldn't be saved.
+		if ( $is_autosave || $is_revision || empty( $_POST['audiotheme_post_terms'] ) ) {
+			return;
+		}
+
+		foreach ( $_POST['audiotheme_post_terms'] as $taxonomy => $term_ids ) {
+			// Don't save if intention can't be verified.
+			if ( ! isset( $_POST[ $taxonomy . '_nonce' ] ) || ! wp_verify_nonce( $_POST[ $taxonomy . '_nonce' ], 'save-post-terms_' . $post_id ) ) {
+				continue;
+			}
+
+			$term_ids = array_map( 'absint', $term_ids );
+			wp_set_object_terms( $post_id, $term_ids, $taxonomy );
+		}
+	}
+
+	/**
 	 * Custom user contact fields.
 	 *
 	 * @since 1.0.0
@@ -240,26 +270,54 @@ class AudioTheme_Admin {
 		$current_version = AUDIOTHEME_VERSION;
 
 		if ( version_compare( $saved_version, '2.0.0', '<' ) ) {
-			delete_option( 'audiotheme_disable_directory_browsing' );
-
-			// Add the archive post type to its metadata and delete the inactive option.
-			if ( $archives = get_option( 'audiotheme_archives_inactive' ) ) {
-				foreach ( $archives as $post_type => $post_id ) {
-					update_post_meta( $post_id, 'post_type', $post_type );
-				}
-				delete_option( 'audiotheme_archives_inactive' );
-			}
-
-			// Add the archive post type to its metadata.
-			if ( $archives = get_option( 'audiotheme_archives' ) ) {
-				foreach ( $archives as $post_type => $post_id ) {
-					update_post_meta( $post_id, 'post_type', $post_type );
-				}
-			}
+			$this->upgrade200();
 		}
 
 		if ( '0' == $saved_version || version_compare( $saved_version, $current_version, '<' ) ) {
 			update_option( 'audiotheme_version', AUDIOTHEME_VERSION );
+		}
+	}
+
+	protected function upgrade200() {
+		delete_option( 'audiotheme_disable_directory_browsing' );
+
+		// Add the archive post type to its metadata and delete the inactive option.
+		if ( $archives = get_option( 'audiotheme_archives_inactive' ) ) {
+			foreach ( $archives as $post_type => $post_id ) {
+				update_post_meta( $post_id, 'post_type', $post_type );
+			}
+			delete_option( 'audiotheme_archives_inactive' );
+		}
+
+		// Add the archive post type to its metadata.
+		if ( $archives = get_option( 'audiotheme_archives' ) ) {
+			foreach ( $archives as $post_type => $post_id ) {
+				update_post_meta( $post_id, 'post_type', $post_type );
+			}
+		}
+
+		// Update record types.
+		$terms = get_terms( 'audiotheme_record_type', array( 'get' => 'all' ) );
+		if ( ! empty( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$name = get_audiotheme_record_type_string( $term->slug );
+				$name = empty( $name ) ? ucwords( str_replace( array( 'record-type-', '-' ), array( '', ' ' ), $term->name ) ) : $name;
+				$slug = str_replace( 'record-type-', '', $term->slug );
+
+				$result = wp_update_term( $term->term_id, 'audiotheme_record_type', array(
+					'name' => $name,
+					'slug' => $slug,
+				) );
+
+				if ( is_wp_error( $result ) ) {
+					// Update the name only. We'll account for the 'record-type-' prefix.
+					wp_update_term( $term->term_id, 'audiotheme_record_type', array(
+						'name' => $name,
+					) );
+				}
+			}
+
+			// @todo Flush rewrite rules.
 		}
 	}
 }

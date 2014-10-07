@@ -93,7 +93,7 @@ class AudioTheme_Admin_Screen_ManageRecords {
 		$columns = audiotheme_array_insert_after_key( $columns, 'cb', $image_column );
 		$columns = audiotheme_array_insert_after_key( $columns, 'title', $release_column );
 
-		$columns['record_type'] = _x( 'Type', 'column name', 'audiotheme' );
+		$columns['taxonomy-audiotheme_record_type'] = _x( 'Type', 'column name', 'audiotheme' );
 		$columns['track_count'] = _x( 'Tracks', 'column name', 'audiotheme' );
 
 		unset( $columns['date'] );
@@ -127,25 +127,6 @@ class AudioTheme_Admin_Screen_ManageRecords {
 		global $post;
 
 		switch ( $column_name ) {
-			case 'record_type' :
-				$taxonomy = 'audiotheme_record_type';
-				$post_type = get_post_type( $post_id );
-				$terms = wp_get_object_terms( $post_id, $taxonomy, array( 'fields' => 'slugs' ) );
-
-				if ( ! empty( $terms ) ) {
-					$record_types = get_audiotheme_record_type_strings();
-					foreach ( $terms as $term ) {
-						if ( isset( $record_types[ $term ] ) ) {
-							$names[] = $record_types[ $term ];
-						}
-					}
-
-					if ( ! empty( $names ) ) {
-						echo join( ', ', $names );
-					}
-				}
-				break;
-
 			case 'release_year' :
 				echo get_audiotheme_record_release_year( $post_id );
 				break;

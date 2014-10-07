@@ -55,6 +55,7 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
  */
 require( AUDIOTHEME_DIR . 'includes/archive-template.php' );
 require( AUDIOTHEME_DIR . 'includes/default-hooks.php' );
+require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
 require( AUDIOTHEME_DIR . 'includes/discography-template.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/general-template.php' );

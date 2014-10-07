@@ -47,7 +47,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	public function register_hooks() {
 		add_action( 'init',                    array( $this, 'register_post_types' ) );
 		add_action( 'init',                    array( $this, 'register_taxonomies' ) );
-		add_filter( 'request',                 array( $this, 'record_type_request' ) );
 		add_filter( 'generate_rewrite_rules',  array( $this, 'generate_rewrite_rules' ) );
 		add_action( 'pre_get_posts',           array( $this, 'record_query_posts_per_page' ), 9 );
 		add_action( 'pre_get_posts',           array( $this, 'record_query_sort' ) );
@@ -59,7 +58,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		add_filter( 'wp_unique_post_slug',     array( $this, 'track_unique_slug' ), 10, 6 );
 		add_action( 'wp_print_footer_scripts', array( $this, 'print_tracks_js' ) );
 		add_filter( 'post_class',              array( $this, 'record_archive_post_class' ) );
-		add_filter( 'get_term',                array( $this, 'record_type_term_filter' ), 10, 2 );
 	}
 
 	/**
@@ -166,16 +164,19 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 
 		$args = array(
 			'args'                           => array( 'orderby' => 'term_order' ),
-			'hierarchical'                   => true,
+			'hierarchical'                   => false,
 			'labels'                         => $labels,
+			'meta_box_cb'                    => 'audiotheme_taxonomy_checkbox_list_meta_box',
 			'public'                         => true,
 			'query_var'                      => true,
 			'rewrite'                        => array(
 				'slug'                       => $this->get_rewrite_base() . '/type',
 				'with_front'                 => false,
 			),
-			'show_ui'                        => false,
-			'show_in_nav_menus'              => false,
+			'show_ui'                        => true,
+			'show_admin_column'              => true,
+			'show_in_nav_menus'              => true,
+			'show_tagcloud'                  => false,
 		);
 
 		register_taxonomy( 'audiotheme_record_type', 'audiotheme_record', $args );
@@ -199,30 +200,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		}
 
 		return $front . $base;
-	}
-
-	/**
-	 * Filter requests to accomodate the 'record-type-' prefix.
-	 *
-	 * @access private
-	 * @since 1.4.0
-	 *
-	 * @param array $query_vars
-	 * @return array
-	 */
-	public function record_type_request( $query_vars ) {
-		if ( ! isset( $query_vars['audiotheme_record_type'] ) ) {
-			return $query_vars;
-		}
-
-		$current_slug = 'record-type-' . $query_vars['audiotheme_record_type'];
-		$slugs = get_audiotheme_record_type_slugs();
-
-		if ( in_array( $current_slug, $slugs ) ) {
-			$query_vars['audiotheme_record_type'] = $current_slug;
-		}
-
-		return $query_vars;
 	}
 
 	/**
@@ -664,23 +641,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		}
 
 		return $classes;
-	}
-
-	/**
-	 * Set the correct record type name when a term is requested.
-	 *
-	 * @since 1.4.0
-	 *
-	 * @param object $term Term object.
-	 * @param string $taxonomy Taxonomy name.
-	 * @return object
-	 */
-	public function record_type_term_filter( $term, $taxonomy ) {
-		if ( 'audiotheme_record_type' == $taxonomy ) {
-			$term->name = get_audiotheme_record_type_string( $term->slug );
-		}
-
-		return $term;
 	}
 
 	/**
