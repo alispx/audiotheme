@@ -1,7 +1,7 @@
 .DS_Store
+admin/css/*.min.css
+admin/js/*.min.js
 includes/css/*.min.css
 languages/*
-modules/admin/css/*.min.css
-modules/admin/js/*.min.js
 node_modules
 release
