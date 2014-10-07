@@ -172,7 +172,7 @@ class AudioTheme_Admin_Videos {
 		$json['postId'] = $post_id;
 
 		if ( empty( $_POST['video_url'] ) ) {
-			// @todo Return an error.
+			wp_send_json_error();
 		}
 
 		$this->sideload_thumbnail( $post_id, $_POST['video_url'] );
