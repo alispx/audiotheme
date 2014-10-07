@@ -81,8 +81,6 @@ class AudioTheme_Admin_Gigs {
 	 * only attached on the screens that require it. The priority should be set
 	 * extremely low to help ensure the correct value gets returned.
 	 *
-	 * @todo Test this.
-	 *
 	 * @since 1.0.0
 	 *
 	 * @param bool $return Default is 'false'.

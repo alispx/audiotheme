@@ -255,22 +255,6 @@ class AudioTheme_Admin_Screen_EditRecord {
 	}
 
 	/**
-	 * Update a record's track count.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param int $post_id Record ID.
-	 */
-	public function update_record_track_count( $post_id ) {
-		global $wpdb;
-
-		$sql         = $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type='audiotheme_track' AND post_parent=%d", $post_id );
-		$track_count = $wpdb->get_var( $sql );
-		$track_count = empty( $track_count ) ? 0 : absint( $track_count );
-		update_post_meta( $post_id, '_audiotheme_track_count', $track_count );
-	}
-
-	/**
 	 * Rules for saving a record.
 	 *
 	 * Creates and updates child tracks and saves additional record meta.
@@ -350,7 +334,7 @@ class AudioTheme_Admin_Screen_EditRecord {
 			}
 
 			// Update track count.
-			$this->update_record_track_count( $post_id );
+			audiotheme_record_update_track_count( $post_id );
 		}
 	}
 }

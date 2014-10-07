@@ -190,7 +190,6 @@ class AudioTheme_Admin_Screen_EditTrack {
 		$is_downloadable = empty( $_POST['is_downloadable'] ) ? null : 1;
 		update_post_meta( $post_id, '_audiotheme_is_downloadable', $is_downloadable );
 
-		// @todo This needs to be updated.
 		audiotheme_record_update_track_count( $track->post_parent );
 	}
 }

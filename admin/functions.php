@@ -432,3 +432,19 @@ function audiotheme_submenu_move_after( $move_slug, $after_slug, $menu_slug ) {
 		}
 	}
 }
+
+/**
+ * Update a record's track count.
+ *
+ * @since 2.0.0
+ *
+ * @param int $post_id Record ID.
+ */
+function audiotheme_record_update_track_count( $post_id ) {
+	global $wpdb;
+
+	$sql         = $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type='audiotheme_track' AND post_parent=%d", $post_id );
+	$track_count = $wpdb->get_var( $sql );
+	$track_count = empty( $track_count ) ? 0 : absint( $track_count );
+	update_post_meta( $post_id, '_audiotheme_track_count', $track_count );
+}
