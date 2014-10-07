@@ -11,9 +11,14 @@
 	line-height: 1.5;
 
 	.audiotheme_record {
+		background: transparent;
 		border-width: 0;
 		box-shadow: none;
 		padding: 0;
+		
+		&:hover {
+			box-shadow: none;
+		}
 
 		.audiotheme-record-artwork {
 			margin: 0 0 10px 0;
@@ -68,12 +73,17 @@
 
 .audiotheme-record-single {
 	@extend .audiotheme-clearfix;
+
+	background: transparent;
 	border-width: 0;
 	box-shadow: none;
-	padding: 0;
-
 	line-height: 1.5;
+	padding: 0;
 	width: auto;
+	
+	&:hover {
+		box-shadow: none;
+	}
 
 	h1, h2, h3, h4, h5, h6 {
 		clear: none;

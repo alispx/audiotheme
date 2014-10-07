@@ -11,6 +11,15 @@
 	line-height: 1.5;
 
 	.audiotheme_video {
+		background: transparent;
+		border-width: 0;
+		box-shadow: none;
+		padding: 0;
+
+		&:hover {
+			box-shadow: none;
+		}
+
 		.audiotheme-featured-image {
 			margin: 0 0 10px 0;
 		}
@@ -31,6 +40,15 @@
 ------------------------------------------------------------------------------*/
 
 .audiotheme-video-single {
+	background: transparent;
+	border-width: 0;
+	box-shadow: none;
+	padding: 0;
+
+	&:hover {
+		box-shadow: none;
+	}
+
 	.audiotheme-embed {
 		margin: 0 0 30px 0;
 	}
