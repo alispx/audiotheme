@@ -140,6 +140,26 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	}
 
 	/**
+	 * Get the videos rewrite base. Defaults to 'videos'.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public function get_rewrite_base() {
+		global $wp_rewrite;
+
+		$front = '';
+		$base  = get_option( 'audiotheme_gig_rewrite_base', 'shows' );
+
+		if ( $wp_rewrite->using_index_permalinks() ) {
+			$front = $wp_rewrite->index . '/';
+		}
+
+		return $front . $base;
+	}
+
+	/**
 	 * Filter gigs requests.
 	 *
 	 * Automatically sorts gigs in ascending order by the gig date, but limits to
@@ -517,25 +537,5 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_gig';
 
 		$wp_rewrite->rules = array_merge( $new_rules, $wp_rewrite->rules );
-	}
-
-	/**
-	 * Get the videos rewrite base. Defaults to 'videos'.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	protected function get_rewrite_base() {
-		global $wp_rewrite;
-
-		$front = '';
-		$base  = get_option( 'audiotheme_gig_rewrite_base', 'shows' );
-
-		if ( $wp_rewrite->using_index_permalinks() ) {
-			$front = $wp_rewrite->index . '/';
-		}
-
-		return $front . $base;
 	}
 }

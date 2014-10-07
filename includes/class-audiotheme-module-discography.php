@@ -182,6 +182,26 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	}
 
 	/**
+	 * Get the Discography rewrite base. Defaults to 'music'.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return string
+	 */
+	public function get_rewrite_base() {
+		global $wp_rewrite;
+
+		$front = '';
+		$base  = get_option( 'audiotheme_record_rewrite_base', 'music' );
+
+		if ( $wp_rewrite->using_index_permalinks() ) {
+			$front = $wp_rewrite->index . '/';
+		}
+
+		return $front . $base;
+	}
+
+	/**
 	 * Filter requests to accomodate the 'record-type-' prefix.
 	 *
 	 * @access private
@@ -690,25 +710,5 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_record';
 
 		$wp_rewrite->rules = array_merge( $new_rules, $wp_rewrite->rules );
-	}
-
-	/**
-	 * Get the Discography rewrite base. Defaults to 'music'.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return string
-	 */
-	protected function get_rewrite_base() {
-		global $wp_rewrite;
-
-		$front = '';
-		$base  = get_option( 'audiotheme_record_rewrite_base', 'music' );
-
-		if ( $wp_rewrite->using_index_permalinks() ) {
-			$front = $wp_rewrite->index . '/';
-		}
-
-		return $front . $base;
 	}
 }

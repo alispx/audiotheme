@@ -101,6 +101,26 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	}
 
 	/**
+	 * Get the videos rewrite base. Defaults to 'videos'.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public function get_rewrite_base() {
+		global $wp_rewrite;
+
+		$front = '';
+		$base  = get_option( 'audiotheme_video_rewrite_base', 'videos' );
+
+		if ( $wp_rewrite->using_index_permalinks() ) {
+			$front = $wp_rewrite->index . '/';
+		}
+
+		return $front . $base;
+	}
+
+	/**
 	 * Sort video archive requests.
 	 *
 	 * Defaults to sorting by publish date in descending order. A plugin can hook
@@ -240,16 +260,5 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		}
 
 		return $classes;
-	}
-
-	/**
-	 * Get the videos rewrite base. Defaults to 'videos'.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	protected function get_rewrite_base() {
-		return get_option( 'audiotheme_video_rewrite_base', 'videos' );
 	}
 }
