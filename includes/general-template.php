@@ -140,31 +140,6 @@ function audiotheme_simplify_url( $url ) {
 }
 
 /**
- * Retrieve CSS classes that mimic nth-child selectors for compatibility
- * across browsers.
- *
- * @since 1.2.0
- *
- * @param array $args Arguments to control the class names.
- * @return array
- */
-function audiotheme_nth_child_classes( $args ) {
-	$args = wp_parse_args( $args, array(
-		'base'    => 'item',
-		'current' => 1, // Current item in the loop. Index starts at 1 to match CSS.
-		'max'     => 3, // Number of columns.
-	) );
-
-	$classes = array( $args['base'] );
-
-	for ( $i = 2; $i <= $args['max']; $i ++ ) {
-		$classes[] = ( $args['current'] % $i ) ? $args['base'] . '-' . $i . 'np' . ( $args['current'] % $i ) : $args['base'] . '-' . $i . 'n';
-	}
-
-	return $classes;
-}
-
-/**
  * Displays navigation to next/previous pages when applicable in archive
  * templates
  *

@@ -651,10 +651,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	/**
 	 * Add classes to record posts on the archive page.
 	 *
-	 * Classes serve as helpful hooks to aid in styling across various browsers.
-	 *
-	 * - Adds nth-child classes to record posts.
-	 *
 	 * @since 1.2.0
 	 *
 	 * @param array $classes Default post classes.
@@ -664,12 +660,7 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		global $wp_query;
 
 		if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_record' ) ) {
-			$nth_child_classes = audiotheme_nth_child_classes( array(
-				'current' => $wp_query->current_post + 1,
-				'max'     => get_audiotheme_archive_meta( 'columns', true, 4 ),
-			) );
-
-			$classes = array_merge( $classes, $nth_child_classes );
+			$classes[] = 'item';
 		}
 
 		return $classes;
