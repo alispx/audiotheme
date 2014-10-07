@@ -336,9 +336,10 @@ function get_audiotheme_track_thumbnail_id( $post = null ) {
  * </code>
  *
  * @since 1.1.0
+ *
  * @uses $audiotheme_enqueued_tracks
  * @see audiotheme_print_tracks_js()
- * @see audiotheme_prepare_track_for_js()
+ * @see AudioTheme_Module_Discography::prepare_track_for_js()
  *
  * @param int|array|object $track Accepts a track ID, record ID, post object, or array in the expected format.
  * @param string $list A list identifier.

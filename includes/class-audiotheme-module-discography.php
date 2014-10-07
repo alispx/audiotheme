@@ -596,12 +596,12 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 
 					if ( $record_tracks ) {
 						foreach ( $record_tracks as $record_track ) {
-							if ( $track_data = audiotheme_prepare_track_for_js( $record_track ) ) {
+							if ( $track_data = $this->prepare_track_for_js( $record_track ) ) {
 								$lists[ $list ][] = $track_data;
 							}
 						}
 					}
-				} elseif ( $track_data = audiotheme_prepare_track_for_js( $track ) ) {
+				} elseif ( $track_data = $this->prepare_track_for_js( $track ) ) {
 					$lists[ $list ][] = $track_data;
 				}
 			}
