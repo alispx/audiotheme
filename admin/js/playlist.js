@@ -19,7 +19,6 @@ window.cue = window.cue || {};
 	 * Fetch a track by id.
 	 */
 	cue.model.Track.prototype.fetch = function() {
-		// @todo Make sure the track has an id.
 		return wp.ajax.post( 'audiotheme_ajax_get_playlist_track', {
 			post_id: this.get( 'id' )
 		});

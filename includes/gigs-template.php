@@ -217,7 +217,6 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 
 	if ( empty( $gig->gig_time ) ) {
 		// ISO 8601 without time component or timezone component.
-		// @todo Need to verify Google Calendar support.
 		$d = ( 'c' == $d ) ? 'Y-m-d' : $d;
 		$format = $d;
 	} else {
