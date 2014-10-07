@@ -636,7 +636,7 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	public function record_archive_post_class( $classes ) {
 		global $wp_query;
 
-		if ( $wp_query->is_main_query() && is_post_type_archive( 'audiotheme_record' ) ) {
+		if ( $wp_query->is_main_query() && ( is_post_type_archive( 'audiotheme_record' ) || is_tax( 'audiotheme_record_type' ) ) ) {
 			$classes[] = 'item';
 		}
 

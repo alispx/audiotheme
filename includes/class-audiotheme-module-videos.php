@@ -45,7 +45,9 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
+		add_action( 'init',              array( $this, 'register_taxonomies' ) );
 		add_action( 'init',              array( $this, 'register_post_types' ) );
+		add_action( 'pre_get_posts',     array( $this, 'video_category_query' ), 9 );
 		add_action( 'template_include',  array( $this, 'template_include' ) );
 		add_action( 'delete_attachment', array( $this, 'delete_oembed_thumbnail_data' ) );
 		add_filter( 'post_class',        array( $this, 'archive_post_class' ) );
@@ -98,6 +100,50 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		);
 
 		register_post_type( 'audiotheme_video', $args );
+	}
+
+	/**
+	 * Register taxonomies.
+	 *
+	 * @since 2.0.0
+	 */
+	public function register_taxonomies() {
+		$labels = array(
+			'name'                       => _x( 'Categories', 'taxonomy general name', 'audiotheme' ),
+			'singular_name'              => _x( 'Category', 'taxonomy singular name', 'audiotheme' ),
+			'search_items'               => __( 'Search Categories', 'audiotheme' ),
+			'popular_items'              => __( 'Popular Categories', 'audiotheme' ),
+			'all_items'                  => __( 'All Categories', 'audiotheme' ),
+			'parent_item'                => __( 'Parent Category', 'audiotheme' ),
+			'parent_item_colon'          => __( 'Parent Category:', 'audiotheme' ),
+			'edit_item'                  => __( 'Edit Category', 'audiotheme' ),
+			'view_item'                  => __( 'View Category', 'audiotheme' ),
+			'update_item'                => __( 'Update Category', 'audiotheme' ),
+			'add_new_item'               => __( 'Add New Category', 'audiotheme' ),
+			'new_item_name'              => __( 'New Category Name', 'audiotheme' ),
+			'separate_items_with_commas' => __( 'Separate categories with commas', 'audiotheme' ),
+			'add_or_remove_items'        => __( 'Add or remove categories', 'audiotheme' ),
+			'choose_from_most_used'      => __( 'Choose from most used categories', 'audiotheme' ),
+			'menu_name'                  => __( 'Categories', 'audiotheme' ),
+		);
+
+		$args = array(
+			'args'                           => array( 'orderby' => 'term_order' ),
+			'hierarchical'                   => true,
+			'labels'                         => $labels,
+			'public'                         => true,
+			'query_var'                      => true,
+			'rewrite'                        => array(
+				'slug'                       => $this->get_rewrite_base() . '/category',
+				'with_front'                 => false,
+			),
+			'show_ui'                        => true,
+			'show_admin_column'              => true,
+			'show_in_nav_menus'              => true,
+			'show_tagcloud'                  => false,
+		);
+
+		register_taxonomy( 'audiotheme_video_category', 'audiotheme_video', $args );
 	}
 
 	/**
@@ -158,6 +204,19 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	}
 
 	/**
+	 * Set video category requests to use the same archive settings as videos.
+	 *
+	 * @since 2.0.0
+	 */
+	public function video_category_query( $query ) {
+		if ( is_admin() || ! $query->is_main_query() || ! is_tax( 'audiotheme_video_category' ) ) {
+			return;
+		}
+
+		$this->archives->set_current_archive_post_type( 'audiotheme_video' );
+	}
+
+	/**
 	 * Set posts per page for video archives.
 	 *
 	 * The default video archive template uses a 4-column grid. If it's loaded from
@@ -191,7 +250,14 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		$original_template = $template;
 		$compat            = $this->theme_compat;
 
-		if ( is_post_type_archive( 'audiotheme_video' ) ) {
+		if ( is_post_type_archive( 'audiotheme_video' ) || is_tax( 'audiotheme_video_category' ) ) {
+			if ( is_tax() ) {
+				$term = get_queried_object();
+				$taxonomy = str_replace( 'audiotheme_', '', $term->taxonomy );
+				$templates[] = "taxonomy-$taxonomy-{$term->slug}.php";
+				$templates[] = "taxonomy-$taxonomy.php";
+			}
+
 			$template = audiotheme_locate_template( 'archive-video.php' );
 
 			$compat->set_title( get_audiotheme_post_type_archive_title() );
