@@ -2,6 +2,21 @@
 -------------------------------------------------------------- */
 
 // @todo Make the video preview responsive.
+.audiotheme-video-preview {
+	padding: 0 0 56.25% 0;
+	position: relative;
+	width: 100%;
+}
+
+.audiotheme-video-preview embed,
+.audiotheme-video-preview iframe,
+.audiotheme-video-preview object {
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
 
 #audiotheme-select-oembed-thumb {
 	clear: both;
