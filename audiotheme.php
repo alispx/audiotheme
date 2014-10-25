@@ -128,18 +128,18 @@ function audiotheme() {
 
 			if ( $modules->is_active( 'discography' ) || $instance->is_settings_screen() ) {
 				$admin_modules['discography']    = 'AudioTheme_Admin_Discography';
-				$admin_screens['edit_record']    = 'AudioTheme_Admin_Screen_EditRecord';
-				$admin_screens['edit_track']     = 'AudioTheme_Admin_Screen_EditTrack';
 				$admin_screens['manage_records'] = 'AudioTheme_Admin_Screen_ManageRecords';
+				$admin_screens['edit_record']    = 'AudioTheme_Admin_Screen_EditRecord';
 				$admin_screens['manage_tracks']  = 'AudioTheme_Admin_Screen_ManageTracks';
+				$admin_screens['edit_track']     = 'AudioTheme_Admin_Screen_EditTrack';
 			}
 
 			if ( $modules->is_active( 'gigs' ) || $instance->is_settings_screen() ) {
 				$admin_modules['gigs']          = 'AudioTheme_Admin_Gigs';
-				$admin_screens['edit_gig']      = 'AudioTheme_Admin_Screen_EditGig';
-				$admin_screens['edit_venue']    = 'AudioTheme_Admin_Screen_EditVenue';
 				$admin_screens['manage_gigs']   = 'AudioTheme_Admin_Screen_ManageGigs';
+				$admin_screens['edit_gig']      = 'AudioTheme_Admin_Screen_EditGig';
 				$admin_screens['manage_venues'] = 'AudioTheme_Admin_Screen_ManageVenues';
+				$admin_screens['edit_venue']    = 'AudioTheme_Admin_Screen_EditVenue';
 			}
 
 			if ( $modules->is_active( 'videos' ) || $instance->is_settings_screen() ) {
