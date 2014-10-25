@@ -47,6 +47,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	public function register_hooks() {
 		add_action( 'init',                     array( $this, 'register_post_types' ) );
 		add_filter( 'generate_rewrite_rules',   array( $this, 'generate_rewrite_rules' ) );
+		add_filter( 'query_vars',               array( $this, 'register_query_vars' ) );
 		add_action( 'pre_get_posts',            array( $this, 'gig_query' ) );
 		add_action( 'template_redirect',        array( $this, 'template_redirect' ) );
 		add_action( 'template_include',         array( $this, 'template_include' ) );
@@ -140,6 +141,19 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	}
 
 	/**
+	 * Register query variables.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $vars Array of valid query variables.
+	 * @return array
+	 */
+	public function register_query_vars( $vars ) {
+		$vars[] = 'audiotheme_gig_range';
+		return $vars;
+	}
+
+	/**
 	 * Get the videos rewrite base. Defaults to 'videos'.
 	 *
 	 * @since 1.0.0
@@ -218,6 +232,16 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 				$query->set( 'monthnum', null );
 				$query->set( 'year', null );
 			}
+		} elseif ( 'past' == $query->get( 'audiotheme_gig_range' ) ){
+			$meta_query[] = array(
+				'key'     => '_audiotheme_gig_datetime',
+				'value'   => date( 'Y-m-d', current_time( 'timestamp' ) ),
+				'compare' => '<',
+				'type'    => 'DATETIME',
+			);
+
+			$query->set( 'posts_per_archive_page', null );
+			$query->set( 'order', 'desc' );
 		} else {
 			// Only show upcoming gigs.
 			$meta_query[] = array(
@@ -508,13 +532,13 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 * /base/YYYY/MM/
 	 * /base/YYYY/(feed|ical|json)/
 	 * /base/YYYY/
+	 * /base/past/page/2/
+	 * /base/past/
 	 * /base/(feed|ical|json)/
 	 * /base/%postname%/
 	 * /base/
 	 *
 	 * @todo /base/tour/%tourname%/
-	 *       /base/past/page/2/
-	 *       /base/past/
 	 *       /base/YYYY/page/2/
 	 *       etc.
 	 *
@@ -532,6 +556,8 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]';
 		$new_rules[ $base . '/([0-9]{4})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]';
 		$new_rules[ $base . '/(feed|ical|json)/?$' ] = 'index.php?post_type=audiotheme_gig&feed=$matches[1]';
+		$new_rules[ $base . '/past/page/([0-9]{1,})/?$' ] = 'index.php?post_type=audiotheme_gig&paged=$matches[1]&audiotheme_gig_range=past';
+		$new_rules[ $base . '/past/?$' ] = 'index.php?post_type=audiotheme_gig&audiotheme_gig_range=past';
 		$new_rules[ $base . '/([^/]+)/(ical|json)/?$' ] = 'index.php?audiotheme_gig=$matches[1]&feed=$matches[2]';
 		$new_rules[ $base . '/([^/]+)/?$' ] = 'index.php?audiotheme_gig=$matches[1]';
 		$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_gig';
