@@ -14,14 +14,6 @@
  */
 class AudioTheme_Admin_Screen_ManageVenues {
 	/**
-	 * Screen identifier.
-	 *
-	 * @since 2.0.0
-	 * @type string
-	 */
-	public $id = 'manage_venues';
-
-	/**
 	 * Load the screen.
 	 *
 	 * @since 2.0.0

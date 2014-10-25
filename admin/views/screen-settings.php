@@ -6,13 +6,13 @@
 			<h3><?php _e( 'Modules', 'audiotheme' ); ?></h3>
 
 			<?php
-			foreach ( $modules as $module_id => $module ) :
+			foreach ( $modules->get_all() as $module_id => $module ) :
 				if ( ! $module->is_core() ) {
 					continue;
 				}
 
 				$classes = array( 'audiotheme-module' );
-				if ( $module->is_active() ) {
+				if ( $modules->is_active( $module_id ) ) {
 					$classes[] = 'is-active';
 				}
 

@@ -14,14 +14,6 @@
  */
 class AudioTheme_Admin_Screen_Settings {
 	/**
-	 * Screen identifier.
-	 *
-	 * @since 2.0.0
-	 * @type string
-	 */
-	public $id = 'settings';
-
-	/**
 	 * Load the screen.
 	 *
 	 * @since 1.0.0
@@ -71,12 +63,11 @@ class AudioTheme_Admin_Screen_Settings {
 	 * @since 1.0.0
 	 */
 	public function render_screen() {
-		$modules          = audiotheme()->modules->get_all();
-		$inactive_modules = audiotheme()->modules->get_inactive();
+		$modules = audiotheme()->modules;
 
 		// Hide menu items for inactive modules on initial load.
 		$styles = '';
-		foreach ( $inactive_modules as $id => $module ) {
+		foreach ( $modules->get_inactive() as $id => $module ) {
 			$styles .= sprintf( '#%s { display: none;}', $module->admin_menu_id );
 		}
 

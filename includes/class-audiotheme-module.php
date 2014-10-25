@@ -40,14 +40,6 @@ abstract class AudioTheme_Module {
 	protected $archives;
 
 	/**
-	 * Module identifier.
-	 *
-	 * @since 2.0.0
-	 * @type string
-	 */
-	protected $id;
-
-	/**
 	 * Module name.
 	 *
 	 * @since 2.0.0
@@ -109,7 +101,6 @@ abstract class AudioTheme_Module {
 			case 'admin_menu_id' :
 			case 'archives' :
 			case 'description' :
-			case 'id' :
 			case 'name' :
 			case 'theme_compat' :
 				return $this->{$name};
@@ -141,18 +132,6 @@ abstract class AudioTheme_Module {
 	 * @since 2.0.0
 	 */
 	abstract function load();
-
-	/**
-	 * Whether the module is active.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return bool
-	 */
-	public function is_active() {
-		$active_modules = get_option( 'audiotheme_inactive_modules', array() );
-		return ! in_array( $this->id, $active_modules );
-	}
 
 	/**
 	 * Whether the module is a core module.

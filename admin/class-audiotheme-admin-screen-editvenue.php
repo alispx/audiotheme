@@ -14,14 +14,6 @@
  */
 class AudioTheme_Admin_Screen_EditVenue {
 	/**
-	 * Screen identifier.
-	 *
-	 * @since 2.0.0
-	 * @type string
-	 */
-	public $id = 'edit_venue';
-
-	/**
 	 * Load the screen.
 	 *
 	 * @since 2.0.0

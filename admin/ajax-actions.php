@@ -14,16 +14,16 @@ function audiotheme_ajax_toggle_module() {
 	check_ajax_referer( 'toggle-module_' . $module_id, 'nonce' );
 
 	$modules = audiotheme()->modules;
-	$module  = $modules->get( $module_id );
+	$module  = $modules[ $module_id ];
 
-	if ( $module->is_core() && $module->is_active() ) {
+	if ( $module->is_core() && $modules->is_active( $module_id ) ) {
 		$modules->deactivate( $module_id );
 	} else {
 		$modules->activate( $module_id );
 	}
 
 	wp_send_json_success( array(
-		'isActive'    => $module->is_active(),
+		'isActive'    => $modules->is_active( $module_id ),
 		'adminMenuId' => $module->admin_menu_id,
 	) );
 }

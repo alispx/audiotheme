@@ -14,14 +14,6 @@
  */
 class AudioTheme_Admin_Screen_EditGig {
 	/**
-	 * Screen identifier.
-	 *
-	 * @since 2.0.0
-	 * @type string
-	 */
-	public $id = 'edit_gig';
-
-	/**
 	 * Load the screen.
 	 *
 	 * @since 2.0.0

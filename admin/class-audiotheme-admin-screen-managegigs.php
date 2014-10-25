@@ -14,14 +14,6 @@
  */
 class AudioTheme_Admin_Screen_ManageGigs {
 	/**
-	 * Screen identifier.
-	 *
-	 * @since 2.0.0
-	 * @type string
-	 */
-	public $id = 'manage_gigs';
-
-	/**
 	 * Load the screen.
 	 *
 	 * @since 2.0.0

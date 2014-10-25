@@ -12,7 +12,7 @@
  * @package AudioTheme\Modules
  * @since 2.0.0
  */
-class AudioTheme_Modules extends AudioTheme_Collection {
+class AudioTheme_Modules extends AudioTheme_Container {
 	/**
 	 * Whether a module is active.
 	 *
@@ -22,7 +22,8 @@ class AudioTheme_Modules extends AudioTheme_Collection {
 	 * @return bool
 	 */
 	public function is_active( $id ) {
-		return $this->items[ $id ]->is_active();
+		$active_modules = get_option( 'audiotheme_inactive_modules', array() );
+		return ! in_array( $id, $active_modules );
 	}
 
 	/**
@@ -33,15 +34,14 @@ class AudioTheme_Modules extends AudioTheme_Collection {
 	 * @return array
 	 */
 	public function get_active() {
-		$active = array();
-		foreach ( $this->items as $id => $module ) {
-			if ( ! $module->is_active() ) {
+		$objects = array();
+		foreach ( $this->container as $id => $item ) {
+			if ( ! $this->is_active( $id ) ) {
 				continue;
 			}
-
-			$active[ $id ] = $module;
+			$objects[ $id ] = $this[ $id ];
 		}
-		return $active;
+		return $objects;
 	}
 
 	/**
@@ -52,15 +52,14 @@ class AudioTheme_Modules extends AudioTheme_Collection {
 	 * @return array
 	 */
 	public function get_inactive() {
-		$inactive = array();
-		foreach ( $this->items as $id => $module ) {
-			if ( $module->is_active() ) {
+		$objects = array();
+		foreach ( $this->container as $id => $item ) {
+			if ( $this->is_active( $id ) ) {
 				continue;
 			}
-
-			$inactive[ $id ] = $module;
+			$objects[ $id ] = $this[ $id ];
 		}
-		return $inactive;
+		return $objects;
 	}
 
 	/**

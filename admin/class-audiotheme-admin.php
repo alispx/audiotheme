@@ -7,18 +7,18 @@
  */
 class AudioTheme_Admin {
 	/**
-	 * Module admin collection.
+	 * Admin modules container.
 	 *
 	 * @since 2.0.0
-	 * @type AudioTheme_Collection
+	 * @type AudioTheme_Container
 	 */
 	public $modules;
 
 	/**
-	 * Screen collection.
+	 * Screen container.
 	 *
 	 * @since 2.0.0
-	 * @type AudioTheme_Collection
+	 * @type AudioTheme_Container
 	 */
 	public $screens;
 
@@ -39,7 +39,7 @@ class AudioTheme_Admin {
 	}
 
 	/**
-	 *
+	 * Load module admin classes.
 	 *
 	 * @since 2.0.0
 	 */
@@ -50,7 +50,7 @@ class AudioTheme_Admin {
 	}
 
 	/**
-	 *
+	 * Load admin screens.
 	 *
 	 * @since 2.0.0
 	 */

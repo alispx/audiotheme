@@ -139,11 +139,9 @@ class AudioTheme {
 	 * @since 2.0.0
 	 */
 	protected function load_active_modules() {
-		foreach ( $this->modules->get_all() as $module_id => $module ) {
-			if ( ! $module->is_active() && ! $this->is_settings_screen() ) {
-				continue;
-			}
+		$modules = $this->is_settings_screen() ? $this->modules->get_all() : $this->modules->get_active();
 
+		foreach ( $modules as $module ) {
 			if ( empty( $module->archives ) ) {
 				$module->archives = $this->archives;
 			}
@@ -198,7 +196,11 @@ class AudioTheme {
 	}
 
 	/**
+	 * Whether the current request is the settings screen.
 	 *
+	 * @since 2.0.0
+	 *
+	 * @return bool
 	 */
 	public function is_settings_screen() {
 		return is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];

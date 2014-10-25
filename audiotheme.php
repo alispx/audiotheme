@@ -116,37 +116,41 @@ function audiotheme() {
 		 *
 		 * @since 2.0.0
 		 */
-		$instance->modules = new AudioTheme_Modules;
-		$instance->modules->add( new AudioTheme_Module_Discography );
-		$instance->modules->add( new AudioTheme_Module_Gigs );
-		$instance->modules->add( new AudioTheme_Module_Videos );
+		$modules                = new AudioTheme_Modules;
+		$modules['discography'] = 'AudioTheme_Module_Discography';
+		$modules['gigs']        = 'AudioTheme_Module_Gigs';
+		$modules['videos']      = 'AudioTheme_Module_Videos';
+		$instance->modules      = $modules;
 
 		if ( is_admin() ) {
+			$admin_modules   = new AudioTheme_Container;
+			$admin_screens   = new AudioTheme_Container;
+
+			$admin_screens['settings'] = 'AudioTheme_Admin_Screen_Settings';
+
+			if ( $modules->is_active( 'discography' ) || $instance->is_settings_screen() ) {
+				$admin_modules['discography']    = 'AudioTheme_Admin_Discography';
+				$admin_screens['edit_record']    = 'AudioTheme_Admin_Screen_EditRecord';
+				$admin_screens['edit_track']     = 'AudioTheme_Admin_Screen_EditTrack';
+				$admin_screens['manage_records'] = 'AudioTheme_Admin_Screen_ManageRecords';
+				$admin_screens['manage_tracks']  = 'AudioTheme_Admin_Screen_ManageTracks';
+			}
+
+			if ( $modules->is_active( 'gigs' ) || $instance->is_settings_screen() ) {
+				$admin_modules['gigs']          = 'AudioTheme_Admin_Gigs';
+				$admin_screens['edit_gig']      = 'AudioTheme_Admin_Screen_EditGig';
+				$admin_screens['edit_venue']    = 'AudioTheme_Admin_Screen_EditVenue';
+				$admin_screens['manage_gigs']   = 'AudioTheme_Admin_Screen_ManageGigs';
+				$admin_screens['manage_venues'] = 'AudioTheme_Admin_Screen_ManageVenues';
+			}
+
+			if ( $modules->is_active( 'videos' ) || $instance->is_settings_screen() ) {
+				$admin_modules['videos'] = 'AudioTheme_Admin_Videos';
+			}
+
 			$instance->admin          = new AudioTheme_Admin;
-			$instance->admin->modules = new AudioTheme_Collection;
-			$instance->admin->screens = new AudioTheme_Collection;
-
-			$instance->admin->screens->add( new AudioTheme_Admin_Screen_Settings );
-
-			if ( $instance->modules->get( 'discography' )->is_active() || $instance->is_settings_screen() ) {
-				$instance->admin->modules->add( 'discography', new AudioTheme_Admin_Discography );
-				$instance->admin->screens->add( new AudioTheme_Admin_Screen_EditRecord );
-				$instance->admin->screens->add( new AudioTheme_Admin_Screen_EditTrack );
-				$instance->admin->screens->add( new AudioTheme_Admin_Screen_ManageRecords );
-				$instance->admin->screens->add( new AudioTheme_Admin_Screen_ManageTracks );
-			}
-
-			if ( $instance->modules->get( 'gigs' )->is_active() || $instance->is_settings_screen() ) {
-				$instance->admin->modules->add( 'gigs', new AudioTheme_Admin_Gigs );
-				$instance->admin->screens->add( new AudioTheme_Admin_Screen_EditGig );
-				$instance->admin->screens->add( new AudioTheme_Admin_Screen_EditVenue );
-				$instance->admin->screens->add( new AudioTheme_Admin_Screen_ManageGigs );
-				$instance->admin->screens->add( new AudioTheme_Admin_Screen_ManageVenues );
-			}
-
-			if ( $instance->modules->get( 'videos' )->is_active() || $instance->is_settings_screen() ) {
-				$instance->admin->modules->add( 'videos', new AudioTheme_Admin_Videos );
-			}
+			$instance->admin->modules = $admin_modules;
+			$instance->admin->screens = $admin_screens;
 		}
 	}
 
