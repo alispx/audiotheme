@@ -54,20 +54,6 @@ class AudioTheme {
 	protected $theme_compat;
 
 	/**
-	 * Constructor method.
-	 *
-	 * @since 2.0.0
-	 */
-	public function __construct( $args = array() ) {
-		$keys = array_keys( get_object_vars( $this ) );
-		foreach ( $keys as $key ) {
-			if ( isset( $args[ $key ] ) ) {
-				$this->$key = $args[ $key ];
-			}
-		}
-	}
-
-	/**
 	 * Magic getter.
 	 *
 	 * @since 2.0.0

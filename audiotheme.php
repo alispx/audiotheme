@@ -104,10 +104,8 @@ function audiotheme() {
 	static $instance;
 
 	if ( null === $instance ) {
-		$instance = new AudioTheme( array(
-			'plugin_file'  => __FILE__,
-		) );
-
+		$instance               = new AudioTheme;
+		$instance->plugin_file  = __FILE__;
 		$instance->archives     = new AudioTheme_Archives;
 		$instance->theme_compat = new AudioTheme_Theme_Compat;
 
