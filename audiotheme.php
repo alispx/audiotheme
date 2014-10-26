@@ -79,7 +79,7 @@ if ( is_admin() ) {
  * @param string $class Class name.
  */
 function audiotheme_autoloader( $class ) {
-	if ( 0 !== strpos( $class, 'AudioTheme' ) ) {
+	if ( 0 !== stripos( $class, 'AudioTheme' ) ) {
 		return;
 	}
 
