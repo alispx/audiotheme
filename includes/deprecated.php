@@ -1,4 +1,12 @@
 <?php
+/**
+ * Deprecated functions from past AudioTheme versions.
+ *
+ * These should no longer be used.
+ *
+ * @package AudioTheme\Deprecated
+ * @since 2.0.0
+ */
 
 /**
  * Old setup method. Used to determine if AudioTheme was active.
@@ -15,6 +23,7 @@ function audiotheme_load() {}
  * format.
  *
  * @since 1.0.0
+ * @deprecated 2.0.0
  *
  * @return array List of record types.
  */
@@ -43,6 +52,7 @@ function get_audiotheme_record_type_strings() {
  * Gets an array of available record type slugs from record type strings.
  *
  * @since 1.0.0
+ * @deprecated 2.0.0
  *
  * @return array List of record type slugs.
  */
@@ -57,6 +67,7 @@ function get_audiotheme_record_type_slugs() {
  * Sets default value of record type if option is not set.
  *
  * @since 1.0.0
+ * @deprecated 2.0.0
  *
  * @param string Record type slug.
  * @return string Record type label.
@@ -76,6 +87,7 @@ if ( ! function_exists( 'get_audiotheme_option' ) ) :
  * Returns an option value.
  *
  * @since 1.0.0
+ * @deprecated 2.0.0
  *
  * @param string $option_name Option name as stored in database.
  * @param string $key Optional. Index of value in the option array.
@@ -100,9 +112,14 @@ if ( ! function_exists( 'get_audiotheme_theme_option' ) ) :
  * Function called to get a theme option. The returned value defaults to false
  * unless a default is passed.
  *
- * Note that this function footprint is slightly different than get_audiotheme_option(). While working in themes, the $option_name shouldn't necessarily need to be known or required, so it should be slightly easier to use while in a theme.
+ * Note that this function footprint is slightly different than
+ * get_audiotheme_option(). While working in themes, the $option_name shouldn't
+ * necessarily need to be known or required, so it should be slightly easier to
+ * use while in a theme.
  *
  * @since 1.0.0
+ * @deprecated 2.0.0
+ *
  * @uses get_audiotheme_option()
  *
  * @param string The option key
@@ -122,6 +139,8 @@ if ( ! function_exists( 'get_audiotheme_theme_options_name' ) ) :
  * Retrieve the registered option name for theme options.
  *
  * @since 1.0.0
+ * @deprecated 2.0.0
+ *
  * @uses get_audiotheme_theme_options_support()
  */
 function get_audiotheme_theme_options_name() {
@@ -149,6 +168,8 @@ if ( ! function_exists( 'get_audiotheme_theme_options_support' ) ) :
  * options. Otherwise, it should be an array of arguments.
  *
  * @since 1.0.0
+ * @deprecated 2.0.0
+ *
  * @uses get_theme_support()
  *
  * @param string $var Optional. Specific argument to return.
