@@ -1,46 +1,77 @@
 <?php
+/**
+ * WP_Query for gigs.
+ *
+ * @package AudioTheme\Gigs
+ * @since 2.0.0
+ */
 
 /**
- * Extend WP_Query and set some default arguments when querying for gigs.
+ * Class to extend WP_Query and set default arguments when querying for gigs.
  *
- * @since 1.0.0
  * @link http://bradt.ca/blog/extending-wp_query/
+ *
+ * @package AudioTheme\Gigs
+ * @since 1.0.0
  */
-class Audiotheme_Gig_Query extends WP_Query {
+class AudioTheme_Gig_Query extends WP_Query {
 	/**
-	 * Build the query args.
+	 * Run the query and cache connected venues.
 	 *
 	 * @since 1.0.0
-	 * @uses p2p_type()
 	 *
-	 * @todo Add context arg.
-	 * @see audiotheme_gig_query()
+	 * @uses p2p_type()
 	 *
 	 * @param array $args WP_Query args.
 	 */
 	public function __construct( $args = array() ) {
-		$args = wp_parse_args( $args, array(
+		$args = $this->parse_args( $args );
+		$args['post_type'] = 'audiotheme_gig';
+		parent::__construct( $args );
+		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $this );
+	}
+
+	/**
+	 * Parse the query args and set defaults.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $args WP_Query args.
+	 * @return array
+	 */
+	protected function parse_args( $args = array() ) {
+		$defaults = array(
 			'post_status'         => 'publish',
-			'posts_per_page'      => get_option( 'posts_per_page' ),
 			'meta_key'            => '_audiotheme_gig_datetime',
 			'orderby'             => 'meta_value',
 			'order'               => 'asc',
 			'ignore_sticky_posts' => true,
-			'meta_query'          => array(
+		);
+
+		if ( isset( $args['audiotheme_preset'] ) && 'recent' == $args['audiotheme_preset'] ) {
+			$defaults['meta_query'] = array(
+				array(
+					'key'     => '_audiotheme_gig_datetime',
+					'value'   => current_time( 'mysql' ),
+					'compare' => '<=',
+					'type'    => 'DATETIME',
+				),
+			);
+
+			$defaults['order'] = 'desc';
+		} else {
+			$defaults['meta_query'] = array(
 				array(
 					'key'     => '_audiotheme_gig_datetime',
 					'value'   => date( 'Y-m-d', current_time( 'timestamp' ) ),
 					'compare' => '>=',
 					'type'    => 'DATETIME',
-				)
-			),
-		) );
+				),
+			);
+		}
 
-		$args = apply_filters( 'audiotheme_gig_query_args', $args );
-		$args['post_type'] = 'audiotheme_gig';
+		$args = wp_parse_args( $args, $defaults );
 
-		parent::__construct( $args );
-
-		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $this );
+		return apply_filters( 'audiotheme_gig_query_args', $args );
 	}
 }
