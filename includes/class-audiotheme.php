@@ -174,8 +174,9 @@ class AudioTheme {
 		$base_url = set_url_scheme( AUDIOTHEME_URI );
 		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script( 'audiotheme',               $base_url . 'includes/js/audiotheme.js',               array( 'jquery', 'audiotheme-media-classes' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme',               $base_url . 'includes/js/audiotheme.js',               array( 'jquery', 'jquery-cue', 'audiotheme-media-classes' ), AUDIOTHEME_VERSION, true );
 		wp_register_script( 'audiotheme-media-classes', $base_url . 'includes/js/audiotheme-media-classes.js', array( 'jquery' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'jquery-cue',               $base_url . 'includes/js/vendor/jquery.cue.min.js',    array( 'jquery', 'mediaelement' ), '1.1.0', true );
 		wp_register_script( 'jquery-timepicker',        $base_url . 'includes/js/vendor/jquery.timepicker.min.js',    array( 'jquery' ), '1.1', true );
 
 		wp_register_style( 'audiotheme', $base_url . 'includes/css/audiotheme.min.css' );
