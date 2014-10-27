@@ -287,9 +287,6 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 				case 'ical':
 					load_template( AUDIOTHEME_DIR . 'includes/views/gigs-feed-ical.php' );
 					break;
-				case 'json':
-					load_template( AUDIOTHEME_DIR . 'includes/views/gigs-feed-json.php' );
-					break;
 				default:
 					$message = sprintf( __( 'ERROR: %s is not a valid feed template.', 'audiotheme' ), esc_html( $type ) );
 					wp_die( $message, '', array( 'response' => 404 ) );
@@ -526,15 +523,15 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	/**
 	 * Add custom gig rewrite rules.
 	 *
-	 * /base/YYYY/MM/DD/(feed|ical|json)/
+	 * /base/YYYY/MM/DD/(feed|ical)/
 	 * /base/YYYY/MM/DD/
-	 * /base/YYYY/MM/(feed|ical|json)/
+	 * /base/YYYY/MM/(feed|ical)/
 	 * /base/YYYY/MM/
-	 * /base/YYYY/(feed|ical|json)/
+	 * /base/YYYY/(feed|ical)/
 	 * /base/YYYY/
 	 * /base/past/page/2/
 	 * /base/past/
-	 * /base/(feed|ical|json)/
+	 * /base/(feed|ical)/
 	 * /base/%postname%/
 	 * /base/
 	 *
@@ -552,15 +549,15 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	public function generate_rewrite_rules( $wp_rewrite ) {
 		$base = $this->get_rewrite_base();
 
-		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|ical|json)/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]';
+		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|ical)/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]';
 		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&day=$matches[3]';
-		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/(feed|ical|json)/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]';
+		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/(feed|ical)/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]';
 		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]';
 		$new_rules[ $base . '/([0-9]{4})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]';
-		$new_rules[ $base . '/(feed|ical|json)/?$' ] = 'index.php?post_type=audiotheme_gig&feed=$matches[1]';
+		$new_rules[ $base . '/(feed|ical)/?$' ] = 'index.php?post_type=audiotheme_gig&feed=$matches[1]';
 		$new_rules[ $base . '/past/page/([0-9]{1,})/?$' ] = 'index.php?post_type=audiotheme_gig&paged=$matches[1]&audiotheme_gig_range=past';
 		$new_rules[ $base . '/past/?$' ] = 'index.php?post_type=audiotheme_gig&audiotheme_gig_range=past';
-		$new_rules[ $base . '/([^/]+)/(ical|json)/?$' ] = 'index.php?audiotheme_gig=$matches[1]&feed=$matches[2]';
+		$new_rules[ $base . '/([^/]+)/(ical)/?$' ] = 'index.php?audiotheme_gig=$matches[1]&feed=$matches[2]';
 		$new_rules[ $base . '/([^/]+)/?$' ] = 'index.php?audiotheme_gig=$matches[1]';
 		$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_gig';
 
