@@ -118,20 +118,18 @@ function the_audiotheme_gig_link( $args = array(), $echo = true ) {
 function get_audiotheme_gig_link( $post = null, $args = array() ) {
 	$gig = get_audiotheme_gig( $post );
 
-	$defaults = array(
+	$args = wp_parse_args( $args, array(
 		'before'      => '',
 		'after'       => '',
 		'before_link' => '<span class="summary" itemprop="name">',
 		'after_link'  => '</span>',
-	);
-	$args = wp_parse_args( $args, $defaults );
-	extract( $args );
+	) );
 
-	$html  = $before;
+	$html  = $args['before'];
 	$html .= '<a href="' . esc_url( get_permalink( $gig->ID ) ) . '" class="url uid" itemprop="url">';
-	$html .= $before_link . get_audiotheme_gig_title( $post ) . $after_link;
+	$html .= $args['before_link'] . get_audiotheme_gig_title( $post ) . $args['after_link'];
 	$html .= '</a>';
-	$html .= $after;
+	$html .= $args['after'];
 
 	return $html;
 }
@@ -212,7 +210,6 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 		'empty_time' => '', // Displays if time hasn't been saved.
 		'translate'  => true,
 	) );
-	extract( $args, EXTR_SKIP );
 
 	$gig = get_audiotheme_gig( $post );
 
@@ -235,8 +232,8 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 		date_default_timezone_set( $tz );
 	}
 
-	$time = mysql2date( $format, $time, $translate );
-	$time = ( empty( $gig->gig_time ) && ! empty( $empty_time ) ) ? $time . $empty_time : $time;
+	$time = mysql2date( $format, $time, $args['translate'] );
+	$time = ( empty( $gig->gig_time ) && ! empty( $args['empty_time'] ) ) ? $time . $args['empty_time'] : $time;
 	date_default_timezone_set( 'UTC' );
 
 	return $time;
@@ -662,18 +659,18 @@ function get_audiotheme_venue_link( $venue_id, $args = array() ) {
 		return '';
 	}
 
-	extract( wp_parse_args( $args, array(
+	$args = wp_parse_args( $args, array(
 		'before'      => '',
 		'after'       => '',
 		'before_link' => '<span class="fn org" itemprop="name">',
 		'after_link'  => '</span>',
-	) ) );
+	) );
 
-	$html  = $before;
+	$html  = $args['before'];
 	$html .= ( empty( $venue->website ) ) ? '' : sprintf( '<a href="%s" class="url" itemprop="url">', esc_url( $venue->website ) );
-	$html .= $before_link . $venue->name . $after_link;
+	$html .= $args['before_link'] . $venue->name . $args['after_link'];
 	$html .= ( empty( $venue->website ) ) ? '' : '</a>';
-	$html .= $after;
+	$html .= $args['after'];
 
 	return $html;
 }
