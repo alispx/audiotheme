@@ -319,5 +319,7 @@ class AudioTheme_Admin {
 
 			// @todo Flush rewrite rules.
 		}
+
+		// @todo Convert video tags to video categories.
 	}
 }

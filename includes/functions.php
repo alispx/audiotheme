@@ -382,7 +382,7 @@ function audiotheme_build_query( $data, $arg_separator = '|', $value_separator =
 /**
  * Convert a date string to MySQL DateTime format.
  *
- * @since x.x.x
+ * @since 2.0.0
  *
  * @param string $datetime Date or date and time string.
  * @param string $time Optional. Time string.
@@ -410,7 +410,7 @@ function audiotheme_datetime_string( $datetime, $time = '' ) {
 /**
  * Convert a time string to the format used in the time portion of MySQL DateTime.
  *
- * @since x.x.x
+ * @since 2.0.0
  *
  * @param string $time Time string.
  * @return string

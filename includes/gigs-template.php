@@ -165,7 +165,8 @@ function get_audiotheme_gig_gmt_date( $post = null ) {
 		$string_gmt = gmdate( $format, $datetime->format( 'U' ) );
 		date_default_timezone_set( 'UTC' );
 	} else {
-		$string_gmt = mysql2date( 'Y-m-d', $gig->gig_datetime ); // only returns the date portion since the time portion is unknown
+		// Only return the date portion since the time portion is unknown.
+		$string_gmt = mysql2date( 'Y-m-d', $gig->gig_datetime );
 	}
 
 	return $string_gmt;
@@ -208,7 +209,7 @@ function the_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
  */
 function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null, $post = null ) {
 	$args = wp_parse_args( $args, array(
-		'empty_time' => '', // displays if time hasn't been saved
+		'empty_time' => '', // Displays if time hasn't been saved.
 		'translate'  => true,
 	) );
 	extract( $args, EXTR_SKIP );
@@ -216,7 +217,7 @@ function get_audiotheme_gig_time( $d = 'c', $t = '', $gmt = false, $args = null,
 	$gig = get_audiotheme_gig( $post );
 
 	if ( empty( $gig->gig_time ) ) {
-		// ISO 8601 without time component or timezone component.
+		// ISO 8601 without time or timezone component.
 		$d = ( 'c' == $d ) ? 'Y-m-d' : $d;
 		$format = $d;
 	} else {
@@ -256,10 +257,11 @@ function the_audiotheme_gig_description( $before = '', $after = '', $echo = true
 
 	$html = ( empty( $description ) ) ? '' : $before . wpautop( $description ) . $after;
 
-	if ( $echo )
+	if ( $echo ) {
 		echo $html;
-	else
+	} else {
 		return $html;
+	}
 }
 
 /**
@@ -296,7 +298,7 @@ function get_audiotheme_gig_description( $post = 0 ) {
 }
 
 /**
- * Does a gig have ticket meta?
+ * Whether a gig has ticket metadata.
  *
  * @since 1.1.0
  *
