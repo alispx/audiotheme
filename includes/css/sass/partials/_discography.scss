@@ -15,7 +15,7 @@
 		border-width: 0;
 		box-shadow: none;
 		padding: 0;
-		
+
 		&:hover {
 			box-shadow: none;
 		}
@@ -80,7 +80,7 @@
 	line-height: 1.5;
 	padding: 0;
 	width: auto;
-	
+
 	&:hover {
 		box-shadow: none;
 	}
@@ -102,6 +102,7 @@
 	}
 
 	.audiotheme-record-header {
+		padding: 0;
 		width: 100%;
 
 		.audiotheme-record-title {
@@ -310,27 +311,29 @@
 			}
 		}
 	}
-}
 
-.audiotheme-record-single.min-width-400 {
-	padding: 0 0 0 170px;
-	position: relative;
+	.audiotheme-record-single {
+		padding: 0 0 0 170px;
+		position: relative;
 
-	.audiotheme-record-artwork {
-		clear: none;
-		float: left;
-		margin: 0 0 0 -170px;
-		width: 140px;
+		.audiotheme-record-artwork {
+			clear: none;
+			float: left;
+			margin: 0 0 0 -170px;
+			width: 140px;
+		}
 	}
 }
 
-.audiotheme-record-single.min-width-600 {
-	padding: 0 0 0 330px;
-	position: relative;
+.min-width-600 {
+	.audiotheme-record-single {
+		padding: 0 0 0 330px;
+		position: relative;
 
-	.audiotheme-record-artwork {
-		margin: 0 0 0 -330px;
-		width: 290px;
+		.audiotheme-record-artwork {
+			margin: 0 0 0 -330px;
+			width: 290px;
+		}
 	}
 }
 

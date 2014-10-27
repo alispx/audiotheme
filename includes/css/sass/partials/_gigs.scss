@@ -15,6 +15,10 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
+
+	> li {
+		margin: 0;
+	}
 }
 
 .audiotheme-gig-card {
@@ -99,20 +103,22 @@
 }
 
 /* Desktop only */
-.audiotheme-gigs.min-width-600 {
-	.audiotheme-gig-card {
-		&.has-audiotheme-ticket-meta .audiotheme-gig-details {
-			padding-right: 120px;
-		}
+.min-width-600 {
+	&.audiotheme-gigs {
+		.audiotheme-gig-card {
+			&.has-audiotheme-ticket-meta .audiotheme-gig-details {
+				padding-right: 120px;
+			}
 
-		.audiotheme-gig-meta-tickets {
-			margin-left: 0;
-			padding: 10px;
-			position: absolute;
-			top: 0;
-			right: 0;
-			text-align: right;
-			width: 100px;
+			.audiotheme-gig-meta-tickets {
+				margin-left: 0;
+				padding: 10px;
+				position: absolute;
+				top: 0;
+				right: 0;
+				text-align: right;
+				width: 100px;
+			}
 		}
 	}
 }
@@ -234,36 +240,38 @@
 }
 
 /* Tablets + Desktop */
-.audiotheme-gig-single.min-width-400 {
-	.audiotheme-gig-venue {
-		.venue-address {
-			float: left;
+.min-width-400 {
+	.audiotheme-gig-single {
+		.audiotheme-gig-venue {
+			.venue-address {
+				float: left;
 
-			.street-address,
-			.sep-street-address {
-				display: inline;
+				.street-address,
+				.sep-street-address {
+					display: inline;
+				}
 			}
-		}
 
-		.audiotheme-venue-meta {
-			float: right;
-			text-align: right;
-		}
+			.audiotheme-venue-meta {
+				float: right;
+				text-align: right;
+			}
 
-		.audiotheme-venue-map {
-			clear: both;
-			display: block;
-			float: left;
-			padding-top: 20px;
-			width: 100%;
-
-			iframe {
+			.audiotheme-venue-map {
+				clear: both;
 				display: block;
-				max-width: 100%;
-			}
+				float: left;
+				padding-top: 20px;
+				width: 100%;
 
-			.venue-map-link {
-				display: none;
+				iframe {
+					display: block;
+					max-width: 100%;
+				}
+
+				.venue-map-link {
+					display: none;
+				}
 			}
 		}
 	}

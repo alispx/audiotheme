@@ -152,15 +152,12 @@ class AudioTheme {
 		add_action( 'wp_enqueue_scripts',           array( $this, 'register_assets' ), 1 );
 		add_action( 'admin_enqueue_scripts',        array( $this, 'register_assets' ), 1 );
 		add_action( 'wp_enqueue_scripts',           'audiotheme_enqueue_assets', 11 ); // Enqueue after theme styles.
+		add_action( 'wp_head',                      'audiotheme_document_js_support' );
 		add_filter( 'wp_nav_menu_objects',          'audiotheme_nav_menu_classes', 10, 3 );
 		add_filter( 'wp_prepare_attachment_for_js', 'audiotheme_wp_prepare_audio_attachment_for_js', 10, 3 );
 
 		// Prevent the audiotheme_archive post type rules from being registered.
 		add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
-
-		// Template hooks.
-		add_action( 'audiotheme_before_main_content',   'audiotheme_before_main_content', 15 );
-		add_action( 'audiotheme_after_main_content',    'audiotheme_after_main_content', 5 );
 	}
 
 	/**

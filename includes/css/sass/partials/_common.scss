@@ -3,6 +3,11 @@
  * -----------------------------------------------------------------------------
  */
 
+// Prevent elements with .no-fouc from showing if JavaScript is enabled.
+.js .no-fouc {
+	visibility: hidden;
+}
+
 .audiotheme-archive-intro {
 	line-height: 1.5;
 	margin: 0 0 30px 0;
@@ -15,6 +20,8 @@
 }
 
 .audiotheme-grid {
+	list-style: none;
+
 	.item {
 		margin-bottom: 20px;
 

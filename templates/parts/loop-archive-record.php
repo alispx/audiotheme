@@ -1,7 +1,7 @@
 
 <?php // @todo if compat template, then display the description ?>
 
-<div class="audiotheme-records audiotheme-grid">
+<div class="audiotheme-records audiotheme-grid no-fouc js-media-classes">
 
 	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 

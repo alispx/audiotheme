@@ -169,6 +169,11 @@ class AudioTheme_Theme_Compat {
 	/**
 	 * Whether a template file is compatible with the theme.
 	 *
+	 * The template is either being loaded from the theme or the theme has
+	 * declared support and has hooks attached to
+	 * 'audiotheme_before_main_content' and 'audiotheme_after_main_content' to
+	 * output the appropriate wrappers.
+	 *
 	 * @param string $template Template file path.
 	 * @return bool
 	 */

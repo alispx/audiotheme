@@ -1,6 +1,10 @@
 
-<?php while ( have_posts() ) : the_post(); ?>
+<div class="no-fouc js-media-classes">
 
-	<?php get_audiotheme_template_part( 'parts/content-record' ); ?>
+	<?php while ( have_posts() ) : the_post(); ?>
 
-<?php endwhile; ?>
+		<?php get_audiotheme_template_part( 'parts/content-record' ); ?>
+
+	<?php endwhile; ?>
+
+</div>

@@ -19,21 +19,17 @@ function audiotheme_enqueue_assets() {
 }
 
 /**
- * Add wrapper open tags in default templates for theme compatibility.
+ * Add a 'js' class to the html element if JavaScript is enabled.
  *
- * @since 1.2.0
+ * @since 2.0.0
  */
-function audiotheme_before_main_content() {
-	echo '<div class="audiotheme">';
-}
-
-/**
- * Add wrapper close tags in default templates for theme compatibility.
- *
- * @since 1.2.0
- */
-function audiotheme_after_main_content() {
-	echo '</div>';
+function audiotheme_document_js_support() {
+	?>
+	<script>
+	var classes = document.documentElement.className.replace( 'no-js', 'js' );
+	document.documentElement.className += /^js$|^js | js$| js /.test( classes ) ? '' : ' js';
+	</script>
+	<?php
 }
 
 /**

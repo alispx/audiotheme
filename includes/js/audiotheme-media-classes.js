@@ -82,6 +82,8 @@
 					$el.toggleClass( bp.className, 'min-width' === bp.type ? w >= bp.size : w <= bp.size );
 				}
 			});
+
+			$items.removeClass( 'no-fouc' );
 		}
 	};
 

@@ -1,7 +1,7 @@
 
 <?php // @todo if compat template, then display the description ?>
 
-<ul id="audiotheme-gigs" class="audiotheme-gigs">
+<ul class="audiotheme-gigs no-fouc js-media-classes">
 
 	<?php while ( have_posts() ) : the_post(); $gig = get_audiotheme_gig(); ?>
 
