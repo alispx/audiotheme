@@ -548,6 +548,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 */
 	public function generate_rewrite_rules( $wp_rewrite ) {
 		$base = $this->get_rewrite_base();
+		$past = preg_replace( '/[^a-z0-9-_]/', '', apply_filters( 'audiotheme_past_gigs_rewrite_slug', 'past' ) );
 
 		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|ical)/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]';
 		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]&day=$matches[3]';
@@ -555,8 +556,8 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		$new_rules[ $base . '/([0-9]{4})/([0-9]{1,2})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]&monthnum=$matches[2]';
 		$new_rules[ $base . '/([0-9]{4})/?$' ] = 'index.php?post_type=audiotheme_gig&year=$matches[1]';
 		$new_rules[ $base . '/(feed|ical)/?$' ] = 'index.php?post_type=audiotheme_gig&feed=$matches[1]';
-		$new_rules[ $base . '/past/page/([0-9]{1,})/?$' ] = 'index.php?post_type=audiotheme_gig&paged=$matches[1]&audiotheme_gig_range=past';
-		$new_rules[ $base . '/past/?$' ] = 'index.php?post_type=audiotheme_gig&audiotheme_gig_range=past';
+		$new_rules[ $base . '/' . $past . '/page/([0-9]{1,})/?$' ] = 'index.php?post_type=audiotheme_gig&paged=$matches[1]&audiotheme_gig_range=past';
+		$new_rules[ $base . '/' . $past . '/?$' ] = 'index.php?post_type=audiotheme_gig&audiotheme_gig_range=past';
 		$new_rules[ $base . '/([^/]+)/(ical)/?$' ] = 'index.php?audiotheme_gig=$matches[1]&feed=$matches[2]';
 		$new_rules[ $base . '/([^/]+)/?$' ] = 'index.php?audiotheme_gig=$matches[1]';
 		$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_gig';
