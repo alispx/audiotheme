@@ -1,5 +1,9 @@
 
-<?php // @todo if compat template, then display the description ?>
+<?php if ( is_audiotheme_theme_compat_active() ) : ?>
+
+	<?php the_audiotheme_archive_description( '<div class="audiotheme-archive-intro archive-intro">', '</div>' ); ?>
+
+<?php endif; ?>
 
 <div class="audiotheme-records audiotheme-grid no-fouc js-media-classes">
 
