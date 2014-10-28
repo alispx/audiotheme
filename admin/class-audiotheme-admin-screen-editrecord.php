@@ -93,7 +93,13 @@ class AudioTheme_Admin_Screen_EditRecord {
 	 * @since 2.0.0
 	 */
 	public function enqueue_assets() {
-
+		wp_enqueue_script(
+			'audiotheme-record-edit',
+			AUDIOTHEME_URI . 'admin/js/record-edit.js',
+			array( 'audiotheme-admin', 'audiotheme-media' ),
+			'1.0.0',
+			true
+		);
 	}
 
 	/**
@@ -120,14 +126,6 @@ class AudioTheme_Admin_Screen_EditRecord {
 
 		include( AUDIOTHEME_DIR . 'admin/views/edit-record-tracklist.php' );
 		include( AUDIOTHEME_DIR . 'admin/views/templates-record.php' );
-
-		wp_enqueue_script(
-			'audiotheme-record-edit',
-			AUDIOTHEME_URI . 'admin/js/record-edit.js',
-			array( 'audiotheme-admin', 'audiotheme-media' ),
-			'1.0.0',
-			true
-		);
 
 		wp_localize_script( 'audiotheme-record-edit', '_audiothemeTracklistSettings', array(
 			'postId' => $post->ID,

@@ -18,16 +18,16 @@
 			<h2 class="audiotheme-record-artist" itemprop="byArtist"><?php echo esc_html( $artist ); ?></h2>
 		<?php endif; ?>
 
-		<?php if ( ( $year = get_audiotheme_record_release_year() ) || ( $genre = get_audiotheme_record_genre() ) ) : ?>
+		<?php if ( get_audiotheme_record_release_year() || get_audiotheme_record_genre() ) : ?>
 			<ul class="audiotheme-record-meta audiotheme-meta-list">
-				<?php if ( $year ) : ?>
+				<?php if ( $year = get_audiotheme_record_release_year() ) : ?>
 					<li class="audiotheme-meta-item">
 						<span class="audiotheme-label"><?php _e( 'Release', 'audiotheme' ); ?></span>
 						<span itemprop="dateCreated"><?php echo esc_html( $year ); ?></span>
 					</li>
 				<?php endif; ?>
 
-				<?php if ( $genre ) : ?>
+				<?php if ( $genre = get_audiotheme_record_genre() ) : ?>
 					<li class="audiotheme-meta-item">
 						<span class="audiotheme-label"><?php _e( 'Genre', 'audiotheme' ); ?></span>
 						<span itemprop="genre"><?php echo esc_html( $genre ); ?></span>

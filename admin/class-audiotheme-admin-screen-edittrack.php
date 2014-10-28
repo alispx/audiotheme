@@ -44,6 +44,15 @@ class AudioTheme_Admin_Screen_EditTrack {
 			return;
 		}
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+	}
+
+	/**
+	 * Enqueue scripts and styles.
+	 *
+	 * @since 2.0.0
+	 */
+	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-media' );
 	}
 
@@ -54,7 +63,7 @@ class AudioTheme_Admin_Screen_EditTrack {
 	 *
 	 * @param int $post_id Track ID.
 	 */
-	function register_meta_boxes( $post ) {
+	public function register_meta_boxes( $post ) {
 		remove_meta_box( 'submitdiv', 'audiotheme_track', 'side' );
 
 		add_meta_box(
@@ -80,6 +89,15 @@ class AudioTheme_Admin_Screen_EditTrack {
 			'side',
 			'high'
 		);
+
+		add_meta_box(
+			'audiotheme-track-record-info',
+			__( 'Record Details', 'audiotheme' ),
+			array( $this, 'display_record_info_meta_box' ),
+			'audiotheme_track',
+			'side',
+			'low'
+		);
 	}
 
 	/**
@@ -91,57 +109,29 @@ class AudioTheme_Admin_Screen_EditTrack {
 	 */
 	public function display_details_meta_box( $post ) {
 		wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
-		?>
-		<p class="audiotheme-field">
-			<label for="track-artist"><?php _e( 'Artist:', 'audiotheme' ) ?></label>
-			<input type="text" name="artist" id="track-artist" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_artist', true ) ) ; ?>" class="widefat">
-		</p>
+		include( AUDIOTHEME_DIR . 'admin/views/meta-box-track-details.php' );
+	}
 
-		<p class="audiotheme-field audiotheme-media-control audiotheme-field-upload"
-			data-title="<?php esc_attr_e( 'Choose an MP3', 'audiotheme' ); ?>"
-			data-update-text="<?php esc_attr_e( 'Use MP3', 'audiotheme' ); ?>"
-			data-target="#track-file-url"
-			data-return-property="url"
-			data-file-type="audio">
-			<label for="track-file-url"><?php _e( 'Audio File URL:', 'audiotheme' ) ?></label>
-			<input type="url" name="file_url" id="track-file-url" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_file_url', true ) ) ; ?>" class="widefat">
+	/**
+	 * Display record information meta box.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param WP_Post $post The track post object being edited.
+	 */
+	public function display_record_info_meta_box( $post ) {
+		$record                  = get_post( $post->post_parent );
+		$record_post_type_object = get_post_type_object( 'audiotheme_record' );
 
-			<input type="checkbox" name="is_downloadable" id="track-is-downloadable" value="1"<?php checked( get_post_meta( $post->ID, '_audiotheme_is_downloadable', true ) ); ?>>
-			<label for="track-is-downloadable"><?php _e( 'Allow downloads?', 'audiotheme' ) ?></label>
-
-			<a href="#" class="button audiotheme-media-control-choose" style="float: right"><?php _e( 'Upload MP3', 'audiotheme' ); ?></a>
-		</p>
-
-		<p class="audiotheme-field">
-			<label for="track-length"><?php _e( 'Length:', 'audiotheme' ) ?></label>
-			<input type="text" name="length" id="track-length" value="<?php echo esc_attr( get_post_meta( $post->ID, '_audiotheme_length', true ) ) ; ?>" placeholder="00:00" class="widefat">
-		</p>
-
-		<p class="audiotheme-field">
-			<label for="track-purchase-url"><?php _e( 'Purchase URL:', 'audiotheme' ) ?></label>
-			<input type="url" name="purchase_url" id="track-purchase-url" value="<?php echo esc_url( get_post_meta( $post->ID, '_audiotheme_purchase_url', true ) ) ; ?>" class="widefat">
-		</p>
-
-		<?php
-		if ( ! get_post( $post->post_parent ) ) {
+		if ( ! $record ) {
 			$records = get_posts( 'post_type=audiotheme_record&orderby=title&order=asc&posts_per_page=-1' );
-			if ( $records ) {
-				echo '<p class="audiotheme-field">';
-					echo '<label for="post-parent">' . __( 'Record:', 'audiotheme' ) . '</label>';
-					echo '<select name="post_parent" id="post-parent" class="widefat">';
-						echo '<option value=""></option>';
-
-						foreach ( $records as $record ) {
-							printf( '<option value="%s">%s</option>',
-								$record->ID,
-								esc_html( $record->post_title )
-							);
-						}
-					echo '</select>';
-					echo '<span class="description">' . __( 'Associate this track with a record.', 'audiotheme' ) . '</span>';
-				echo '</p>';
-			}
+		} else {
+			$artist  = get_audiotheme_record_artist( $record->ID );
+			$genre   = get_audiotheme_record_genre( $record->ID );
+			$release = get_audiotheme_record_release_year( $record->ID );
 		}
+
+		include( AUDIOTHEME_DIR . 'admin/views/meta-box-track-record-info.php' );
 	}
 
 	/**
