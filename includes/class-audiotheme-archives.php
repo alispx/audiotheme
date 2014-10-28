@@ -360,8 +360,6 @@ class AudioTheme_Archives {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @todo Implement a "rows" setting for calculating "posts_per_archive_page".
-	 *
 	 * @param object $query The main WP_Query object. Passed by reference.
 	 */
 	public function pre_get_posts( $wp_query ) {
