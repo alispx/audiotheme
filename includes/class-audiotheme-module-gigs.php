@@ -539,8 +539,6 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 *       /base/YYYY/page/2/
 	 *       etc.
 	 *
-	 * @todo Allow 'past' slug to be filtered.
-	 *
 	 * @since 1.0.0
 	 * @see audiotheme_gigs_rewrite_base()
 	 *

@@ -137,8 +137,6 @@ class AudioTheme_Archives {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @todo Do we need to make sure this doesn't run in the network admin?
-	 *
 	 * @param string $post_type Post type name.
 	 * @param array $args {
 	 *     An array of arguments. Optional.
@@ -361,7 +359,7 @@ class AudioTheme_Archives {
 	 * Sets the number of posts per archive page based on saved archive meta.
 	 *
 	 * @since 2.0.0
-	 * @todo Refactor to make it easier to retrieve settings and to define defaults in a single location.
+	 *
 	 * @todo Implement a "rows" setting for calculating "posts_per_archive_page".
 	 *
 	 * @param object $query The main WP_Query object. Passed by reference.
@@ -837,8 +835,6 @@ class AudioTheme_Archives {
 
 	/**
 	 * Retrieve the post type for the current query.
-	 *
-	 * @todo Only call this after is_post_type_archive()?
 	 *
 	 * @since 2.0.0
 	 *

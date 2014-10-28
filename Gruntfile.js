@@ -218,7 +218,7 @@ module.exports = function(grunt) {
 	 * Builds a release and pushes it to the remote git repo and uploads it to
 	 * the production server.
 	 *
-	 * @todo "@since x.x.x" tags are also replaced with the new version number.
+	 * "@since x.x.x" tags are also replaced with the new version number.
 	 */
 	grunt.registerTask('release', function(arg1) {
 		var pkg = grunt.file.readJSON('package.json'),

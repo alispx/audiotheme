@@ -207,6 +207,7 @@ function get_audiotheme_track_file_url( $post_id = null ) {
  * Get the length of a track.
  *
  * @since 1.0.0
+ *
  * @todo Determine if the track's file is an attachment and check its meta data.
  *
  * @param int $post_id Optional. Post ID.
