@@ -1,3 +1,10 @@
+<?php
+/**
+ *
+ */
+
+$columns = get_audiotheme_archive_meta( 'columns', true, 4 );
+?>
 
 <?php if ( is_audiotheme_theme_compat_active() ) : ?>
 
@@ -5,7 +12,7 @@
 
 <?php endif; ?>
 
-<div class="audiotheme-records audiotheme-grid no-fouc js-media-classes">
+<div class="audiotheme-records audiotheme-grid audiotheme-grid--columns-<?php echo absint( $columns ); ?> no-fouc js-media-classes">
 
 	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 

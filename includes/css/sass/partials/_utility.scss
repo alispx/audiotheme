@@ -23,22 +23,24 @@
 	list-style: none;
 
 	.item {
-		clear: none;
 		float: left;
 		margin-right: $margin;
 		margin-left: $margin;
 		width: ( ( 100% - $marginTotal ) / $columns );
 	}
 
+	// Reset all items.
+	.item:nth-child(n) {
+		clear: none;
+	}
+
 	// First item in a row.
-	.item:nth-of-type(#{$columns}n+1),
-	.item-#{$columns}np1 {
+	.item:nth-of-type(#{$columns}n+1) {
 		clear: left;
 	}
 
 	// Last item in a row.
-	.item:nth-of-type(#{$columns}n),
-	.item-#{$columns}n {
+	.item:nth-of-type(#{$columns}n) {
 		clear: right;
 	}
 }

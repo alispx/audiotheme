@@ -43,18 +43,26 @@
 	}
 
 	&.min-width-600 {
-		margin-right: -1%;
-		margin-left: -1%;
+		&.audiotheme-grid--columns-3 {
+			margin-right: -1%;
+			margin-left: -1%;
 
-		// Reset the the smaller breakpoint rules.
-		.item:nth-of-type(2n+1),
-		.item-2np1,
-		.item:nth-of-type(2n),
-		.item-2n {
-			clear: none;
+			@include responsive-grid(3, 1%);
 		}
 
-		@include responsive-grid(4, 1%);
+		&.audiotheme-grid--columns-4 {
+			margin-right: -1%;
+			margin-left: -1%;
+
+			@include responsive-grid(4, 1%);
+		}
+
+		&.audiotheme-grid--columns-5 {
+			margin-right: -1%;
+			margin-left: -1%;
+
+			@include responsive-grid(5, 1%);
+		}
 	}
 }
 

@@ -48,7 +48,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		add_action( 'init',                    array( $this, 'register_post_types' ) );
 		add_action( 'init',                    array( $this, 'register_taxonomies' ) );
 		add_filter( 'generate_rewrite_rules',  array( $this, 'generate_rewrite_rules' ) );
-		add_action( 'pre_get_posts',           array( $this, 'record_query_posts_per_page' ), 9 );
 		add_action( 'pre_get_posts',           array( $this, 'record_query_sort' ) );
 		add_action( 'pre_get_posts',           array( $this, 'track_query' ) );
 		add_action( 'pre_get_posts',           array( $this, 'record_type_query' ), 9 );
@@ -200,29 +199,6 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 		}
 
 		return $front . $base;
-	}
-
-	/**
-	 * Set posts per page for record archives.
-	 *
-	 * The default record archive template uses a 4-column grid, so the
-	 * 'posts_per_archive_page' query var is set to a multiple of 4.
-	 *
-	 * This hook should either be removed or the value should be updated by theme's
-	 * where necessary.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param object $query The main WP_Query object. Passed by reference.
-	 */
-	public function record_query_posts_per_page( $query ) {
-		if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_record' ) ) {
-			return;
-		}
-
-		if ( '' == $query->get( 'posts_per_archive_page' ) ) {
-			$query->set( 'posts_per_archive_page', 12 );
-		}
 	}
 
 	/**

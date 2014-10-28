@@ -388,7 +388,7 @@ class AudioTheme_Archives {
 
 		if ( ! empty( $fields['posts_per_archive_page'] ) && $fields['posts_per_archive_page'] ) {
 			// Get the number of posts to display for this post type.
-			$posts_per_archive_page = $this->get_archive_meta( 'posts_per_archive_page', true, get_option( 'posts_per_page' ), $post_type );
+			$posts_per_archive_page = $this->get_archive_meta( 'posts_per_archive_page', true, 0, $post_type );
 
 			if ( ! empty( $posts_per_archive_page ) ) {
 				$wp_query->set( 'posts_per_archive_page', intval( $posts_per_archive_page ) );

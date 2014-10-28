@@ -54,7 +54,6 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 
 		if ( ! is_admin() ) {
 			add_action( 'pre_get_posts', array( $this, 'sort_query' ) );
-			add_action( 'pre_get_posts', array( $this, 'default_template_query' ) );
 		}
 	}
 
@@ -214,26 +213,6 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		}
 
 		$this->archives->set_current_archive_post_type( 'audiotheme_video' );
-	}
-
-	/**
-	 * Set posts per page for video archives.
-	 *
-	 * The default video archive template uses a 4-column grid. If it's loaded from
-	 * the plugin, set the posts per page arg to a multiple of 4.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @param object $query The main WP_Query object. Passed by reference.
-	 */
-	public function default_template_query( $query ) {
-		if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_video' ) ) {
-			return;
-		}
-
-		if ( '' == $query->get( 'posts_per_archive_page' ) ) {
-			$query->set( 'posts_per_archive_page', 12 );
-		}
 	}
 
 	/**

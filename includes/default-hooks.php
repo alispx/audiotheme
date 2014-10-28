@@ -112,3 +112,29 @@ function audiotheme_wp_prepare_audio_attachment_for_js( $response, $attachment, 
 
 	return $response;
 }
+
+/**
+ * Activate default archive setting fields.
+ *
+ * Themes will need to disable or override these settings.
+ *
+ * @since 1.0.0
+ *
+ * @param array $fields List of default fields to activate.
+ * @param string $post_type Post type archive.
+ * @return array
+ */
+function audiotheme_archive_default_settings_fields( $fields, $post_type ) {
+	if ( ! in_array( $post_type, array( 'audiotheme_record', 'audiotheme_video' ) ) ) {
+		return $fields;
+	}
+
+	$fields['columns'] = array(
+		'choices' => range( 3, 5 ),
+		'default' => 4,
+	);
+
+	$fields['posts_per_archive_page'] = true;
+
+	return $fields;
+}
