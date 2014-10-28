@@ -99,6 +99,9 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		);
 
 		register_post_type( 'audiotheme_video', $args );
+
+		// Register the archive.
+		$this->archives->add_post_type_archive( 'audiotheme_video' );
 	}
 
 	/**
