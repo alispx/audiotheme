@@ -195,7 +195,7 @@ class AudioTheme_Archives {
 	 * @return int
 	 */
 	public function get_archive_id( $post_type = null ) {
-		$post_type = $post_type ? $post_type : get_post_type();
+		$post_type = $post_type ? $post_type : $this->get_post_type();
 		$archives  = $this->get_archive_ids();
 
 		if ( empty( $post_type ) ) {
