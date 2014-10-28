@@ -5,14 +5,14 @@
 	<header class="audiotheme-video-header entry-header">
 		<?php the_title( '<h1 class="audiotheme-video-title entry-title">', '</h1>' ); ?>
 	</header>
-	
-	<?php if ( $tag_list = get_the_tag_list( '', ' ' ) ) : ?>
-		
+
+	<?php if ( $term_list = get_the_term_list( get_the_ID(), 'audiotheme_video_category', '', ' ' ) ) : ?>
+
 		<p class="audiotheme-term-list">
-			<span class="audiotheme-term-list-label"><?php _e( 'Tags', 'audiotheme' ); ?></span>
-			<span class="audiotheme-term-list-items"><?php echo $tag_list; ?></span>
+			<span class="audiotheme-term-list-label"><?php _e( 'Categories', 'audiotheme' ); ?></span>
+			<span class="audiotheme-term-list-items"><?php echo $term_list; ?></span>
 		</p>
-		
+
 	<?php endif; ?>
 
 	<div class="audiotheme-content entry-content">

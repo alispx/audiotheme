@@ -95,7 +95,6 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 			'show_in_menu'           => true,
 			'show_in_nav_menus'      => false,
 			'supports'               => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments', 'revisions', 'author' ),
-			'taxonomies'             => array( 'post_tag' ),
 		);
 
 		register_post_type( 'audiotheme_video', $args );
