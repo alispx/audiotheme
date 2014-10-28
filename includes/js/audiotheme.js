@@ -12,7 +12,7 @@
 				cueSelectors: {
 					playlist: '.audiotheme-tracklist-section',
 					track: '.audiotheme-track',
-					trackCurrentTime: '.jp-current-time',
+					trackCurrentTime: '.audiotheme-track-current-time',
 					tracklist: '.audiotheme-tracklist'
 				},
 				features: ['cueplaylist']

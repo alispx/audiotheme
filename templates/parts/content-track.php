@@ -28,7 +28,7 @@
 					<span class="audiotheme-track-title"><?php the_title(); ?></span>
 					
 					<span class="audiotheme-track-meta">
-						<span class="jp-current-time">-:--</span>
+						<span class="audiotheme-track-current-time">-:--</span>
 					</span>
 				</span>
 			</li>

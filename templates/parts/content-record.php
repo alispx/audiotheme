@@ -72,7 +72,7 @@
 									<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-track-download-link">Download</a>
 								<?php endif; ?>
 
-								<span class="jp-current-time">-:--</span>
+								<span class="audiotheme-track-current-time">-:--</span>
 							</span>
 						</span>
 					</li>
