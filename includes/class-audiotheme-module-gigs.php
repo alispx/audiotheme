@@ -317,7 +317,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		} elseif ( is_singular( 'audiotheme_gig' ) ) {
 			$template = audiotheme_locate_template( 'single-gig.php' );
 
-			$compat->set_title( '' );
+			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'gig' );
 		}
 

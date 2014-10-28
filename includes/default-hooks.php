@@ -33,6 +33,22 @@ function audiotheme_document_js_support() {
 }
 
 /**
+ * Add HTML classes to the body element.
+ *
+ * @since 2.0.0
+ *
+ * @param array $classes Array of classes.
+ * @return array
+ */
+function audiotheme_body_classes( $classes ) {
+	if ( is_audiotheme_theme_compat_active() ) {
+		$classes[] = 'audiotheme-theme-compat';
+	}
+
+	return $classes;
+}
+
+/**
  * Add helpful nav menu item classes.
  *
  * @since 1.0.0

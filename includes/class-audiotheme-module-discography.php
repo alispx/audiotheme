@@ -342,12 +342,12 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 
 			$template = audiotheme_locate_template( $templates );
 
-			$compat->set_title( '' );
+			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'record' );
 		} elseif ( is_singular( 'audiotheme_track' ) ) {
 			$template = audiotheme_locate_template( 'single-track.php' );
 
-			$compat->set_title( '' );
+			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'track' );
 		}
 

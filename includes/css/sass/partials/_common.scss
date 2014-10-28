@@ -156,3 +156,12 @@
 		}
 	}
 }
+
+// Hide singular titles when theme compatibility mode is active.
+.audiotheme-theme-compat.single {
+	.audiotheme-gig-title,
+	.audiotheme-record-title,
+	.audiotheme-video-title {
+		display: none;
+	}
+}

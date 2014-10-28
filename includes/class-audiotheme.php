@@ -153,6 +153,7 @@ class AudioTheme {
 		add_action( 'admin_enqueue_scripts',        array( $this, 'register_assets' ), 1 );
 		add_action( 'wp_enqueue_scripts',           'audiotheme_enqueue_assets', 11 ); // Enqueue after theme styles.
 		add_action( 'wp_head',                      'audiotheme_document_js_support' );
+		add_filter( 'body_class',                   'audiotheme_body_classes' );
 		add_filter( 'wp_nav_menu_objects',          'audiotheme_nav_menu_classes', 10, 3 );
 		add_filter( 'wp_prepare_attachment_for_js', 'audiotheme_wp_prepare_audio_attachment_for_js', 10, 3 );
 

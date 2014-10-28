@@ -244,7 +244,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 		} elseif ( is_singular( 'audiotheme_video' ) ) {
 			$template = audiotheme_locate_template( 'single-video.php' );
 
-			$compat->set_title( '' );
+			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'video' );
 		}
 

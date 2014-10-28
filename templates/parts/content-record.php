@@ -11,7 +11,6 @@
 	<?php endif; ?>
 
 	<header class="audiotheme-record-header entry-header">
-		<?php // @todo If compat template, hide the title ?>
 		<?php the_title( '<h1 class="audiotheme-record-title entry-title" itemprop="name">', '</h1>' ); ?>
 
 		<?php if ( $artist = get_audiotheme_record_artist() ) : ?>
