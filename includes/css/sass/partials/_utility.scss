@@ -17,18 +17,6 @@
 	text-transform: uppercase;
 }
 
-@mixin clearfix {
-	&:before,
-	&:after {
-		content: " ";
-		display: table;
-	}
-
-	&:after {
-		clear: both;
-	}
-}
-
 @mixin responsive-grid( $columns: 3, $margin: 0.5% ) {
 	$marginTotal: ( $margin * $columns * 2 );
 

@@ -80,6 +80,7 @@
 		border-style: solid;
 		border-width: 0 0 0 1px;
 		display: inline-block;
+		margin: 0;
 		padding: 10px;
 
 		&:first-child {
@@ -89,7 +90,7 @@
 }
 
 .audiotheme-paged-nav {
-	@include clearfix();
+	@extend .audiotheme-clearfix;
 
 	border-color: #d3d3d3;
 	border-style: solid;
@@ -157,11 +158,19 @@
 	}
 }
 
-// Hide singular titles when theme compatibility mode is active.
-.audiotheme-theme-compat.single {
-	.audiotheme-gig-title,
-	.audiotheme-record-title,
-	.audiotheme-video-title {
-		display: none;
+
+.audiotheme-theme-compat {
+	// Hide singular titles when theme compatibility mode is active.
+	&.single {
+		.audiotheme-gig-title,
+		.audiotheme-record-title,
+		.audiotheme-video-title {
+			display: none;
+		}
+	}
+
+	.hentry[class*="audiotheme_"] .hentry {
+		margin-right: 0;
+		margin-left: 0;
 	}
 }

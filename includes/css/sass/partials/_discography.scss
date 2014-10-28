@@ -8,7 +8,7 @@
 ------------------------------------------------------------------------------*/
 
 .audiotheme-records {
-	@include clearfix();
+	@extend .audiotheme-clearfix;
 
 	line-height: 1.5;
 
@@ -265,8 +265,8 @@
 			}
 		}
 
-		&.is-playing,
-		&.is-playing:hover {
+		&.is-playing.is-current,
+		&.is-playing.is-current:hover {
 			background: #f7f7f7;
 
 			&:before {
@@ -285,7 +285,25 @@
 			&:before {
 				width: 40px;
 			}
+		}
+	}
 
+	.audiotheme-record-single {
+		padding: 0 170px 0 0;
+		position: relative;
+
+		.audiotheme-record-artwork {
+			clear: none;
+			float: right;
+			margin: 0 -170px 0 0;
+			width: 140px;
+		}
+	}
+}
+
+.min-width-600 {
+	.audiotheme-tracklist {
+		.audiotheme-track {
 			.audiotheme-track-meta {
 				float: right;
 				text-align: right;
@@ -317,26 +335,16 @@
 	}
 
 	.audiotheme-record-single {
-		padding: 0 0 0 170px;
+		$outerWidth: 600;
+		$innerWidth: 390;
+
+		padding: 0 0 0 percentage( ( $outerWidth - $innerWidth ) / $outerWidth );
 		position: relative;
 
 		.audiotheme-record-artwork {
-			clear: none;
 			float: left;
-			margin: 0 0 0 -170px;
-			width: 140px;
-		}
-	}
-}
-
-.min-width-600 {
-	.audiotheme-record-single {
-		padding: 0 0 0 330px;
-		position: relative;
-
-		.audiotheme-record-artwork {
-			margin: 0 0 0 -330px;
-			width: 290px;
+			margin: 0 0 0 percentage( -( $outerWidth - $innerWidth ) / $innerWidth );
+			width: percentage( ( $outerWidth - $innerWidth ) / $innerWidth ) - percentage( 30 / $innerWidth );
 		}
 	}
 }
@@ -365,8 +373,8 @@
 			}
 		}
 
-		&.is-playing,
-		&.is-playing:hover {
+		&.is-playing.is-current,
+		&.is-playing.is-current:hover {
 			&:before {
 				@extend %audiotheme-icon-pause;
 			}
