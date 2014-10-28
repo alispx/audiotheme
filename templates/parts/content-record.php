@@ -18,21 +18,23 @@
 			<h2 class="audiotheme-record-artist" itemprop="byArtist"><?php echo esc_html( $artist ); ?></h2>
 		<?php endif; ?>
 
-		<ul class="audiotheme-record-meta audiotheme-meta-list">
-			<?php if ( $year = get_audiotheme_record_release_year() ) : ?>
-				<li class="audiotheme-meta-item">
-					<span class="audiotheme-label"><?php _e( 'Release', 'audiotheme' ); ?></span>
-					<span itemprop="dateCreated"><?php echo esc_html( $year ); ?></span>
-				</li>
-			<?php endif; ?>
+		<?php if ( ( $year = get_audiotheme_record_release_year() ) || ( $genre = get_audiotheme_record_genre() ) ) : ?>
+			<ul class="audiotheme-record-meta audiotheme-meta-list">
+				<?php if ( $year ) : ?>
+					<li class="audiotheme-meta-item">
+						<span class="audiotheme-label"><?php _e( 'Release', 'audiotheme' ); ?></span>
+						<span itemprop="dateCreated"><?php echo esc_html( $year ); ?></span>
+					</li>
+				<?php endif; ?>
 
-			<?php if ( $genre = get_audiotheme_record_genre() ) : ?>
-				<li class="audiotheme-meta-item">
-					<span class="audiotheme-label"><?php _e( 'Genre', 'audiotheme' ); ?></span>
-					<span itemprop="genre"><?php echo esc_html( $genre ); ?></span>
-				</li>
-			<?php endif; ?>
-		</ul><!-- /.record-meta -->
+				<?php if ( $genre ) : ?>
+					<li class="audiotheme-meta-item">
+						<span class="audiotheme-label"><?php _e( 'Genre', 'audiotheme' ); ?></span>
+						<span itemprop="genre"><?php echo esc_html( $genre ); ?></span>
+					</li>
+				<?php endif; ?>
+			</ul><!-- /.record-meta -->
+		<?php endif; ?>
 	</header>
 
 	<?php if ( $links = get_audiotheme_record_links() ) : ?>
@@ -70,7 +72,7 @@
 								<?php if ( $download_url = is_audiotheme_track_downloadable( $track->ID ) ) : ?>
 									<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-track-download-link">Download</a>
 								<?php endif; ?>
-								
+
 								<span class="jp-current-time">-:--</span>
 							</span>
 						</span>

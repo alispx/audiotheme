@@ -8,6 +8,8 @@
 ------------------------------------------------------------------------------*/
 
 .audiotheme-videos {
+	@include clearfix();
+
 	line-height: 1.5;
 
 	.audiotheme_video {

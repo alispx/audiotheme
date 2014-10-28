@@ -8,6 +8,8 @@
 ------------------------------------------------------------------------------*/
 
 .audiotheme-records {
+	@include clearfix();
+
 	line-height: 1.5;
 
 	.audiotheme_record {
@@ -131,6 +133,7 @@
 			margin-left: 0;
 		}
 	}
+
 	.audiotheme-record-links {
 		.audiotheme-record-links-list {
 			margin-left: 0;
@@ -154,6 +157,7 @@
 
 	.audiotheme-record-links-item {
 		display: inline;
+		margin: 0;
 
 		.audiotheme-record-link {
 			background: #333;
