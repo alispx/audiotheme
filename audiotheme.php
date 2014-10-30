@@ -107,6 +107,7 @@ function audiotheme() {
 		$instance               = new AudioTheme;
 		$instance->plugin_file  = __FILE__;
 		$instance->archives     = new AudioTheme_Archives;
+		$instance->templates    = new AudioTheme_Template_Loader;
 		$instance->theme_compat = new AudioTheme_Theme_Compat;
 
 		/**

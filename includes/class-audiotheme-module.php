@@ -64,6 +64,14 @@ abstract class AudioTheme_Module {
 	protected $is_core_module = false;
 
 	/**
+	 * Template loader.
+	 *
+	 * @since 2.0.0
+	 * @type AudioTheme_Template_Loader
+	 */
+	protected $templates;
+
+	/**
 	 * Theme compatability class.
 	 *
 	 * @since 2.0.0
@@ -102,6 +110,7 @@ abstract class AudioTheme_Module {
 			case 'archives' :
 			case 'description' :
 			case 'name' :
+			case 'templates' :
 			case 'theme_compat' :
 				return $this->{$name};
 		}
@@ -119,6 +128,7 @@ abstract class AudioTheme_Module {
 		switch ( $name ) {
 			case 'admin' :
 			case 'archives' :
+			case 'templates' :
 			case 'theme_compat' :
 				$this->{$name} = $value;
 		}

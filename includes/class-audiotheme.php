@@ -46,6 +46,14 @@ class AudioTheme {
 	protected $plugin_file;
 
 	/**
+	 * Template loader.
+	 *
+	 * @since 2.0.0
+	 * @type AudioTheme_Template_Loader
+	 */
+	protected $templates;
+
+	/**
 	 * Theme compatibility class.
 	 *
 	 * @since 2.0.0
@@ -67,6 +75,7 @@ class AudioTheme {
 			case 'archives' :
 			case 'modules' :
 			case 'plugin_file' :
+			case 'templates' :
 			case 'theme_compat' :
 				return $this->{$name};
 		}
@@ -130,6 +139,10 @@ class AudioTheme {
 		foreach ( $modules as $module ) {
 			if ( empty( $module->archives ) ) {
 				$module->archives = $this->archives;
+			}
+
+			if ( empty( $module->templates ) ) {
+				$module->templates = $this->templates;
 			}
 
 			if ( empty( $module->theme_compat ) ) {

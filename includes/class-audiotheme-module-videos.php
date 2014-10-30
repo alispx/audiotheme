@@ -229,6 +229,7 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 	 */
 	public function template_include( $template ) {
 		$original_template = $template;
+		$template_loader   = $this->templates;
 		$compat            = $this->theme_compat;
 
 		if ( is_post_type_archive( 'audiotheme_video' ) || is_tax( 'audiotheme_video_category' ) ) {
@@ -239,12 +240,12 @@ class AudioTheme_Module_Videos extends AudioTheme_Module {
 				$templates[] = "taxonomy-$taxonomy.php";
 			}
 
-			$template = audiotheme_locate_template( 'archive-video.php' );
+			$template = $template_loader->locate_template( 'archive-video.php' );
 
 			$compat->set_title( get_audiotheme_post_type_archive_title() );
 			$compat->set_loop_template_part( 'parts/loop-archive', 'video' );
 		} elseif ( is_singular( 'audiotheme_video' ) ) {
-			$template = audiotheme_locate_template( 'single-video.php' );
+			$template = $template_loader->locate_template( 'single-video.php' );
 
 			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'video' );

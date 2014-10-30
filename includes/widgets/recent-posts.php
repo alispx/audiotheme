@@ -113,8 +113,9 @@ class AudioTheme_Widget_Recent_Posts extends WP_Widget {
 			$data                   = array_merge( $instance, $data );
 
 			ob_start();
-			$template = audiotheme_locate_template( array( "widgets/{$args['id']}_recent-posts.php", "widgets/recent-posts.php" ) );
-			audiotheme_load_template( $template, $data );
+			$template_loader = audiotheme()->templates;
+			$template = $template_loader->locate_template( array( "widgets/{$args['id']}_recent-posts.php", "widgets/recent-posts.php" ) );
+			$template_loader->load_template( $template, $data );
 			$output .= ob_get_clean();
 
 			wp_reset_postdata();

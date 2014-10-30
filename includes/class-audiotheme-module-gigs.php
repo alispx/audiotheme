@@ -307,15 +307,16 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 */
 	public function template_include( $template ) {
 		$original_template = $template;
+		$template_loader   = $this->templates;
 		$compat            = $this->theme_compat;
 
 		if ( is_post_type_archive( 'audiotheme_gig' ) ) {
-			$template = audiotheme_locate_template( 'archive-gig.php' );
+			$template = $template_loader->locate_template( 'archive-gig.php' );
 
 			$compat->set_title( get_audiotheme_post_type_archive_title() );
 			$compat->set_loop_template_part( 'parts/loop-archive', 'gig' );
 		} elseif ( is_singular( 'audiotheme_gig' ) ) {
-			$template = audiotheme_locate_template( 'single-gig.php' );
+			$template = $template_loader->locate_template( 'single-gig.php' );
 
 			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'gig' );

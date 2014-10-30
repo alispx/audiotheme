@@ -316,6 +316,7 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 	 */
 	public function template_include( $template ) {
 		$original_template = $template;
+		$template_loader   = $this->templates;
 		$compat            = $this->theme_compat;
 
 		if ( is_post_type_archive( array( 'audiotheme_record', 'audiotheme_track' ) ) || is_tax( 'audiotheme_record_type' ) ) {
@@ -333,19 +334,19 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 
 			$templates[] = 'archive-record.php';
 
-			$template = audiotheme_locate_template( $templates );
+			$template = $template_loader->locate_template( $templates );
 
 			$compat->set_title( get_audiotheme_post_type_archive_title() );
 			$compat->set_loop_template_part( 'parts/loop-archive', 'record' );
 		} elseif ( is_singular( 'audiotheme_record' ) ) {
 			$templates = array( 'single-record.php' );
 
-			$template = audiotheme_locate_template( $templates );
+			$template = $template_loader->locate_template( $templates );
 
 			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'record' );
 		} elseif ( is_singular( 'audiotheme_track' ) ) {
-			$template = audiotheme_locate_template( 'single-track.php' );
+			$template = $template_loader->locate_template( 'single-track.php' );
 
 			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'track' );
