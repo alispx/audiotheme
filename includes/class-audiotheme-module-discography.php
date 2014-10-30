@@ -335,30 +335,22 @@ class AudioTheme_Module_Discography extends AudioTheme_Module {
 			$templates[] = 'archive-record.php';
 
 			$template = $template_loader->locate_template( $templates );
-
 			$compat->set_title( get_audiotheme_post_type_archive_title() );
 			$compat->set_loop_template_part( 'parts/loop-archive', 'record' );
 		} elseif ( is_singular( 'audiotheme_record' ) ) {
 			$templates = array( 'single-record.php' );
 
 			$template = $template_loader->locate_template( $templates );
-
 			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'record' );
 		} elseif ( is_singular( 'audiotheme_track' ) ) {
 			$template = $template_loader->locate_template( 'single-track.php' );
-
 			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'track' );
 		}
 
 		if ( $template !== $original_template ) {
-			// Enable theme compatibility.
-			if ( ! $compat->is_template_compatible( $template ) ) {
-				$compat->enable();
-				$template = $compat->get_template();
-			}
-
+			$template = $this->get_compatible_template( $template );
 			do_action( 'audiotheme_template_include', $template );
 		}
 

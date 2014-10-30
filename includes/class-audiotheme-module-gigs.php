@@ -321,23 +321,16 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 
 		if ( is_post_type_archive( 'audiotheme_gig' ) ) {
 			$template = $template_loader->locate_template( 'archive-gig.php' );
-
 			$compat->set_title( get_audiotheme_post_type_archive_title() );
 			$compat->set_loop_template_part( 'parts/loop-archive', 'gig' );
 		} elseif ( is_singular( 'audiotheme_gig' ) ) {
 			$template = $template_loader->locate_template( 'single-gig.php' );
-
 			$compat->set_title( get_queried_object()->post_title );
 			$compat->set_loop_template_part( 'parts/loop-single', 'gig' );
 		}
 
 		if ( $template !== $original_template ) {
-			// Enable theme compatibility.
-			if ( ! $compat->is_template_compatible( $template ) ) {
-				$compat->enable();
-				$template = $compat->get_template();
-			}
-
+			$template = $this->get_compatible_template( $template );
 			do_action( 'audiotheme_template_include', $template );
 		}
 

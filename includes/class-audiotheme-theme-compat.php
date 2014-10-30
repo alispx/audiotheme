@@ -112,7 +112,7 @@ class AudioTheme_Theme_Compat {
 	}
 
 	/**
-	 * Retrieve a theme compatible template.
+	 * Retrieve a template from the theme.
 	 *
 	 * @since 2.0.0
 	 *
@@ -121,7 +121,7 @@ class AudioTheme_Theme_Compat {
 	 *
 	 * @return string The template path if one is located.
 	 */
-	public function get_template() {
+	public function get_theme_template() {
 		// If the template is being loaded from the plugin and the theme hasn't
 		// declared support, search for a compatible template in the theme.
 		$template = locate_template( array(

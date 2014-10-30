@@ -153,4 +153,26 @@ abstract class AudioTheme_Module {
 	public function is_core() {
 		return (bool) $this->is_core_module;
 	}
+
+	/**
+	 * Retrieve a template that's compatible with the theme.
+	 *
+	 * Ensures the given template is compatible with theme, otherwise theme
+	 * compatibility mode is enabled and a generic template is located from the
+	 * theme to use in instead.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $template
+	 * @return string
+	 */
+	public function get_compatible_template( $template ) {
+		// Enable theme compatibility.
+		if ( ! $this->theme_compat->is_template_compatible( $template ) ) {
+			$this->theme_compat->enable();
+			$template = $this->theme_compat->get_theme_template();
+		}
+
+		return $template;
+	}
 }
