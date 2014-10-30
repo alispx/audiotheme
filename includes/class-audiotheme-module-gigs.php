@@ -46,6 +46,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 */
 	public function register_hooks() {
 		add_action( 'init',                     array( $this, 'register_post_types' ) );
+		add_action( 'p2p_init',                 array( $this, 'register_post_connections' ) );
 		add_filter( 'generate_rewrite_rules',   array( $this, 'generate_rewrite_rules' ) );
 		add_filter( 'query_vars',               array( $this, 'register_query_vars' ) );
 		add_action( 'pre_get_posts',            array( $this, 'gig_query' ) );
@@ -130,13 +131,21 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		$this->archives->add_post_type_archive( 'audiotheme_gig', array(
 			'admin_menu_parent' => 'audiotheme-gigs',
 		) );
+	}
 
+	/**
+	 * Register post connections.
+	 *
+	 * @since 2.0.0
+	 */
+	public function register_post_connections() {
 		// Register the relationship between gigs and venues.
 		p2p_register_connection_type( array(
 			'name'        => 'audiotheme_venue_to_gig',
 			'from'        => 'audiotheme_venue',
 			'to'          => 'audiotheme_gig',
 			'cardinality' => 'one-to-many',
+			'admin_box'   => false,
 		) );
 	}
 
