@@ -318,7 +318,7 @@ class AudioTheme_Theme_Compat {
 	 * @return bool
 	 */
 	protected function is_plugin_template( $template ) {
-		$base     = str_replace( array( '\\', '/' ), DIRECTORY_SEPARATOR, AUDIOTHEME_DIR );
+		$base     = str_replace( array( '\\', '/' ), DIRECTORY_SEPARATOR, WP_PLUGIN_DIR );
 		$template = str_replace( array( '\\', '/' ), DIRECTORY_SEPARATOR, $template );
 		return ( 0 === strpos( $template, $base ) );
 	}
