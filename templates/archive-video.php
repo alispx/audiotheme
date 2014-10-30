@@ -1,6 +1,6 @@
 <?php
 /**
- * The template to display list of videos.
+ * The template to display a list of videos.
  *
  * @package AudioTheme\Template
  * @since 1.2.0

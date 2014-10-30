@@ -1,6 +1,6 @@
 <?php
 /**
- * The template to display list of records.
+ * The template to display a list of records.
  *
  * @package AudioTheme\Template
  * @since 1.2.0
