@@ -116,8 +116,6 @@ class AudioTheme_Admin_Screen_ManageRecords {
 	 * @param int $post_id Post ID.
 	 */
 	public function display_columns( $column_name, $post_id ) {
-		global $post;
-
 		switch ( $column_name ) {
 			case 'release_year' :
 				echo get_audiotheme_record_release_year( $post_id );

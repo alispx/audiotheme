@@ -340,7 +340,7 @@ class AudioTheme_Theme_Compat {
 		$wp_query->post_count  = 1;
 		$wp_query->found_posts = 1;
 		$wp_query->is_archive  = false;
-		$wp_query->is_singular = true;
+		$wp_query->is_singular = true; // @todo Prevents titles from being linked, but causes issues in WP_Query::is_singular()
 
 		// Attempt to disable the comment form if the current post doesn't support them.
 		if ( 'open' != $post->comment_status || ! post_type_supports( $post->post_type, 'comments' ) ) {
