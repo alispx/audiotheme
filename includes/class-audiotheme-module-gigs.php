@@ -46,7 +46,7 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 	 */
 	public function register_hooks() {
 		add_action( 'init',                     array( $this, 'register_post_types' ) );
-		add_action( 'p2p_init',                 array( $this, 'register_post_connections' ) );
+		add_action( 'wp_loaded',                array( $this, 'register_post_connections' ) );
 		add_filter( 'generate_rewrite_rules',   array( $this, 'generate_rewrite_rules' ) );
 		add_filter( 'query_vars',               array( $this, 'register_query_vars' ) );
 		add_action( 'pre_get_posts',            array( $this, 'gig_query' ) );
