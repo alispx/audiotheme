@@ -7,17 +7,6 @@
  */
 
 /**
- * Widget Includes
- *
- * @since 1.0.0
- */
-require( AUDIOTHEME_DIR . 'includes/widgets/recent-posts.php' );
-require( AUDIOTHEME_DIR . 'includes/widgets/record.php' );
-require( AUDIOTHEME_DIR . 'includes/widgets/track.php' );
-require( AUDIOTHEME_DIR . 'includes/widgets/upcoming-gigs.php' );
-require( AUDIOTHEME_DIR . 'includes/widgets/video.php' );
-
-/**
  * Register Supported Widgets
  *
  * Themes can load all widgets by calling add_theme_support( 'audiotheme-widgets' ).
