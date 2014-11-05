@@ -23,7 +23,7 @@
  * @author Gary Jones
  * @author Brady Vercher
  */
-class Audiotheme_Template_Loader {
+class AudioTheme_Template_Loader {
 	/**
 	 * Prefix for filter names.
 	 *
