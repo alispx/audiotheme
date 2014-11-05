@@ -63,6 +63,8 @@ require( AUDIOTHEME_DIR . 'includes/gigs-template.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/videos-template.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets.php' );
+require( AUDIOTHEME_DIR . 'vendor/scribu/lib-posts-to-posts/autoload.php' );
+require( AUDIOTHEME_DIR . 'vendor/scribu/scb-framework/load.php' );
 
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'admin/ajax-actions.php' );

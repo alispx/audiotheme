@@ -1,0 +1,17 @@
+{
+	"name": "audiotheme/audiotheme",
+	"description": "A WordPress framework plugin built for bands, musicians, and labels.",
+	"keywords": ["wordpress"],
+	"type": "wordpress-plugin",
+	"homepage": "https://github.com/audiotheme/audiotheme",
+	"license": "GPL-2.0+",
+	"support": {
+		"issues": "https://github.com/audiotheme/audiotheme/issues",
+		"source": "https://github.com/audiotheme/audiotheme"
+	},
+	"require": {
+		"scribu/lib-posts-to-posts": "dev-master"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}

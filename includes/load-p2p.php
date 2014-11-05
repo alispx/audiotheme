@@ -5,14 +5,8 @@
  * @package AudioTheme
  * @since 1.0.0
  *
- * @link https://github.com/AppThemes/wp-posts-to-posts-core
- * @link https://github.com/AppThemes/wp-posts-to-posts-core/wiki/Bundling-in-a-plugin
+ * @link https://github.com/scribu/wp-lib-posts-to-posts
  */
-
-/**
- * Include the scbFramework.
- */
-require( AUDIOTHEME_DIR . 'includes/vendor/scb/load.php' );
 
 /**
  * Attach hook to load the Posts to Posts core.
@@ -23,13 +17,12 @@ require( AUDIOTHEME_DIR . 'includes/vendor/scb/load.php' );
  */
 function audiotheme_p2p_init() {
 	add_action( 'plugins_loaded', 'audiotheme_p2p_load_core', 20 );
+	register_uninstall_hook( AUDIOTHEME_DIR . 'audiotheme.php', array( 'P2P_Storage', 'uninstall' ) );
 }
 scb_init( 'audiotheme_p2p_init' );
 
 /**
  * Load Posts 2 Posts core.
- *
- * Requires the scbFramework.
  *
  * Posts 2 Posts requires two custom database tables to store post
  * relationships and relationship metadata. If an alternative version of the
@@ -38,15 +31,14 @@ scb_init( 'audiotheme_p2p_init' );
  * @since 1.0.0
  */
 function audiotheme_p2p_load_core() {
-	if ( function_exists( 'p2p_register_connection_type' ) ) {
-		return;
-	}
-
 	if ( ! defined( 'P2P_TEXTDOMAIN' ) ) {
 		define( 'P2P_TEXTDOMAIN', 'audiotheme' );
 	}
 
-	require_once( AUDIOTHEME_DIR . 'includes/vendor/p2p/init.php' );
-
-	add_action( 'admin_init', array( 'P2P_Storage', 'install' ) );
+	P2P_Storage::init();
+	P2P_Query_Post::init();
+	P2P_Query_User::init();
+	P2P_URL_Query::init();
+	P2P_Widget::init();
+	P2P_Shortcodes::init();
 }
