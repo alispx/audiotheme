@@ -1,8 +1,0 @@
-[submodule "includes/vendor/p2p"]
-	path = includes/vendor/p2p
-	url = https://github.com/AppThemes/wp-posts-to-posts-core.git
-	ignore = dirty
-[submodule "includes/vendor/scb"]
-	path = includes/vendor/scb
-	url = https://github.com/scribu/wp-scb-framework.git
-	ignore = dirty
