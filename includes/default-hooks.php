@@ -12,7 +12,7 @@
  * @since 2.0.0
  */
 function audiotheme_enqueue_assets() {
-	if ( apply_filters( 'audiotheme_enqueue_assets', '__return_true' ) ) {
+	if ( apply_filters( 'audiotheme_enqueue_assets', true ) ) {
 		wp_enqueue_script( 'audiotheme' );
 		wp_enqueue_style( 'audiotheme' );
 	}
