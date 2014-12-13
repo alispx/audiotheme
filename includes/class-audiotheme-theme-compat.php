@@ -229,7 +229,7 @@ class AudioTheme_Theme_Compat {
 		$this->the_query = unserialize( serialize( $wp_query ) );
 
 		// Get a temporary post for the default main loop.
-		$post = $this->get_temp_post(
+		$post = $this->get_temporary_post(
 			array(
 				'post_content' => $this->get_content(),
 				'post_title'   => $this->title,
@@ -257,7 +257,7 @@ class AudioTheme_Theme_Compat {
 			return;
 		}
 
-		$this->reset_the_query();
+		$this->restore_the_query();
 		$this->restore_filters();
 	}
 
@@ -273,7 +273,7 @@ class AudioTheme_Theme_Compat {
 	 * @param array $defaults Optional. Properties that should override the default temporary properties.
 	 * @return array
 	 */
-	protected function get_temp_post( $args = array(), $defaults = array() ) {
+	protected function get_temporary_post( $args = array(), $defaults = array() ) {
 		if ( ! empty( $defaults ) ) {
 			$args = wp_parse_args( $args, (array) $defaults );
 		}
@@ -355,7 +355,7 @@ class AudioTheme_Theme_Compat {
 	 *
 	 * @global WP_Query $wp_query
 	 */
-	protected function reset_the_query() {
+	protected function restore_the_query() {
 		global $wp_query;
 
 		if ( ! isset( $this->the_query ) ) {
