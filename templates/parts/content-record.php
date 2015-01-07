@@ -65,11 +65,11 @@
 
 					<li id="track-<?php echo $track->ID; ?>" class="audiotheme-track" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording">
 						<span class="audiotheme-track-info audiotheme-track-cell">
-							<a href="<?php echo get_permalink( $track->ID ); ?>" itemprop="url" class="audiotheme-track-title"><span itemprop="name"><?php echo get_the_title( $track->ID ); ?></span></a>
+							<a href="<?php echo esc_url( get_permalink( $track->ID ) ); ?>" itemprop="url" class="audiotheme-track-title"><span itemprop="name"><?php echo get_the_title( $track->ID ); ?></span></a>
 
 							<span class="audiotheme-track-meta">
 								<?php if ( $download_url = is_audiotheme_track_downloadable( $track->ID ) ) : ?>
-									<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-track-download-link">Download</a>
+									<a href="<?php echo esc_url( $download_url ); ?>" class="audiotheme-track-download-link"><?php _e( 'Download', 'audiotheme' ); ?></a>
 								<?php endif; ?>
 
 								<span class="audiotheme-track-current-time">-:--</span>
