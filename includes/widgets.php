@@ -19,10 +19,10 @@
  */
 function audiotheme_widgets_init() {
 	$widgets = array(
-		'recent-posts'  => 'AudioTheme_Widget_Recent_Posts',
+		'recent-posts'  => 'AudioTheme_Widget_RecentPosts',
 		'record'        => 'AudioTheme_Widget_Record',
 		'track'         => 'AudioTheme_Widget_Track',
-		'upcoming-gigs' => 'AudioTheme_Widget_Upcoming_Gigs',
+		'upcoming-gigs' => 'AudioTheme_Widget_UpcomingGigs',
 		'video'         => 'AudioTheme_Widget_Video',
 	);
 

@@ -7,7 +7,7 @@
  * @package AudioTheme\Widgets
  * @since 1.0.0
  */
-class AudioTheme_Widget_Upcoming_Gigs extends WP_Widget {
+class AudioTheme_Widget_UpcomingGigs extends WP_Widget {
 	/**
 	 * Setup widget options.
 	 *

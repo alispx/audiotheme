@@ -87,9 +87,7 @@ class AudioTheme_Admin_Screen_ManageGigs {
 			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 		}
 
-		require_once( AUDIOTHEME_DIR . 'admin/class-audiotheme-gigs-list-table.php' );
-
-		$list_table = new AudioTheme_Gigs_List_Table();
+		$list_table = new AudioTheme_Admin_ListTable_Gigs();
 		$list_table->process_actions();
 	}
 
@@ -101,7 +99,7 @@ class AudioTheme_Admin_Screen_ManageGigs {
 	public function display_screen() {
 		$post_type_object = get_post_type_object( 'audiotheme_gig' );
 
-		$list_table = new AudioTheme_Gigs_List_Table();
+		$list_table = new AudioTheme_Admin_ListTable_Gigs();
 		$list_table->prepare_items();
 
 		require( AUDIOTHEME_DIR . 'admin/views/screen-manage-gigs.php' );

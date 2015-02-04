@@ -62,9 +62,9 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				files: [
-					{ src: 'admin/css/sass/admin.scss', dest: 'admin/css/admin.min.css' },
-					{ src: 'admin/css/sass/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
-					{ src: 'includes/css/sass/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' }
+					{ src: 'admin/sass/admin.scss', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/sass/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'includes/sass/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
 		},
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
 				tasks: ['jshint', 'uglify']
 			},
 			sass: {
-				files: ['includes/css/**/*.scss', 'admin/css/**/*.scss'],
+				files: ['includes/**/*.scss', 'admin/**/*.scss'],
 				tasks: ['sass', 'autoprefixer', 'cssmin']
 			}
 		},

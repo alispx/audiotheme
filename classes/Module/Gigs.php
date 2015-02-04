@@ -287,8 +287,6 @@ class AudioTheme_Module_Gigs extends AudioTheme_Module {
 		if ( is_feed() && 'audiotheme_gig' == $wp_query->get( 'post_type' ) ) {
 			p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
 
-			require_once( AUDIOTHEME_DIR . 'includes/feed.php' );
-
 			switch( $type ) {
 				case 'feed':
 					load_template( AUDIOTHEME_DIR . 'includes/views/gigs-feed-rss2.php' );

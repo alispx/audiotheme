@@ -12,7 +12,7 @@
  * @package AudioTheme
  * @since 2.0.0
  */
-class AudioTheme {
+class AudioTheme_Plugin {
 	/**
 	 * Administration API.
 	 *

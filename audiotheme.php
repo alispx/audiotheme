@@ -53,18 +53,19 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
 /**
  * Load functions, libraries and template tags.
  */
-require( AUDIOTHEME_DIR . 'includes/archive-template.php' );
 require( AUDIOTHEME_DIR . 'includes/default-hooks.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
-require( AUDIOTHEME_DIR . 'includes/discography-template.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
-require( AUDIOTHEME_DIR . 'includes/general-template.php' );
-require( AUDIOTHEME_DIR . 'includes/gigs-template.php' );
-require( AUDIOTHEME_DIR . 'includes/videos-template.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets.php' );
 require( AUDIOTHEME_DIR . 'vendor/scribu/lib-posts-to-posts/autoload.php' );
 require( AUDIOTHEME_DIR . 'vendor/scribu/scb-framework/load.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
+require( AUDIOTHEME_DIR . 'includes/template-tags/archive.php' );
+require( AUDIOTHEME_DIR . 'includes/template-tags/discography.php' );
+require( AUDIOTHEME_DIR . 'includes/template-tags/feed.php' );
+require( AUDIOTHEME_DIR . 'includes/template-tags/general.php' );
+require( AUDIOTHEME_DIR . 'includes/template-tags/gigs.php' );
+require( AUDIOTHEME_DIR . 'includes/template-tags/videos.php' );
 
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'admin/ajax-actions.php' );
@@ -85,9 +86,8 @@ function audiotheme_autoloader( $class ) {
 		return;
 	}
 
-	$file  = dirname( __FILE__ );
-	$file .= ( false === strpos( $class, 'Admin' ) ) ? '/includes/' : '/admin/';
-	$file .= 'class-' . strtolower( str_replace( '_', '-', $class ) ) . '.php';
+	$class = str_replace( array( 'AudioTheme_', '_' ), array( '', '/' ), $class );
+	$file  = dirname( __FILE__ ) . '/classes/' . $class . '.php';
 
 	if ( file_exists( $file ) ) {
 		require_once( $file );
@@ -106,7 +106,7 @@ function audiotheme() {
 	static $instance;
 
 	if ( null === $instance ) {
-		$instance = new AudioTheme;
+		$instance = new AudioTheme_Plugin;
 	}
 
 	return $instance;

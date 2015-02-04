@@ -11,7 +11,7 @@
  *
  * @since 1.0.0
  */
-class AudioTheme_Gigs_List_Table extends WP_List_Table {
+class AudioTheme_Admin_ListTable_Gigs extends WP_List_Table {
 	/**
 	 * The current view.
 	 *

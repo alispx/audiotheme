@@ -66,9 +66,7 @@ class AudioTheme_Admin_Screen_ManageVenues {
 			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 		}
 
-		require( AUDIOTHEME_DIR . 'admin/class-audiotheme-venues-list-table.php' );
-
-		$list_table = new AudioTheme_Venues_List_Table();
+		$list_table = new AudioTheme_Admin_ListTable_Venues();
 		$list_table->process_actions();
 	}
 
@@ -78,7 +76,7 @@ class AudioTheme_Admin_Screen_ManageVenues {
 	 * @since 1.0.0
 	 */
 	public function display_screen() {
-		$list_table = new AudioTheme_Venues_List_Table();
+		$list_table = new AudioTheme_Admin_ListTable_Venues();
 		$list_table->prepare_items();
 
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
