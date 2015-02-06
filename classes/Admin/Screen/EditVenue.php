@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin\Screen;
+
 /**
  * Edit venue administration screen class.
  *
  * @package AudioTheme\Gigs
  * @since 2.0.0
  */
-class AudioTheme_Admin_Screen_EditVenue {
+class EditVenue {
 	/**
 	 * Load the screen.
 	 *

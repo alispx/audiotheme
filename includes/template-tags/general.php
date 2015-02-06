@@ -43,7 +43,7 @@ function audiotheme_simplify_url( $url ) {
 
 /**
  * Displays navigation to next/previous pages when applicable in archive
- * templates
+ * templates.
  *
  * @since 1.2.0
  */

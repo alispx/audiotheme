@@ -35,6 +35,19 @@
  */
 
 /**
+ * Load the Composer autoloader.
+ */
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require( __DIR__ . '/vendor/autoload.php' );
+}
+
+use AudioTheme\Admin;
+use AudioTheme\Admin\Screen;
+use AudioTheme\Module;
+use AudioTheme\Modules;
+use Pimple\Container;
+
+/**
  * The AudioTheme version.
  */
 define( 'AUDIOTHEME_VERSION', '1.6.2' );
@@ -57,8 +70,6 @@ require( AUDIOTHEME_DIR . 'includes/default-hooks.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/widgets.php' );
-require( AUDIOTHEME_DIR . 'vendor/scribu/lib-posts-to-posts/autoload.php' );
-require( AUDIOTHEME_DIR . 'vendor/scribu/scb-framework/load.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/archive.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/discography.php' );
@@ -73,29 +84,6 @@ if ( is_admin() ) {
 }
 
 /**
- * Autoloader callback.
- *
- * Converts a class name to a file path and requires it if it exists.
- *
- * @since 2.0.0
- *
- * @param string $class Class name.
- */
-function audiotheme_autoloader( $class ) {
-	if ( 0 !== stripos( $class, 'AudioTheme' ) ) {
-		return;
-	}
-
-	$class = str_replace( array( 'AudioTheme_', '_' ), array( '', '/' ), $class );
-	$file  = dirname( __FILE__ ) . '/classes/' . $class . '.php';
-
-	if ( file_exists( $file ) ) {
-		require_once( $file );
-	}
-}
-spl_autoload_register( 'audiotheme_autoloader' );
-
-/**
  * Retrieve the AudioTheme plugin instance.
  *
  * @since 2.0.0
@@ -106,7 +94,7 @@ function audiotheme() {
 	static $instance;
 
 	if ( null === $instance ) {
-		$instance = new AudioTheme_Plugin;
+		$instance = new AudioTheme\Plugin;
 	}
 
 	return $instance;
@@ -122,39 +110,73 @@ add_action( 'plugins_loaded', array( $audiotheme, 'load_plugin' ) );
  * Define dependencies.
  */
 $audiotheme->plugin_file  = __FILE__;
-$audiotheme->archives     = new AudioTheme_Archives;
-$audiotheme->templates    = new AudioTheme_Template_Loader;
-$audiotheme->theme_compat = new AudioTheme_Theme_Compat;
+$audiotheme->archives     = new AudioTheme\Archives;
+$audiotheme->templates    = new AudioTheme\Template\Loader;
+$audiotheme->theme_compat = new AudioTheme\Theme\Compat;
+$audiotheme->modules      = new Modules;
 
-$audiotheme->modules                = new AudioTheme_Modules;
-$audiotheme->modules['discography'] = 'AudioTheme_Module_Discography';
-$audiotheme->modules['gigs']        = 'AudioTheme_Module_Gigs';
-$audiotheme->modules['videos']      = 'AudioTheme_Module_Videos';
+$audiotheme->modules['discography'] = function( $c ) {
+	return new Module\Discography;
+};
+
+$audiotheme->modules['gigs'] = function( $c ) {
+	return new Module\Gigs;
+};
+
+$audiotheme->modules['videos'] = function( $c ) {
+	return new Module\Videos;
+};
 
 if ( is_admin() ) {
-	$audiotheme->admin          = new AudioTheme_Admin;
-	$audiotheme->admin->modules = new AudioTheme_Container;
-	$audiotheme->admin->screens = new AudioTheme_Container;
+	$audiotheme->admin          = new Admin;
+	$audiotheme->admin->modules = new Modules;
+	$audiotheme->admin->screens = new Container;
 
-	$audiotheme->admin->screens['settings'] = 'AudioTheme_Admin_Screen_Settings';
+	$audiotheme->admin->modules['discography'] = function( $c ) use ( $audiotheme ) {
+		$audiotheme->admin->screens['manage_records'] = function( $c ) {
+			return new Screen\ManageRecords;
+		};
 
-	if ( $audiotheme->modules->is_active( 'discography' ) || $audiotheme->is_settings_screen() ) {
-		$audiotheme->admin->modules['discography']    = 'AudioTheme_Admin_Discography';
-		$audiotheme->admin->screens['manage_records'] = 'AudioTheme_Admin_Screen_ManageRecords';
-		$audiotheme->admin->screens['edit_record']    = 'AudioTheme_Admin_Screen_EditRecord';
-		$audiotheme->admin->screens['manage_tracks']  = 'AudioTheme_Admin_Screen_ManageTracks';
-		$audiotheme->admin->screens['edit_track']     = 'AudioTheme_Admin_Screen_EditTrack';
-	}
+		$audiotheme->admin->screens['edit_record'] = function( $c ) {
+			return new Screen\EditRecord;
+		};
 
-	if ( $audiotheme->modules->is_active( 'gigs' ) || $audiotheme->is_settings_screen() ) {
-		$audiotheme->admin->modules['gigs']          = 'AudioTheme_Admin_Gigs';
-		$audiotheme->admin->screens['manage_gigs']   = 'AudioTheme_Admin_Screen_ManageGigs';
-		$audiotheme->admin->screens['edit_gig']      = 'AudioTheme_Admin_Screen_EditGig';
-		$audiotheme->admin->screens['manage_venues'] = 'AudioTheme_Admin_Screen_ManageVenues';
-		$audiotheme->admin->screens['edit_venue']    = 'AudioTheme_Admin_Screen_EditVenue';
-	}
+		$audiotheme->admin->screens['manage_tracks'] = function( $c ) {
+			return new Screen\ManageTracks;
+		};
 
-	if ( $audiotheme->modules->is_active( 'videos' ) || $audiotheme->is_settings_screen() ) {
-		$audiotheme->admin->modules['videos'] = 'AudioTheme_Admin_Videos';
-	}
+		$audiotheme->admin->screens['edit_track'] = function( $c ) {
+			return new Screen\EditTrack;
+		};
+
+		return new Admin\Discography;
+	};
+
+	$audiotheme->admin->modules['gigs'] = function( $c ) use ( $audiotheme ) {
+		$audiotheme->admin->screens['manage_gigs'] = function( $c ) {
+			return new Screen\ManageGigs;
+		};
+
+		$audiotheme->admin->screens['edit_gig'] = function( $c ) {
+			return new Screen\EditGig;
+		};
+
+		$audiotheme->admin->screens['manage_venues'] = function( $c ) {
+			return new Screen\ManageVenues;
+		};
+
+		$audiotheme->admin->screens['edit_venue'] = function( $c ) {
+			return new Screen\EditVenue;
+		};
+
+		return new Admin\Gigs;
+	};
+
+	$audiotheme->admin->modules['videos'] = function( $c ) {
+		return new Admin\Videos;
+	};
+
+	$audiotheme->admin->screens['settings'] = function( $c ) {
+		return new Screen\Settings;
+	};
 }

@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme;
+
 /**
  * Basic container class.
  *
  * @package AudioTheme
  * @since 2.0.0
  */
-class AudioTheme_Container implements ArrayAccess {
+class Container implements \ArrayAccess {
 	/**
 	 * List of items added to the container.
 	 *

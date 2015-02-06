@@ -1,11 +1,14 @@
 <?php
+
+namespace AudioTheme;
+
 /**
  * Administration class.
  *
  * @package AudioTheme\Administration
  * @since 2.0.0
  */
-class AudioTheme_Admin {
+class Admin {
 	/**
 	 * Admin modules container.
 	 *
@@ -28,10 +31,6 @@ class AudioTheme_Admin {
 	 * @since 2.0.0
 	 */
 	public function load() {
-		if ( ! is_admin() ) {
-			return;
-		}
-
 		$this->register_hooks();
 		$this->register_ajax_actions();
 		$this->load_modules();
@@ -44,8 +43,10 @@ class AudioTheme_Admin {
 	 * @since 2.0.0
 	 */
 	public function load_modules() {
-		foreach ( $this->modules->get_all() as $module ) {
-			$module->load();
+		$modules = $this->is_settings_screen() ? $this->modules->keys() : $this->modules->get_active();
+
+		foreach ( $modules as $module_id ) {
+			$this->modules[ $module_id ]->load();
 		}
 	}
 
@@ -55,8 +56,8 @@ class AudioTheme_Admin {
 	 * @since 2.0.0
 	 */
 	public function load_screens() {
-		foreach ( $this->screens->get_all() as $screen ) {
-			$screen->load();
+		foreach ( $this->screens->keys() as $screen_id ) {
+			$this->screens[ $screen_id ]->load();
 		}
 	}
 
@@ -258,6 +259,17 @@ class AudioTheme_Admin {
 		$contact_methods['twitter']  = __( 'Twitter Username', 'audiotheme' );
 		$contact_methods['facebook'] = __( 'Facebook URL', 'audiotheme' );
 		return $contact_methods;
+	}
+
+	/**
+	 * Whether the current request is the settings screen.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return bool
+	 */
+	public function is_settings_screen() {
+		return is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];
 	}
 
 	/**

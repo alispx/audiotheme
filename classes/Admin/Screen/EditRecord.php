@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin\Screen;
+
 /**
  * Edit record administration screen functionality.
  *
  * @package AudioTheme\Discography
  * @since 2.0.0
  */
-class AudioTheme_Admin_Screen_EditRecord {
+class EditRecord {
 	/**
 	 * Load the screen.
 	 *

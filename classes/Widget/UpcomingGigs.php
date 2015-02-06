@@ -1,13 +1,18 @@
 <?php
+
+namespace AudioTheme\Widget;
+
+use AudioTheme\Gig\Query;
+
 /**
  * AudioTheme record widget class.
  *
  * Display a list of upcoming gigs in a widget area.
  *
- * @package AudioTheme\Widgets
+ * @package AudioTheme\Widget
  * @since 1.0.0
  */
-class AudioTheme_Widget_UpcomingGigs extends WP_Widget {
+class UpcomingGigs extends \WP_Widget {
 	/**
 	 * Setup widget options.
 	 *
@@ -48,7 +53,7 @@ class AudioTheme_Widget_UpcomingGigs extends WP_Widget {
 		$instance['date_format'] = apply_filters( 'audiotheme_widget_upcoming_gigs_date_format', get_option( 'date_format' ) );
 		$instance['number'] = ( empty( $instance['number'] ) || ! absint( $instance['number'] ) ) ? 5 : absint( $instance['number'] );
 
-		$loop = new AudioTheme_Gig_Query( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
+		$loop = new \AudioTheme\Gig\Query( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
 			'no_found_rows'  => true,
 			'posts_per_page' => $instance['number'],
 		) ) );

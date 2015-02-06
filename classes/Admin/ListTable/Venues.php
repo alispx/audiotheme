@@ -6,12 +6,14 @@
  * @since 1.0.0
  */
 
+namespace AudioTheme\Admin\ListTable;
+
 /**
  * Venues list table class.
  *
  * @since 1.0.0
  */
-class AudioTheme_Admin_ListTable_Venues extends WP_List_Table {
+class Venues extends \WP_List_Table {
 	/**
 	 * Constructor.
 	 *
@@ -84,7 +86,7 @@ class AudioTheme_Admin_ListTable_Venues extends WP_List_Table {
 
 		// Run the query.
 		$items = array();
-		$wp_query = new WP_Query( $args );
+		$wp_query = new \WP_Query( $args );
 		if ( isset( $wp_query->posts ) && count( $wp_query->posts ) ) {
 			foreach ( $wp_query->posts as $post ) {
 				$items[ $post->ID ] = get_audiotheme_venue( $post->ID );

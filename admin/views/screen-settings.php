@@ -6,7 +6,9 @@
 			<h3><?php _e( 'Modules', 'audiotheme' ); ?></h3>
 
 			<?php
-			foreach ( $modules->get_all() as $module_id => $module ) :
+			foreach ( $modules->keys() as $module_id ) :
+				$module = $modules[ $module_id ];
+
 				if ( ! $module->is_core() ) {
 					continue;
 				}

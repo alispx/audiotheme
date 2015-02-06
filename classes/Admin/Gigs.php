@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin;
+
 /**
  * Gigs module administration class.
  *
  * @package AudioTheme\Gigs
  * @since 2.0.0
  */
-class AudioTheme_Admin_Gigs {
+class Gigs {
 	/**
 	 * Attach hooks for loading gigs administration.
 	 *

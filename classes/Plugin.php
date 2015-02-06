@@ -6,13 +6,17 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme;
+
+use AudioTheme;
+
 /**
  * Main plugin class.
  *
  * @package AudioTheme
  * @since 2.0.0
  */
-class AudioTheme_Plugin {
+class Plugin {
 	/**
 	 * Administration API.
 	 *
@@ -134,9 +138,11 @@ class AudioTheme_Plugin {
 	 * @since 2.0.0
 	 */
 	protected function load_active_modules() {
-		$modules = $this->is_settings_screen() ? $this->modules->get_all() : $this->modules->get_active();
+		$modules = $this->is_settings_screen() ? $this->modules->keys() : $this->modules->get_active();
 
-		foreach ( $modules as $module ) {
+		foreach ( $modules as $module_id ) {
+			$module = $this->modules[ $module_id ];
+
 			if ( empty( $module->archives ) ) {
 				$module->archives = $this->archives;
 			}

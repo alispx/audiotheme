@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme;
+
 /**
  * Abstract class for a new module.
  *
  * @package AudioTheme\Modules
  * @since 2.0.0
  */
-abstract class AudioTheme_Module {
+abstract class Module {
 	/**
 	 * Admininistration class.
 	 *

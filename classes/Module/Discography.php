@@ -6,13 +6,17 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Module;
+
+use AudioTheme\Module;
+
 /**
  * Discography module class.
  *
  * @package AudioTheme\Discography
  * @since 2.0.0
  */
-class AudioTheme_Module_Discography extends AudioTheme_Module {
+class Discography extends Module {
 	/**
 	 * Constructor method.
 	 *

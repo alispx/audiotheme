@@ -6,13 +6,17 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Module;
+
+use AudioTheme\Module;
+
 /**
  * Video module class.
  *
  * @package AudioTheme\Videos
  * @since 2.0.0
  */
-class AudioTheme_Module_Videos extends AudioTheme_Module {
+class Videos extends Module {
 	/**
 	 * Constructor method.
 	 *

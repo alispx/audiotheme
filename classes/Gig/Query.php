@@ -6,6 +6,8 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Gig;
+
 /**
  * Class to extend WP_Query and set default arguments when querying for gigs.
  *
@@ -14,7 +16,7 @@
  * @package AudioTheme\Gigs
  * @since 1.0.0
  */
-class AudioTheme_Gig_Query extends WP_Query {
+class Query extends \WP_Query {
 	/**
 	 * Run the query and cache connected venues.
 	 *

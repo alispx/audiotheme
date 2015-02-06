@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin\Screen;
+
 /**
  * Edit track administration screen class.
  *
  * @package AudioTheme\Discography
  * @since 2.0.0
  */
-class AudioTheme_Admin_Screen_EditTrack {
+class EditTrack {
 	/**
 	 * Load the screen.
 	 *

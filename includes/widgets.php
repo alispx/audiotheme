@@ -19,11 +19,11 @@
  */
 function audiotheme_widgets_init() {
 	$widgets = array(
-		'recent-posts'  => 'AudioTheme_Widget_RecentPosts',
-		'record'        => 'AudioTheme_Widget_Record',
-		'track'         => 'AudioTheme_Widget_Track',
-		'upcoming-gigs' => 'AudioTheme_Widget_UpcomingGigs',
-		'video'         => 'AudioTheme_Widget_Video',
+		'recent-posts'  => '\AudioTheme\Widget\RecentPosts',
+		'record'        => '\AudioTheme\Widget\Record',
+		'track'         => '\AudioTheme\Widget\Track',
+		'upcoming-gigs' => '\AudioTheme\Widget\UpcomingGigs',
+		'video'         => '\AudioTheme\Widget\Video',
 	);
 
 	if ( $support = get_theme_support( 'audiotheme-widgets' ) ) {

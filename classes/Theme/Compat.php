@@ -1,4 +1,7 @@
 <?php
+
+namespace AudioTheme\Theme;
+
 /**
  * AudioTheme Theme Compatibility
  *
@@ -26,7 +29,7 @@
  * @package AudioTheme
  * @since 2.0.0
  */
-class AudioTheme_Theme_Compat {
+class Compat {
 	/**
 	 * Whether theme compat mode is enabled.
 	 *

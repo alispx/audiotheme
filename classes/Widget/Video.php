@@ -1,13 +1,16 @@
 <?php
+
+namespace AudioTheme\Widget;
+
 /**
  * AudioTheme video widget class.
  *
  * Display a selected video in a widget area.
  *
- * @package AudioTheme\Widgets
+ * @package AudioTheme\Widget
  * @since 1.0.0
  */
-class AudioTheme_Widget_Video extends WP_Widget {
+class Video extends \WP_Widget {
 	/**
 	 * Setup widget options.
 	 *

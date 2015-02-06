@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin\Screen;
+
 /**
  * Manage records administration screen class.
  *
  * @package AudioTheme\Discography
  * @since 2.0.0
  */
-class AudioTheme_Admin_Screen_ManageRecords {
+class ManageRecords {
 	/**
 	 * Load the screen.
 	 *

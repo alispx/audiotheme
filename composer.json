@@ -9,9 +9,22 @@
 		"issues": "https://github.com/audiotheme/audiotheme/issues",
 		"source": "https://github.com/audiotheme/audiotheme"
 	},
+	"autoload": {
+		"psr-4": {
+			"AudioTheme\\": "classes/"
+		}
+	},
 	"require": {
+		"gamajo/template-loader": "*",
+		"icit/wp-less": "dev-master",
+		"pimple/pimple": "~3.0",
 		"scribu/lib-posts-to-posts": "dev-master"
 	},
+	"extra": {
+        "installer-paths": {
+            "vendor/{$vendor}/{$name}": ["icit/wp-less"]
+        }
+    },
 	"minimum-stability": "dev",
 	"prefer-stable": true
 }

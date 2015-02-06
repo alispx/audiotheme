@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin;
+
 /**
  * Discography module administration class.
  *
  * @package AudioTheme\Discography
  * @since 2.0.0
  */
-class AudioTheme_Admin_Discography {
+class Discography {
 	/**
 	 * Attach hooks for loading discography administration.
 	 *

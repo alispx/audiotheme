@@ -6,13 +6,17 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin\Screen;
+
+use AudioTheme\Admin\ListTable;
+
 /**
  * Manage gigs administration screen class.
  *
  * @package AudioTheme\Gigs
  * @since 2.0.0
  */
-class AudioTheme_Admin_Screen_ManageGigs {
+class ManageGigs {
 	/**
 	 * Load the screen.
 	 *
@@ -87,7 +91,7 @@ class AudioTheme_Admin_Screen_ManageGigs {
 			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 		}
 
-		$list_table = new AudioTheme_Admin_ListTable_Gigs();
+		$list_table = new ListTable\Gigs();
 		$list_table->process_actions();
 	}
 
@@ -99,7 +103,7 @@ class AudioTheme_Admin_Screen_ManageGigs {
 	public function display_screen() {
 		$post_type_object = get_post_type_object( 'audiotheme_gig' );
 
-		$list_table = new AudioTheme_Admin_ListTable_Gigs();
+		$list_table = new ListTable\Gigs();
 		$list_table->prepare_items();
 
 		require( AUDIOTHEME_DIR . 'admin/views/screen-manage-gigs.php' );

@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin;
+
 /**
  * Video module admin class.
  *
  * @package AudioTheme\Videos
  * @since 2.0.0
  */
-class AudioTheme_Admin_Videos {
+class Videos {
 	/**
 	 * Attach hooks for loading and managing videos in the admin dashboard.
 	 *

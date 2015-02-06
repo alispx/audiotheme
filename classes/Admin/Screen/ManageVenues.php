@@ -6,13 +6,17 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin\Screen;
+
+use AudioTheme\Admin\ListTable;
+
 /**
  * Manage venues administration screen class.
  *
  * @package AudioTheme\Gigs
  * @since 2.0.0
  */
-class AudioTheme_Admin_Screen_ManageVenues {
+class ManageVenues {
 	/**
 	 * Load the screen.
 	 *
@@ -66,7 +70,7 @@ class AudioTheme_Admin_Screen_ManageVenues {
 			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 		}
 
-		$list_table = new AudioTheme_Admin_ListTable_Venues();
+		$list_table = new ListTable\Venues();
 		$list_table->process_actions();
 	}
 
@@ -76,7 +80,7 @@ class AudioTheme_Admin_Screen_ManageVenues {
 	 * @since 1.0.0
 	 */
 	public function display_screen() {
-		$list_table = new AudioTheme_Admin_ListTable_Venues();
+		$list_table = new ListTable\Venues();
 		$list_table->prepare_items();
 
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );

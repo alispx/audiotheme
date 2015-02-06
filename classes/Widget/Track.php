@@ -1,13 +1,16 @@
 <?php
+
+namespace AudioTheme\Widget;
+
 /**
  * AudioTheme track widget class.
  *
  * Display a selected track in a widget area.
  *
- * @package AudioTheme\Widgets
+ * @package AudioTheme\Widget
  * @since 1.0.0
  */
-class AudioTheme_Widget_Track extends WP_Widget {
+class Track extends \WP_Widget {
 	/**
 	 * Setup widget options.
 	 *

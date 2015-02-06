@@ -6,13 +6,17 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Module;
+
+use AudioTheme\Module;
+
 /**
  * Gigs module class.
  *
  * @package AudioTheme\Gigs
  * @since 2.0.0
  */
-class AudioTheme_Module_Gigs extends AudioTheme_Module {
+class Gigs extends Module {
 	/**
 	 * Constructor method.
 	 *

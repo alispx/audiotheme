@@ -9,13 +9,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme;
+
 /**
  * Archive custom post type class.
  *
  * @package AudioTheme\Archives
  * @since 2.0.0
  */
-class AudioTheme_Archives {
+class Archives {
 	/**
 	 * Archive post type name.
 	 *

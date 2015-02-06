@@ -6,13 +6,15 @@
  * @since 1.0.0
  */
 
+namespace AudioTheme\Admin\Screen;
+
 /**
  * Settings administration screen class.
  *
  * @package AudioTheme
  * @since 1.0.0
  */
-class AudioTheme_Admin_Screen_Settings {
+class Settings {
 	/**
 	 * Load the screen.
 	 *
@@ -67,8 +69,8 @@ class AudioTheme_Admin_Screen_Settings {
 
 		// Hide menu items for inactive modules on initial load.
 		$styles = '';
-		foreach ( $modules->get_inactive() as $id => $module ) {
-			$styles .= sprintf( '#%s { display: none;}', $module->admin_menu_id );
+		foreach ( $modules->get_inactive() as $module_id ) {
+			$styles .= sprintf( '#%s { display: none;}', $modules[ $module_id ]->admin_menu_id );
 		}
 
 		include( AUDIOTHEME_DIR . 'admin/views/screen-settings.php' );

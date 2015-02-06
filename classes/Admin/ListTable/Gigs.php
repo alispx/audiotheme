@@ -6,12 +6,14 @@
  * @since 1.0.0
  */
 
+namespace AudioTheme\Admin\ListTable;
+
 /**
  * Gigs list table class.
  *
  * @since 1.0.0
  */
-class AudioTheme_Admin_ListTable_Gigs extends WP_List_Table {
+class Gigs extends \WP_List_Table {
 	/**
 	 * The current view.
 	 *
@@ -132,7 +134,7 @@ class AudioTheme_Admin_ListTable_Gigs extends WP_List_Table {
 
 		// Run the query and fetch the connected venues.
 		$items = array();
-		$wp_query = new WP_Query( $args );
+		$wp_query = new \WP_Query( $args );
 		p2p_type( 'audiotheme_venue_to_gig' )->each_connected( $wp_query );
 
 		if ( isset( $wp_query->posts ) && count( $wp_query->posts ) ) {

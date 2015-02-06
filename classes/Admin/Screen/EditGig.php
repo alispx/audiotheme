@@ -6,13 +6,15 @@
  * @since 2.0.0
  */
 
+namespace AudioTheme\Admin\Screen;
+
 /**
  * Edit gig administration screen class.
  *
  * @package AudioTheme\Gigs
  * @since 2.0.0
  */
-class AudioTheme_Admin_Screen_EditGig {
+class EditGig {
 	/**
 	 * Load the screen.
 	 *
