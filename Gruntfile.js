@@ -62,9 +62,9 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				files: [
-					{ src: 'admin/sass/admin.scss', dest: 'admin/css/admin.min.css' },
-					{ src: 'admin/sass/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
-					{ src: 'includes/sass/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' }
+					{ src: 'admin/scss/admin.scss', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/scss/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'includes/scss/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
 		},
