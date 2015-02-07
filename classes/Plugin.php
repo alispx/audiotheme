@@ -74,6 +74,7 @@ class Plugin extends Container {
 	 */
 	protected function register_hooks() {
 		// Default hooks.
+		add_action( 'plugins_loaded',               array( $this, 'load_p2p_core' ), 20 );
 		add_action( 'widgets_init',                 array( $this, 'register_widgets' ) );
 		add_action( 'wp_loaded',                    array( $this, 'maybe_flush_rewrite_rules' ) );
 		add_action( 'wp_enqueue_scripts',           array( $this, 'register_assets' ), 1 );
@@ -90,6 +91,28 @@ class Plugin extends Container {
 
 		// Deprecated.
 		add_action( 'init', 'audiotheme_less_setup' );
+	}
+
+	/**
+	 * Load Posts 2 Posts core.
+	 *
+	 * Posts 2 Posts requires two custom database tables to store post
+	 * relationships and relationship metadata. If an alternative version of the
+	 * library doesn't exist, the tables are created on admin_init.
+	 *
+	 * @since 2.0.0
+	 */
+	public function load_p2p_core() {
+		if ( ! defined( 'P2P_TEXTDOMAIN' ) ) {
+			define( 'P2P_TEXTDOMAIN', 'audiotheme' );
+		}
+
+		\P2P_Storage::init();
+		\P2P_Query_Post::init();
+		\P2P_Query_User::init();
+		\P2P_URL_Query::init();
+		\P2P_Widget::init();
+		\P2P_Shortcodes::init();
 	}
 
 	/**

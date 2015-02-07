@@ -61,10 +61,9 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
 }
 
 /**
- * Load functions, libraries and template tags.
+ * Load functions and template tags.
  */
 require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
-require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/archive.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/discography.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/feed.php' );
