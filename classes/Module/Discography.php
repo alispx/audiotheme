@@ -258,7 +258,11 @@ class Discography extends Module {
 	 * @param object $query The main WP_Query object. Passed by reference.
 	 */
 	public function record_query_sort( $query ) {
-		if ( is_admin() || ! $query->is_main_query() || ! ( is_post_type_archive( 'audiotheme_record' ) || is_tax( 'audiotheme_record_type' ) ) ) {
+		if (
+			is_admin() ||
+			! $query->is_main_query() ||
+			! ( is_post_type_archive( 'audiotheme_record' ) || is_tax( 'audiotheme_record_type' ) )
+		) {
 			return;
 		}
 
@@ -357,8 +361,8 @@ class Discography extends Module {
 	 */
 	public function template_include( $template ) {
 		$original_template = $template;
-		$template_loader   = $this->templates;
-		$compat            = $this->theme_compat;
+		$template_loader   = $this->template_loader;
+		$compat            = $this->theme_compatibility;
 
 		if (
 			is_post_type_archive( array( 'audiotheme_record', 'audiotheme_track' ) ) ||

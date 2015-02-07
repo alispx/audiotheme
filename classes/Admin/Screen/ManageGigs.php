@@ -8,8 +8,6 @@
 
 namespace AudioTheme\Admin\Screen;
 
-use AudioTheme\Admin\ListTable;
-
 /**
  * Manage gigs administration screen class.
  *
@@ -17,6 +15,22 @@ use AudioTheme\Admin\ListTable;
  * @since 2.0.0
  */
 class ManageGigs {
+	/**
+	 * List table class.
+	 *
+	 * @since 2.0.0
+	 * @type string
+	 */
+	public $list_table_class = 'AudioTheme\Admin\ListTable\Gigs';
+
+	/**
+	 * List table instance.
+	 *
+	 * @since 2.0.0
+	 * @type WP_List_Table
+	 */
+	protected $list_table;
+
 	/**
 	 * Load the screen.
 	 *
@@ -86,13 +100,8 @@ class ManageGigs {
 		$title = $post_type_object->labels->name;
 		add_screen_option( 'per_page', array( 'label' => $title, 'default' => 20 ) );
 
-		// Include the WP_List_Table dependency if it doesn't exist.
-		if( ! class_exists( 'WP_List_Table' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
-		}
-
-		$list_table = new ListTable\Gigs();
-		$list_table->process_actions();
+		$this->list_table = new $this->list_table_class;
+		$this->list_table->process_actions();
 	}
 
 	/**
@@ -101,11 +110,10 @@ class ManageGigs {
 	 * @since 1.0.0
 	 */
 	public function display_screen() {
+		$this->list_table->prepare_items();
+
+		$list_table       = $this->list_table;
 		$post_type_object = get_post_type_object( 'audiotheme_gig' );
-
-		$list_table = new ListTable\Gigs();
-		$list_table->prepare_items();
-
 		require( AUDIOTHEME_DIR . 'admin/views/screen-manage-gigs.php' );
 	}
 }

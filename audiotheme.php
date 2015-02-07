@@ -6,7 +6,7 @@
  * Version: 2.0.0-alpha
  * Author: AudioTheme
  * Author URI: https://audiotheme.com/
- * Requires at least: 3.8
+ * Requires at least: 4.0
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: audiotheme
@@ -27,7 +27,7 @@
  * Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * @package AudioTheme
- * @version 1.6.2
+ * @version 2.0.0-alpha
  * @author AudioTheme
  * @link https://audiotheme.com/
  * @copyright Copyright 2012 AudioTheme
@@ -41,16 +41,13 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require( __DIR__ . '/vendor/autoload.php' );
 }
 
-use AudioTheme\Admin;
-use AudioTheme\Admin\Screen;
-use AudioTheme\Module;
-use AudioTheme\Modules;
-use Pimple\Container;
+use AudioTheme\Plugin;
+use AudioTheme\PluginServiceProvider;
 
 /**
  * The AudioTheme version.
  */
-define( 'AUDIOTHEME_VERSION', '1.6.2' );
+define( 'AUDIOTHEME_VERSION', '2.0.0-alpha' );
 
 /**
  * Framework path and URL.
@@ -69,7 +66,6 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
 require( AUDIOTHEME_DIR . 'includes/default-hooks.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
 require( AUDIOTHEME_DIR . 'includes/functions.php' );
-require( AUDIOTHEME_DIR . 'includes/widgets.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/archive.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/discography.php' );
@@ -84,99 +80,44 @@ if ( is_admin() ) {
 }
 
 /**
+ * Autoloader callback.
+ *
+ * @param string $class Class name.
+ */
+function audiotheme_autoloader( $class ) {
+	$classes = array(
+		'wp_list_table' => ABSPATH . 'wp-admin/includes/class-wp-list-table.php',
+	);
+
+	$class = strtolower( $class );
+	if ( isset( $classes[ $class ] ) ) {
+		require_once( $classes[ $class ] );
+	}
+}
+spl_autoload_register( 'audiotheme_autoloader' );
+
+/**
  * Retrieve the AudioTheme plugin instance.
  *
  * @since 2.0.0
  *
- * @return AudioTheme
+ * @param string $service Optional. Service identifier.
+ * @return AudioTheme\Plugin|object The main AudioTheme plugin instance or a service.
  */
-function audiotheme() {
+function audiotheme( $service = null ) {
 	static $instance;
 
 	if ( null === $instance ) {
-		$instance = new AudioTheme\Plugin;
+		$instance = new Plugin;
 	}
 
-	return $instance;
+	return empty( $service ) ? $instance : $instance[ $service ];
 }
 
 /**
- * Initialize the plugin.
+ * Initialize the plugin and register services.
  */
 $audiotheme = audiotheme();
-add_action( 'plugins_loaded', array( $audiotheme, 'load_plugin' ) );
-
-/**
- * Define dependencies.
- */
-$audiotheme->plugin_file  = __FILE__;
-$audiotheme->archives     = new AudioTheme\Archives;
-$audiotheme->templates    = new AudioTheme\Template\Loader;
-$audiotheme->theme_compat = new AudioTheme\Theme\Compat;
-$audiotheme->modules      = new Modules;
-
-$audiotheme->modules['discography'] = function( $c ) {
-	return new Module\Discography;
-};
-
-$audiotheme->modules['gigs'] = function( $c ) {
-	return new Module\Gigs;
-};
-
-$audiotheme->modules['videos'] = function( $c ) {
-	return new Module\Videos;
-};
-
-if ( is_admin() ) {
-	$audiotheme->admin          = new Admin;
-	$audiotheme->admin->modules = new Modules;
-	$audiotheme->admin->screens = new Container;
-
-	$audiotheme->admin->modules['discography'] = function( $c ) use ( $audiotheme ) {
-		$audiotheme->admin->screens['manage_records'] = function( $c ) {
-			return new Screen\ManageRecords;
-		};
-
-		$audiotheme->admin->screens['edit_record'] = function( $c ) {
-			return new Screen\EditRecord;
-		};
-
-		$audiotheme->admin->screens['manage_tracks'] = function( $c ) {
-			return new Screen\ManageTracks;
-		};
-
-		$audiotheme->admin->screens['edit_track'] = function( $c ) {
-			return new Screen\EditTrack;
-		};
-
-		return new Admin\Discography;
-	};
-
-	$audiotheme->admin->modules['gigs'] = function( $c ) use ( $audiotheme ) {
-		$audiotheme->admin->screens['manage_gigs'] = function( $c ) {
-			return new Screen\ManageGigs;
-		};
-
-		$audiotheme->admin->screens['edit_gig'] = function( $c ) {
-			return new Screen\EditGig;
-		};
-
-		$audiotheme->admin->screens['manage_venues'] = function( $c ) {
-			return new Screen\ManageVenues;
-		};
-
-		$audiotheme->admin->screens['edit_venue'] = function( $c ) {
-			return new Screen\EditVenue;
-		};
-
-		return new Admin\Gigs;
-	};
-
-	$audiotheme->admin->modules['videos'] = function( $c ) {
-		return new Admin\Videos;
-	};
-
-	$audiotheme->admin->screens['settings'] = function( $c ) {
-		return new Screen\Settings;
-	};
-}
+$audiotheme['plugin_file'] = __FILE__;
+$audiotheme->register( new PluginServiceProvider() );
+add_action( 'plugins_loaded', array( $audiotheme, 'load' ) );

@@ -8,7 +8,7 @@
 
 namespace AudioTheme;
 
-use AudioTheme;
+use \Pimple\Container;
 
 /**
  * Main plugin class.
@@ -16,107 +16,24 @@ use AudioTheme;
  * @package AudioTheme
  * @since 2.0.0
  */
-class Plugin {
-	/**
-	 * Administration API.
-	 *
-	 * @since 2.0.0
-	 * @type AudioTheme_Admin
-	 */
-	protected $admin;
-
-	/**
-	 * Archives API.
-	 *
-	 * @since 2.0.0
-	 * @type AudioTheme_Archives
-	 */
-	protected $archives;
-
-	/**
-	 * Modules API.
-	 *
-	 * @since 2.0.0
-	 * @type AudioTheme_Modules
-	 */
-	protected $modules;
-
-	/**
-	 * Path to the main plugin file.
-	 *
-	 * @since 2.0.0
-	 * @type string
-	 */
-	protected $plugin_file;
-
-	/**
-	 * Template loader.
-	 *
-	 * @since 2.0.0
-	 * @type AudioTheme_Template_Loader
-	 */
-	protected $templates;
-
-	/**
-	 * Theme compatibility class.
-	 *
-	 * @since 2.0.0
-	 * @type AudioTheme_Theme_Compat
-	 */
-	protected $theme_compat;
-
-	/**
-	 * Magic getter.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param string $name Property name.
-	 * @return mixed Property value.
-	 */
-	public function __get( $name ) {
-		switch ( $name ) {
-			case 'admin' :
-			case 'archives' :
-			case 'modules' :
-			case 'plugin_file' :
-			case 'templates' :
-			case 'theme_compat' :
-				return $this->{$name};
-		}
-	}
-
-	/**
-	 * Magic setter.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param string $name Property name.
-	 * @param mixed $value Property value.
-	 */
-	public function __set( $name, $value ) {
-		switch ( $name ) {
-			default :
-				$this->{$name} = $value;
-		}
-	}
-
+class Plugin extends Container {
 	/**
 	 * Load the plugin.
 	 *
 	 * @since 1.0.0
 	 */
-	public function load_plugin() {
+	public function load() {
 		$this->load_textdomain();
-		$this->archives->load();
+		$this['archives']->load();
 		$this->register_hooks();
-		$this->load_active_modules();
+		$this->load_modules();
 
 		if ( is_admin() ) {
-			$this->admin->load();
+			$this['admin']->load();
 		}
 
-		register_activation_hook( $this->plugin_file, 'activate' );
-		register_deactivation_hook( $this->plugin_file, 'deactivate' );
+		register_activation_hook( $this['plugin_file'], 'activate' );
+		register_deactivation_hook( $this['plugin_file'], 'deactivate' );
 	}
 
 	/**
@@ -125,7 +42,7 @@ class Plugin {
 	 * @since 1.0.0
 	 */
 	protected function load_textdomain() {
-		$plugin_rel_path = dirname( plugin_basename( $this->plugin_file ) ) . '/languages';
+		$plugin_rel_path = dirname( plugin_basename( $this['plugin_file'] ) ) . '/languages';
 		load_plugin_textdomain( 'audiotheme', false, $plugin_rel_path );
 	}
 
@@ -137,25 +54,16 @@ class Plugin {
 	 *
 	 * @since 2.0.0
 	 */
-	protected function load_active_modules() {
-		$modules = $this->is_settings_screen() ? $this->modules->keys() : $this->modules->get_active();
+	protected function load_modules() {
+		// Load all modules on the settings screen.
+		if ( $this->is_settings_screen() ) {
+			$modules = $this['modules']->keys();
+		} else {
+			$modules = $this['modules']->get_active_keys();
+		}
 
 		foreach ( $modules as $module_id ) {
-			$module = $this->modules[ $module_id ];
-
-			if ( empty( $module->archives ) ) {
-				$module->archives = $this->archives;
-			}
-
-			if ( empty( $module->templates ) ) {
-				$module->templates = $this->templates;
-			}
-
-			if ( empty( $module->theme_compat ) ) {
-				$module->theme_compat = $this->theme_compat;
-			}
-
-			$module->load();
+			$this['modules'][ $module_id ]->load();
 		}
 	}
 
@@ -166,7 +74,7 @@ class Plugin {
 	 */
 	protected function register_hooks() {
 		// Default hooks.
-		add_action( 'widgets_init',                 'audiotheme_widgets_init' );
+		add_action( 'widgets_init',                 array( $this, 'register_widgets' ) );
 		add_action( 'wp_loaded',                    array( $this, 'maybe_flush_rewrite_rules' ) );
 		add_action( 'wp_enqueue_scripts',           array( $this, 'register_assets' ), 1 );
 		add_action( 'admin_enqueue_scripts',        array( $this, 'register_assets' ), 1 );
@@ -179,6 +87,40 @@ class Plugin {
 		// Prevent the audiotheme_archive post type rules from being registered.
 		add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
 		add_filter( 'audiotheme_archive_settings_fields', 'audiotheme_archive_default_settings_fields', 9, 2 );
+	}
+
+	/**
+	 * Register supported widgets.
+	 *
+	 * Themes can load all widgets by calling
+	 * add_theme_support( 'audiotheme-widgets' ).
+	 *
+	 * If support for all widgets isn't desired, a second parameter consisting
+	 * of an array of widget keys can be passed to load the specified widgets:
+	 * add_theme_support( 'audiotheme-widgets', array( 'upcoming-gigs' ) )
+	 *
+	 * @since 2.0.0
+	 */
+	public function register_widgets() {
+		$widgets = array(
+			'recent-posts'  => '\AudioTheme\Widget\RecentPosts',
+			'record'        => '\AudioTheme\Widget\Record',
+			'track'         => '\AudioTheme\Widget\Track',
+			'upcoming-gigs' => '\AudioTheme\Widget\UpcomingGigs',
+			'video'         => '\AudioTheme\Widget\Video',
+		);
+
+		if ( $support = get_theme_support( 'audiotheme-widgets' ) ) {
+			if ( is_array( $support ) ) {
+				$widgets = array_intersect_key( $widgets, array_flip( $support[0] ) );
+			}
+
+			if ( ! empty( $widgets ) ) {
+				foreach ( $widgets as $widget_id => $widget_class ) {
+					register_widget( $widget_class );
+				}
+			}
+		}
 	}
 
 	/**

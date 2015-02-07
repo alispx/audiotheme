@@ -43,7 +43,12 @@ class Admin {
 	 * @since 2.0.0
 	 */
 	public function load_modules() {
-		$modules = $this->is_settings_screen() ? $this->modules->keys() : $this->modules->get_active();
+		// Load all modules on the settings screen.
+		if ( $this->is_settings_screen() ) {
+			$modules = $this->modules->keys();
+		} else {
+			$modules = $this->modules->get_active_keys();
+		}
 
 		foreach ( $modules as $module_id ) {
 			$this->modules[ $module_id ]->load();

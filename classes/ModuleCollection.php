@@ -13,21 +13,21 @@ use \Pimple\Container;
 /**
  * Modules API class.
  *
- * @package AudioTheme\Modules
+ * @package AudioTheme\ModuleCollection
  * @since 2.0.0
  */
-class Modules extends Container {
+class ModuleCollection extends Container {
 	/**
 	 * Whether a module is active.
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param string $id Module identifier.
+	 * @param string $module_id Module identifier.
 	 * @return bool
 	 */
-	public function is_active( $id ) {
+	public function is_active( $module_id ) {
 		$active_modules = get_option( 'audiotheme_inactive_modules', array() );
-		return ! in_array( $id, $active_modules );
+		return ! in_array( $module_id, $active_modules );
 	}
 
 	/**
@@ -37,7 +37,7 @@ class Modules extends Container {
 	 *
 	 * @return array
 	 */
-	public function get_active() {
+	public function get_active_keys() {
 		$module_ids = array();
 		foreach ( $this->keys() as $id ) {
 			if ( ! $this->is_active( $id ) ) {
@@ -55,7 +55,7 @@ class Modules extends Container {
 	 *
 	 * @return array
 	 */
-	public function get_inactive() {
+	public function get_inactive_keys() {
 		$module_ids = array();
 		foreach ( $this->keys() as $id ) {
 			if ( $this->is_active( $id ) ) {
@@ -71,11 +71,11 @@ class Modules extends Container {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param string $module Module identifier.
+	 * @param string $module_id Module identifier.
 	 */
-	public function activate( $module ) {
-		$modules = $this->get_inactive();
-		unset( $modules[ array_search( $module, $modules ) ] );
+	public function activate( $module_id ) {
+		$modules = $this->get_inactive_keys();
+		unset( $modules[ array_search( $module_id, $modules ) ] );
 		update_option( 'audiotheme_inactive_modules', array_values( $modules ) );
 	}
 
@@ -84,11 +84,11 @@ class Modules extends Container {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param string $module Module identifier.
+	 * @param string $module_id Module identifier.
 	 */
-	public function deactivate( $module ) {
-		$modules = $this->get_inactive();
-		$modules = array_unique( array_merge( $modules, array( $module ) ) );
+	public function deactivate( $module_id ) {
+		$modules = $this->get_inactive_keys();
+		$modules = array_unique( array_merge( $modules, array( $module_id ) ) );
 		sort( $modules );
 		update_option( 'audiotheme_inactive_modules', $modules );
 	}

@@ -13,7 +13,7 @@ function audiotheme_ajax_toggle_module() {
 
 	check_ajax_referer( 'toggle-module_' . $module_id, 'nonce' );
 
-	$modules = audiotheme()->modules;
+	$modules = audiotheme( 'modules' );
 	$module  = $modules[ $module_id ];
 
 	if ( $module->is_core() && $modules->is_active( $module_id ) ) {

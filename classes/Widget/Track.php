@@ -57,7 +57,7 @@ class Track extends \WP_Widget {
 				$data['post']         = get_post( $instance['post_id'] );
 				$data                 = array_merge( $instance, $data );
 
-				$template_loader = audiotheme()->templates;
+				$template_loader = audiotheme( 'template_loader' );
 				$template = $template_loader->locate_template( array( "widgets/{$args['id']}_track.php", "widgets/track.php" ) );
 				$template_loader->load_template( $template, $data );
 			}

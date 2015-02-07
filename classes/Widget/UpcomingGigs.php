@@ -76,7 +76,7 @@ class UpcomingGigs extends \WP_Widget {
 			$data                 = array_merge( $instance, $data );
 
 			ob_start();
-			$template_loader = audiotheme()->templates;
+			$template_loader = audiotheme( 'template_loader' );
 			$template = $template_loader->locate_template( array( "widgets/{$args['id']}_upcoming-gigs.php", "widgets/upcoming-gigs.php" ) );
 			$template_loader->load_template( $template, $data );
 			$output .= ob_get_clean();

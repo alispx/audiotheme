@@ -318,8 +318,8 @@ class Gigs extends Module {
 	 */
 	public function template_include( $template ) {
 		$original_template = $template;
-		$template_loader   = $this->templates;
-		$compat            = $this->theme_compat;
+		$template_loader   = $this->template_loader;
+		$compat            = $this->theme_compatibility;
 
 		if ( is_post_type_archive( 'audiotheme_gig' ) ) {
 			$template = $template_loader->locate_template( 'archive-gig.php' );

@@ -108,7 +108,7 @@ class RecentPosts extends \WP_Widget {
 			$data['before_title']   = $args['before_title'];
 			$data['feed_link']      = ( 'post' == $instance['post_type'] ) ? get_bloginfo( 'rss2_url' ) : get_post_type_archive_feed_link( $instance['post_type'] );
 			$data['instance']       = $instance;
-			$data['loop']           = new WP_Query( $instance['loop_args'] );
+			$data['loop']           = new \WP_Query( $instance['loop_args'] );
 			$data['show_date']      = ! empty( $instance['show_date'] );
 			$data['show_excerpts']  = ! empty( $instance['show_excerpts'] );
 			$data['show_feed_link'] = ! empty( $instance['show_feed_link'] ) && ! empty( $data['feed_link'] );
@@ -116,7 +116,7 @@ class RecentPosts extends \WP_Widget {
 			$data                   = array_merge( $instance, $data );
 
 			ob_start();
-			$template_loader = audiotheme()->templates;
+			$template_loader = audiotheme( 'template_loader' );
 			$template = $template_loader->locate_template( array( "widgets/{$args['id']}_recent-posts.php", "widgets/recent-posts.php" ) );
 			$template_loader->load_template( $template, $data );
 			$output .= ob_get_clean();

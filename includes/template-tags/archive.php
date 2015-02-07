@@ -18,7 +18,7 @@
  * @return array Associative array with post types as keys and post IDs as the values.
  */
 function get_audiotheme_archive_ids() {
-	return audiotheme()->archives->get_archive_ids();
+	return audiotheme( 'archives' )->get_archive_ids();
 }
 
 /**
@@ -30,7 +30,7 @@ function get_audiotheme_archive_ids() {
  * @return int
  */
 function get_audiotheme_post_type_archive( $post_type = null ) {
-	return audiotheme()->archives->get_archive_id( $post_type );
+	return audiotheme( 'archives' )->get_archive_id( $post_type );
 }
 
 /**
@@ -53,7 +53,7 @@ function is_audiotheme_post_type_archive() {
  * @return string|bool Post type name if true, otherwise false.
  */
 function is_audiotheme_post_type_archive_id( $archive_id ) {
-	return audiotheme()->archives->is_archive_id( $archive_id );
+	return audiotheme( 'archives' )->is_archive_id( $archive_id );
 }
 
 /**
@@ -66,7 +66,7 @@ function is_audiotheme_post_type_archive_id( $archive_id ) {
  * @return string
  */
 function get_audiotheme_post_type_archive_title( $post_type = '', $title = '' ) {
-	return audiotheme()->archives->get_archive_title( $post_type, $title );
+	return audiotheme( 'archives' )->get_archive_title( $post_type, $title );
 }
 
 /**
@@ -130,7 +130,7 @@ function the_audiotheme_archive_description( $before = '', $after = '' ) {
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
  */
 function get_audiotheme_archive_meta( $key = '', $single = false, $default = null, $post_type = null ) {
-	return audiotheme()->archives->get_archive_meta( $key, $single, $default, $post_type );
+	return audiotheme( 'archives' )->get_archive_meta( $key, $single, $default, $post_type );
 }
 
 /**

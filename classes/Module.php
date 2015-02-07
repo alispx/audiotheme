@@ -16,12 +16,12 @@ namespace AudioTheme;
  */
 abstract class Module {
 	/**
-	 * Admininistration class.
+	 * Archives class.
 	 *
 	 * @since 2.0.0
 	 * @type object
 	 */
-	protected $admin;
+	protected $archives;
 
 	/**
 	 * Admin menu item HTML id.
@@ -32,14 +32,6 @@ abstract class Module {
 	 * @type string
 	 */
 	protected $admin_menu_id;
-
-	/**
-	 * Archives class.
-	 *
-	 * @since 2.0.0
-	 * @type object
-	 */
-	protected $archives;
 
 	/**
 	 * Module name.
@@ -69,17 +61,17 @@ abstract class Module {
 	 * Template loader.
 	 *
 	 * @since 2.0.0
-	 * @type AudioTheme_Template_Loader
+	 * @type AudioTheme\Template\Loader
 	 */
-	protected $templates;
+	protected $template_loader;
 
 	/**
 	 * Theme compatability class.
 	 *
 	 * @since 2.0.0
-	 * @type AudioTheme_Theme_Compat
+	 * @type AudioTheme\Theme\Compatibility
 	 */
-	protected $theme_compat;
+	protected $theme_compatibility;
 
 	/**
 	 * Constructor method.
@@ -107,13 +99,9 @@ abstract class Module {
 	 */
 	public function __get( $name ) {
 		switch ( $name ) {
-			case 'admin' :
 			case 'admin_menu_id' :
-			case 'archives' :
 			case 'description' :
 			case 'name' :
-			case 'templates' :
-			case 'theme_compat' :
 				return $this->{$name};
 		}
 	}
@@ -128,10 +116,9 @@ abstract class Module {
 	 */
 	public function __set( $name, $value ) {
 		switch ( $name ) {
-			case 'admin' :
 			case 'archives' :
-			case 'templates' :
-			case 'theme_compat' :
+			case 'template_loader' :
+			case 'theme_compatibility' :
 				$this->{$name} = $value;
 		}
 	}
@@ -169,10 +156,12 @@ abstract class Module {
 	 * @return string
 	 */
 	public function get_compatible_template( $template ) {
+		$compat = $this->theme_compatibility;
+
 		// Enable theme compatibility.
-		if ( ! $this->theme_compat->is_template_compatible( $template ) ) {
-			$this->theme_compat->enable();
-			$template = $this->theme_compat->get_theme_template();
+		if ( ! $compat->is_template_compatible( $template ) ) {
+			$compat->enable();
+			$template = $compat->get_theme_template();
 		}
 
 		return $template;

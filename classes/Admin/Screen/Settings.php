@@ -65,11 +65,11 @@ class Settings {
 	 * @since 1.0.0
 	 */
 	public function render_screen() {
-		$modules = audiotheme()->modules;
+		$modules = $this->modules;
 
 		// Hide menu items for inactive modules on initial load.
 		$styles = '';
-		foreach ( $modules->get_inactive() as $module_id ) {
+		foreach ( $modules->get_inactive_keys() as $module_id ) {
 			$styles .= sprintf( '#%s { display: none;}', $modules[ $module_id ]->admin_menu_id );
 		}
 

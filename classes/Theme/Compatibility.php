@@ -29,7 +29,7 @@ namespace AudioTheme\Theme;
  * @package AudioTheme
  * @since 2.0.0
  */
-class Compat {
+class Compatibility {
 	/**
 	 * Whether theme compat mode is enabled.
 	 *

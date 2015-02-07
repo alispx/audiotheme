@@ -15,7 +15,7 @@
  * @param string $name The name of the specialised template.
  */
 function get_audiotheme_template_part( $slug, $name = null ) {
-	audiotheme()->templates->get_template_part( $slug, $name );
+	audiotheme( 'template_loader' )->get_template_part( $slug, $name );
 }
 
 /**
@@ -26,7 +26,7 @@ function get_audiotheme_template_part( $slug, $name = null ) {
  * @return bool
  */
 function is_audiotheme_theme_compat_active() {
-	return audiotheme()->theme_compat->is_active();
+	return audiotheme( 'theme_compatibility' )->is_active();
 }
 
 /**
