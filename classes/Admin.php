@@ -2,6 +2,8 @@
 
 namespace AudioTheme;
 
+use AudioTheme\Util;
+
 /**
  * Administration class.
  *
@@ -106,7 +108,7 @@ class Admin {
 			'edit_posts',
 			'audiotheme',
 			array( $this, 'render_dashboard_screen' ),
-			audiotheme_encode_svg( 'admin/images/dashicons/audiotheme.svg' ),
+			Util::encode_svg( 'admin/images/dashicons/audiotheme.svg' ),
 			3.901
 		);
 

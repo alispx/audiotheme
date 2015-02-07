@@ -8,6 +8,8 @@
 
 namespace AudioTheme\Admin;
 
+use AudioTheme\Util;
+
 /**
  * Discography module administration class.
  *
@@ -69,7 +71,7 @@ class Discography {
 			'edit_posts',
 			'edit.php?post_type=audiotheme_record',
 			null,
-			audiotheme_encode_svg( 'admin/images/dashicons/discography.svg' ),
+			Util::encode_svg( 'admin/images/dashicons/discography.svg' ),
 			513
 		);
 	}

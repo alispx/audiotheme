@@ -8,6 +8,8 @@
 
 namespace AudioTheme\Admin\Screen;
 
+use AudioTheme\Util;
+
 /**
  * Manage tracks administration screen class.
  *
@@ -93,7 +95,7 @@ class ManageTracks {
 			'purchase' => _x( 'Purchase URL', 'column name', 'audiotheme' ),
 		);
 
-		$columns = audiotheme_array_insert_after_key( $columns, 'title', $track_columns );
+		$columns = Util::array_insert_after_key( $columns, 'title', $track_columns );
 
 		unset( $columns['date'] );
 

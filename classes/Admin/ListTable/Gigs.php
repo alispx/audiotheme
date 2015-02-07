@@ -8,6 +8,8 @@
 
 namespace AudioTheme\Admin\ListTable;
 
+use AudioTheme\Util;
+
 /**
  * Gigs list table class.
  *
@@ -144,7 +146,7 @@ class Gigs extends \WP_List_Table {
 
 			// Sort by venue.
 			if ( ! empty( $_GET['orderby'] ) && 'venue' == $_GET['orderby'] ) {
-				$items = audiotheme_sort_objects( $items, array( 'venue', 'name' ), $args['order'], true, 'gig_datetime' );
+				$items = Util::sort_objects( $items, array( 'venue', 'name' ), $args['order'], true, 'gig_datetime' );
 			}
 		}
 

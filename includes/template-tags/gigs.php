@@ -6,6 +6,8 @@
  * @since 1.0.0
  */
 
+use AudioTheme\Util;
+
 /**
  * Retrieve a gig object with associated venue.
  *
@@ -1154,7 +1156,7 @@ function get_audiotheme_google_static_map_url( $args = array(), $venue_id = 0 ) 
 	$map_styles = apply_filters( 'audiotheme_google_static_map_styles', array() );
 	if ( ! empty( $map_styles ) ) {
 		foreach ( $map_styles as $styles ) {
-			$image_url .= '&style=' . audiotheme_build_query( $styles );
+			$image_url .= '&style=' . Util::build_query( $styles );
 		}
 	}
 

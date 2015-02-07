@@ -65,7 +65,6 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
  */
 require( AUDIOTHEME_DIR . 'includes/default-hooks.php' );
 require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
-require( AUDIOTHEME_DIR . 'includes/functions.php' );
 require( AUDIOTHEME_DIR . 'includes/load-p2p.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/archive.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/discography.php' );

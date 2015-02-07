@@ -8,6 +8,8 @@
 
 namespace AudioTheme\Admin\Screen;
 
+use AudioTheme\Util;
+
 /**
  * Manage gigs administration screen class.
  *
@@ -74,7 +76,7 @@ class ManageGigs {
 			'edit_posts',
 			'audiotheme-gigs',
 			array( $this, 'display_screen' ),
-			audiotheme_encode_svg( 'admin/images/dashicons/gigs.svg' ),
+			Util::encode_svg( 'admin/images/dashicons/gigs.svg' ),
 			512
 		);
 

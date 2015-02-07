@@ -9,6 +9,7 @@
 namespace AudioTheme\Module;
 
 use AudioTheme\Module;
+use AudioTheme\Util;
 
 /**
  * Video module class.
@@ -87,7 +88,7 @@ class Videos extends Module {
 			'has_archive'            => $this->get_rewrite_base(),
 			'hierarchical'           => true,
 			'labels'                 => $labels,
-			'menu_icon'              => audiotheme_encode_svg( 'admin/images/dashicons/videos.svg' ),
+			'menu_icon'              => Util::encode_svg( 'admin/images/dashicons/videos.svg' ),
 			'menu_position'          => 514,
 			'public'                 => true,
 			'publicly_queryable'     => true,

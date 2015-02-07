@@ -8,6 +8,8 @@
 
 namespace AudioTheme\Admin;
 
+use AudioTheme\Util;
+
 /**
  * Video module admin class.
  *
@@ -85,7 +87,7 @@ class Videos {
 	public function register_columns( $columns ) {
 		// Register an image column and insert it after the checkbox column.
 		$image_column = array( 'audiotheme_image' => _x( 'Image', 'column name', 'audiotheme' ) );
-		$columns      = audiotheme_array_insert_after_key( $columns, 'cb', $image_column );
+		$columns      = Util::array_insert_after_key( $columns, 'cb', $image_column );
 		return $columns;
 	}
 

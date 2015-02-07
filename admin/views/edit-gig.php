@@ -29,7 +29,7 @@
 				<div id="gig-venue-timezone-group" class="hide-if-js">
 					<input type="text" id="gig-venue-timezone-search" placeholder="<?php esc_attr_e( 'Search time zone by city', 'audiotheme' ); ?>" class="hide-if-no-js">
 					<select name="audiotheme_venue[timezone_string]" id="gig-venue-timezone" class="hide-if-js">
-						<?php echo audiotheme_timezone_choice( $timezone_string ); ?>
+						<?php echo \AudioTheme\Util::timezone_choice( $timezone_string ); ?>
 					</select><br>
 					<em><?php _e( "Be sure to set a timezone when adding a new venue.", 'audiotheme' ); ?></em>
 				</div>

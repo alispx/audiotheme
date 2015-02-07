@@ -8,6 +8,8 @@
 
 namespace AudioTheme\Admin\Screen;
 
+use AudioTheme\Util;
+
 /**
  * Manage records administration screen class.
  *
@@ -84,8 +86,8 @@ class ManageRecords {
 		// Create columns and insert them in the appropriate position in the columns array.
 		$image_column = array( 'audiotheme_image' => _x( 'Image', 'column name', 'audiotheme' ) );
 		$release_column = array( 'release_year' => _x( 'Released', 'column_name', 'audiotheme' ) );
-		$columns = audiotheme_array_insert_after_key( $columns, 'cb', $image_column );
-		$columns = audiotheme_array_insert_after_key( $columns, 'title', $release_column );
+		$columns = Util::array_insert_after_key( $columns, 'cb', $image_column );
+		$columns = Util::array_insert_after_key( $columns, 'title', $release_column );
 
 		$columns['taxonomy-audiotheme_record_type'] = _x( 'Type', 'column name', 'audiotheme' );
 		$columns['track_count'] = _x( 'Tracks', 'column name', 'audiotheme' );

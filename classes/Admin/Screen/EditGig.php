@@ -8,6 +8,8 @@
 
 namespace AudioTheme\Admin\Screen;
 
+use AudioTheme\Util;
+
 /**
  * Edit gig administration screen class.
  *
@@ -193,8 +195,8 @@ class EditGig {
 		}
 
 		$venue    = set_audiotheme_gig_venue( $post_id, $_POST['gig_venue'] );
-		$datetime = audiotheme_datetime_string( $_POST['gig_date'], $_POST['gig_time'] );
-		$time     = audiotheme_time_string( $_POST['gig_time'] );
+		$datetime = Util::format_datetime_string( $_POST['gig_date'], $_POST['gig_time'] );
+		$time     = Util::format_time_string( $_POST['gig_time'] );
 
 		// Date and time are always stored local to the venue.
 		// If GMT, or time in another locale is needed, use the venue time zone to calculate.

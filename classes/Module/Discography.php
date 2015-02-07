@@ -9,6 +9,7 @@
 namespace AudioTheme\Module;
 
 use AudioTheme\Module;
+use AudioTheme\Util;
 
 /**
  * Discography module class.
@@ -615,11 +616,11 @@ class Discography extends Module {
 			}
 
 			if ( isset( $track['file'] ) ) {
-				$data['mp3'] = esc_url_raw( audiotheme_encode_url_path( $track['file'] ) );
+				$data['mp3'] = esc_url_raw( Util::encode_url_path( $track['file'] ) );
 			}
 
 			if ( isset( $track['mp3'] ) ) {
-				$data['mp3'] = esc_url_raw( audiotheme_encode_url_path( $track['mp3'] ) );
+				$data['mp3'] = esc_url_raw( Util::encode_url_path( $track['mp3'] ) );
 			}
 
 			if ( isset( $track['title'] ) ) {
