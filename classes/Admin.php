@@ -308,6 +308,8 @@ class Admin {
 			}
 		}
 
+		// @todo Convert genres.
+
 		// Update record types.
 		$terms = get_terms( 'audiotheme_record_type', array( 'get' => 'all' ) );
 		if ( ! empty( $terms ) ) {

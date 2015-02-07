@@ -35,8 +35,7 @@ class EditRecord {
 		add_action( 'add_meta_boxes_audiotheme_record',   array( $this, 'register_meta_boxes' ) );
 		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_released' ) );
 		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_artist' ), 20 );
-		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_genre' ), 30 );
-		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_links' ), 40 );
+		add_action( 'audiotheme_record_details_meta_box', array( $this, 'display_field_links' ), 30 );
 		add_action( 'save_post',                          array( $this, 'on_record_save' ) );
 	}
 
@@ -183,23 +182,6 @@ class EditRecord {
 	}
 
 	/**
-	 * Display a field to edit the record genre.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param WP_Post $post Record post object.
-	 */
-	public function display_field_genre( $post ) {
-		$genre = get_audiotheme_record_genre( $post->ID );
-		?>
-		<p class="audiotheme-field">
-			<label for="record-genre"><?php _e( 'Genre', 'audiotheme' ); ?></label>
-			<input type="text" name="genre" id="record-genre" value="<?php echo esc_attr( $genre ) ; ?>" class="widefat">
-		</p>
-		<?php
-	}
-
-	/**
 	 * Display a field to edit record links.
 	 *
 	 * @since 2.0.0
@@ -239,7 +221,7 @@ class EditRecord {
 		$current_user = wp_get_current_user();
 
 		// Whitelisted fields.
-		$fields = array( 'artist', 'genre', 'release_year' );
+		$fields = array( 'artist', 'release_year' );
 		foreach( $fields as $field ) {
 			$value = empty( $_POST[ $field ] ) ? '' : $_POST[ $field ];
 			update_post_meta( $post_id, '_audiotheme_' . $field, $value );

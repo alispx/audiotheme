@@ -49,18 +49,21 @@ class Discography extends Module {
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
-		add_action( 'init',                    array( $this, 'register_post_types' ) );
-		add_action( 'init',                    array( $this, 'register_taxonomies' ) );
-		add_filter( 'generate_rewrite_rules',  array( $this, 'generate_rewrite_rules' ) );
-		add_action( 'pre_get_posts',           array( $this, 'record_query_sort' ) );
-		add_action( 'pre_get_posts',           array( $this, 'track_query' ) );
-		add_action( 'pre_get_posts',           array( $this, 'record_type_query' ), 9 );
-		add_action( 'template_include',        array( $this, 'template_include' ) );
-		add_filter( 'post_type_link',          array( $this, 'post_permalinks' ), 10, 4 );
-		add_filter( 'post_type_archive_link',  array( $this, 'archive_permalink' ), 10, 2 );
-		add_filter( 'wp_unique_post_slug',     array( $this, 'track_unique_slug' ), 10, 6 );
-		add_action( 'wp_print_footer_scripts', array( $this, 'print_tracks_js' ) );
-		add_filter( 'post_class',              array( $this, 'record_archive_post_class' ) );
+		add_action( 'init',                           array( $this, 'register_post_types' ) );
+		add_action( 'init',                           array( $this, 'register_taxonomies' ) );
+		add_filter( 'generate_rewrite_rules',         array( $this, 'generate_rewrite_rules' ) );
+		add_action( 'pre_get_posts',                  array( $this, 'record_query_sort' ) );
+		add_action( 'pre_get_posts',                  array( $this, 'track_query' ) );
+		add_action( 'pre_get_posts',                  array( $this, 'record_type_query' ), 9 );
+		add_action( 'template_include',               array( $this, 'template_include' ) );
+		add_filter( 'post_type_archive_link',         array( $this, 'archive_permalink' ), 10, 2 );
+		add_filter( 'post_type_link',                 array( $this, 'post_permalinks' ), 10, 4 );
+		add_filter( 'term_link',                      array( $this, 'genre_permalinks' ), 10, 3 );
+		add_filter( 'post_type_archive_title',        array( $this, 'genre_archive_title' ) );
+		add_filter( 'audiotheme_archive_description', array( $this, 'genre_archive_description' ) );
+		add_filter( 'wp_unique_post_slug',            array( $this, 'track_unique_slug' ), 10, 6 );
+		add_action( 'wp_print_footer_scripts',        array( $this, 'print_tracks_js' ) );
+		add_filter( 'post_class',                     array( $this, 'record_archive_post_class' ) );
 	}
 
 	/**
@@ -183,6 +186,40 @@ class Discography extends Module {
 		);
 
 		register_taxonomy( 'audiotheme_record_type', 'audiotheme_record', $args );
+
+		$labels = array(
+			'name'                       => _x( 'Genres', 'taxonomy general name', 'atgenres' ),
+			'singular_name'              => _x( 'Genre', 'taxonomy singular name', 'atgenres' ),
+			'search_items'               => __( 'Search Genres', 'atgenres' ),
+			'popular_items'              => __( 'Popular Genres', 'atgenres' ),
+			'all_items'                  => __( 'All Genres', 'atgenres' ),
+			'parent_item'                => __( 'Parent Genre', 'atgenres' ),
+			'parent_item_colon'          => __( 'Parent Genre:', 'atgenres' ),
+			'edit_item'                  => __( 'Edit Genre', 'atgenres' ),
+			'view_item'                  => __( 'View Genre', 'atgenres' ),
+			'update_item'                => __( 'Update Genre', 'atgenres' ),
+			'add_new_item'               => __( 'Add New Genre', 'atgenres' ),
+			'new_item_name'              => __( 'New Genre Name', 'atgenres' ),
+			'separate_items_with_commas' => __( 'Separate genres with commas', 'atgenres' ),
+			'add_or_remove_items'        => __( 'Add or remove genres', 'atgenres' ),
+			'choose_from_most_used'      => __( 'Choose from most used genres', 'atgenres' ),
+			'menu_name'                  => __( 'Genres', 'atgenres' ),
+		);
+
+		$args = array(
+			'hierarchical'      => false,
+			'labels'            => $labels,
+			'meta_box_cb'       => 'audiotheme_taxonomy_checkbox_list_meta_box',
+			'public'            => true,
+			'query_var'         => true,
+			'rewrite'           => false,
+			'show_admin_column' => true,
+			'show_ui'           => true,
+			'show_in_nav_menus' => true,
+			'show_tagcloud'     => false,
+		);
+
+		register_taxonomy( 'audiotheme_genre', array( 'audiotheme_record' ), $args );
 	}
 
 	/**
@@ -323,17 +360,27 @@ class Discography extends Module {
 		$template_loader   = $this->templates;
 		$compat            = $this->theme_compat;
 
-		if ( is_post_type_archive( array( 'audiotheme_record', 'audiotheme_track' ) ) || is_tax( 'audiotheme_record_type' ) ) {
+		if (
+			is_post_type_archive( array( 'audiotheme_record', 'audiotheme_track' ) ) ||
+			is_tax( 'audiotheme_record_type' ) ||
+			is_tax( 'audiotheme_genre' )
+		) {
 			if ( is_post_type_archive( 'audiotheme_track' ) ) {
 				$templates[] = 'archive-track.php';
 			}
 
-			if ( is_tax() ) {
+			if ( is_tax( 'audiotheme_record_type' ) ) {
 				$term = get_queried_object();
 				$slug = str_replace( 'record-type-', '', $term->slug );
 				$taxonomy = str_replace( 'audiotheme_', '', $term->taxonomy );
 				$templates[] = "taxonomy-$taxonomy-{$slug}.php";
 				$templates[] = "taxonomy-$taxonomy.php";
+			}
+
+			if ( is_tax( 'audiotheme_genre' ) ) {
+				$term = get_queried_object();
+				$templates[] = "taxonomy-genre-{$term->slug}.php";
+				$templates[] = "taxonomy-genre.php";
 			}
 
 			$templates[] = 'archive-record.php';
@@ -359,6 +406,25 @@ class Discography extends Module {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Filter the permalink for the discography archive.
+	 *
+	 * @since 1.0.0
+	 * @uses audiotheme_discography_rewrite_base()
+	 *
+	 * @param string $link The default archive URL.
+	 * @param string $post_type Post type.
+	 * @return string The discography archive URL.
+	 */
+	public function archive_permalink( $link, $post_type ) {
+		$permalink = get_option( 'permalink_structure' );
+		if ( ! empty( $permalink ) && ( 'audiotheme_record' == $post_type || 'audiotheme_track' == $post_type ) ) {
+			$link = home_url( '/' . $this->get_rewrite_base() . '/' );
+		}
+
+		return $link;
 	}
 
 	/**
@@ -406,22 +472,50 @@ class Discography extends Module {
 	}
 
 	/**
-	 * Filter the permalink for the discography archive.
+	 * Filter genre term permalinks.
 	 *
-	 * @since 1.0.0
-	 * @uses audiotheme_discography_rewrite_base()
+	 * @since 2.0.0
 	 *
-	 * @param string $link The default archive URL.
-	 * @param string $post_type Post type.
-	 * @return string The discography archive URL.
+	 * @param string $link Term permalink.
+	 * @param object $term Term object.
+	 * @param string $taxonomy Taxonomy name.
+	 * @return string
 	 */
-	public function archive_permalink( $link, $post_type ) {
-		$permalink = get_option( 'permalink_structure' );
-		if ( ! empty( $permalink ) && ( 'audiotheme_record' == $post_type || 'audiotheme_track' == $post_type ) ) {
-			$link = home_url( '/' . $this->get_rewrite_base() . '/' );
+	public function genre_permalinks( $link, $term, $taxonomy ) {
+		if ( 'audiotheme_genre' == $taxonomy && get_option( 'permalink_structure' ) ) {
+			$link = home_url( sprintf( '/%s/genre/%s/', $this->get_rewrite_base(), $term->slug ) );
 		}
-
 		return $link;
+	}
+
+	/**
+	 * Filter archive titles to display the genre name.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $title Archive title.
+	 * @return string
+	 */
+	public function genre_archive_title( $title ) {
+		if ( is_tax( 'audiotheme_genre' ) ) {
+			$title = single_term_title( '', false );
+		}
+		return $title;
+	}
+
+	/**
+	 * Filter archive descriptions to display the genre term description.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $description Archive description.
+	 * @return string
+	 */
+	public function genre_archive_description( $description ) {
+		if ( is_tax( 'audiotheme_genre' ) ) {
+			$description = term_description();
+		}
+		return $description;
 	}
 
 	/**
@@ -627,6 +721,8 @@ class Discography extends Module {
 	public function generate_rewrite_rules( $wp_rewrite ) {
 		$base = $this->get_rewrite_base();
 
+		$new_rules[ $base . '/genre/([^/]+)/?$' ] = 'index.php?post_type=audiotheme_record&audiotheme_genre=$matches[1]';
+		$new_rules[ $base . '/genre/([^/]+)/page/([0-9]{1,})/?$'] = 'index.php?post_type=audiotheme_record&audiotheme_genre=$matches[1]&paged=$matches[2]';
 		$new_rules[ $base . '/tracks/?$' ] = 'index.php?post_type=audiotheme_track';
 		$new_rules[ $base . '/page/([0-9]{1,})/?$'] = 'index.php?post_type=audiotheme_record&paged=$matches[1]';
 		$new_rules[ $base .'/([^/]+)/track/([^/]+)?$'] = 'index.php?audiotheme_record=$matches[1]&audiotheme_track=$matches[2]';

@@ -92,7 +92,6 @@ function get_audiotheme_record_links( $post_id = null ) {
 	return apply_filters( 'audiotheme_record_links', $links, $post_id );
 }
 
-
 /**
  * Get the record genre.
  *
@@ -103,7 +102,15 @@ function get_audiotheme_record_links( $post_id = null ) {
  */
 function get_audiotheme_record_genre( $post_id = null ) {
 	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	$genre = get_post_meta( $post_id, '_audiotheme_genre', true );
+
+	$terms = get_the_terms( $post_id, 'audiotheme_genre' );
+	if ( $terms ) {
+		$genre = implode( ', ', wp_list_pluck( $terms, 'name' ) );
+	} else {
+		// Deprecated location.
+		$genre = get_post_meta( $post_id, '_audiotheme_genre', true );
+	}
+
 	return apply_filters( 'audiotheme_record_genre', $genre, $post_id );
 }
 
