@@ -87,6 +87,9 @@ class Plugin extends Container {
 		// Prevent the audiotheme_archive post type rules from being registered.
 		add_filter( 'audiotheme_archive_rewrite_rules', '__return_empty_array' );
 		add_filter( 'audiotheme_archive_settings_fields', 'audiotheme_archive_default_settings_fields', 9, 2 );
+
+		// Deprecated
+		add_action( 'init', 'audiotheme_less_setup' );
 	}
 
 	/**

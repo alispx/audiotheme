@@ -86,6 +86,7 @@ if ( is_admin() ) {
  */
 function audiotheme_autoloader( $class ) {
 	$classes = array(
+		'wp_less'       => AUDIOTHEME_DIR . '/vendor/icit/wp-less/wp-less.php',
 		'wp_list_table' => ABSPATH . 'wp-admin/includes/class-wp-list-table.php',
 	);
 
