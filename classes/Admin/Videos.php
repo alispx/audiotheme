@@ -41,10 +41,10 @@ class Videos {
 		add_filter( 'admin_post_thumbnail_html',                   array( $this, 'post_thumbnail_html' ), 10, 2 );
 		add_filter( 'post_updated_messages',                       array( $this, 'post_updated_messages' ) );
 
-		// Videos Archive
+		// Videos archive.
 		add_action( 'add_audiotheme_archive_settings_meta_box_audiotheme_video', '__return_true' );
-		add_action( 'save_audiotheme_archive_settings',                          array( $this, 'on_save_archive_settings' ), 10, 3 );
-		add_action( 'audiotheme_archive_settings_meta_box',                      array( $this, 'archive_settings' ) );
+		add_action( 'save_audiotheme_archive_settings',     array( $this, 'on_save_archive_settings' ), 10, 3 );
+		add_action( 'audiotheme_archive_settings_meta_box', array( $this, 'archive_settings' ) );
 	}
 
 	/**

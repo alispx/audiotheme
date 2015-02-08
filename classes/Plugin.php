@@ -128,13 +128,21 @@ class Plugin extends Container {
 	 * @since 2.0.0
 	 */
 	public function register_widgets() {
-		$widgets = array(
-			'recent-posts'  => '\AudioTheme\Widget\RecentPosts',
-			'record'        => '\AudioTheme\Widget\Record',
-			'track'         => '\AudioTheme\Widget\Track',
-			'upcoming-gigs' => '\AudioTheme\Widget\UpcomingGigs',
-			'video'         => '\AudioTheme\Widget\Video',
-		);
+		$widgets = array();
+		$widgets['recent-posts'] = '\AudioTheme\Widget\RecentPosts';
+
+		if ( $this['modules']->is_active( 'discography' ) ) {
+			$widgets['record'] = '\AudioTheme\Widget\Record';
+			$widgets['track']  = '\AudioTheme\Widget\Track';
+		}
+
+		if ( $this['modules']->is_active( 'gigs' ) ) {
+			$widgets['upcoming-gigs'] = '\AudioTheme\Widget\UpcomingGigs';
+		}
+
+		if ( $this['modules']->is_active( 'videos' ) ) {
+			$widgets['video']  = '\AudioTheme\Widget\Video';
+		}
 
 		if ( $support = get_theme_support( 'audiotheme-widgets' ) ) {
 			if ( is_array( $support ) ) {

@@ -17,8 +17,12 @@ class Track extends \WP_Widget {
 	 * @since 1.0.0
 	 * @see WP_Widget::construct()
 	 */
-	function __construct() {
-		$widget_options = array( 'classname' => 'widget_audiotheme_track', 'description' => __( 'Display a selected track', 'audiotheme' ) );
+	public function __construct() {
+		$widget_options = array(
+			'classname'   => 'widget_audiotheme_track',
+			'description' => __( 'Display a selected track', 'audiotheme' )
+		);
+
 		parent::__construct( 'audiotheme-track', __( 'Track (AudioTheme)', 'audiotheme' ), $widget_options );
 	}
 
@@ -30,7 +34,7 @@ class Track extends \WP_Widget {
 	 * @param array $args Args specific to the widget area (sidebar).
 	 * @param array $instance Widget instance settings.
 	 */
-	function widget( $args, $instance ) {
+	public function widget( $args, $instance ) {
 		extract( $args );
 
 		$instance['title_raw'] = empty( $instance['title'] ) ? '' : $instance['title'];
@@ -72,7 +76,7 @@ class Track extends \WP_Widget {
 	 *
 	 * @param array $instance Current widget instance settings.
 	 */
-	function form( $instance ) {
+	public function form( $instance ) {
 		global $wpdb;
 
 		$instance = wp_parse_args( (array) $instance, array(
@@ -136,7 +140,7 @@ class Track extends \WP_Widget {
 	 * @param array $new_instance New widget settings.
 	 * @param array $old_instance Old widget settings.
 	 */
-	function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 		$instance = wp_parse_args( $new_instance, $old_instance );
 
 		$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
