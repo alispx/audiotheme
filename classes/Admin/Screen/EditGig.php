@@ -2,18 +2,18 @@
 /**
  * Edit gig administration screen functionality.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 
-namespace AudioTheme\Admin\Screen;
+namespace AudioTheme\Core\Admin\Screen;
 
-use AudioTheme\Util;
+use AudioTheme\Core\Util;
 
 /**
  * Edit gig administration screen class.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 class EditGig {

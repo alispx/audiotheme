@@ -2,16 +2,16 @@
 /**
  * Edit venue administration screen functionality.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 
-namespace AudioTheme\Admin\Screen;
+namespace AudioTheme\Core\Admin\Screen;
 
 /**
  * Edit venue administration screen class.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 class EditVenue {

@@ -4,16 +4,16 @@
  *
  * These should no longer be used.
  *
- * @package AudioTheme\Deprecated
+ * @package AudioTheme\Core\Deprecated
  * @since 2.0.0
  */
 
 /**
- * Deprecated alias for AudioTheme\Query\Gigs.
+ * Deprecated alias for AudioTheme\Core\Query\Gigs.
  *
  * @since 2.0.0
  */
-class AudioTheme_Gig_Query extends \AudioTheme\Query\Gigs {}
+class AudioTheme_Gig_Query extends \AudioTheme\Core\Query\Gigs {}
 
 /**
  * Old setup method. Used to determine if AudioTheme was active.

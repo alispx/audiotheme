@@ -2,7 +2,7 @@
 /**
  * Template to display an Upcoming Gigs widget.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 1.5.0
  */
 ?>

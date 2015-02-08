@@ -2,18 +2,18 @@
 /**
  * Manage records administration screen functionality.
  *
- * @package AudioTheme\Discography
+ * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
 
-namespace AudioTheme\Admin\Screen;
+namespace AudioTheme\Core\Admin\Screen;
 
-use AudioTheme\Util;
+use AudioTheme\Core\Util;
 
 /**
  * Manage records administration screen class.
  *
- * @package AudioTheme\Discography
+ * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
 class ManageRecords {

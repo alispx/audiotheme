@@ -2,16 +2,16 @@
 /**
  * Administration functionality for the Gigs module.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 
-namespace AudioTheme\Admin;
+namespace AudioTheme\Core\Admin;
 
 /**
  * Gigs module administration class.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 class Gigs {

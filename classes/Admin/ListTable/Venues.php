@@ -2,11 +2,11 @@
 /**
  * Class to list venues on the Manage Venues screen.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 1.0.0
  */
 
-namespace AudioTheme\Admin\ListTable;
+namespace AudioTheme\Core\Admin\ListTable;
 
 /**
  * Venues list table class.

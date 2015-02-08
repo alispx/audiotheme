@@ -6,7 +6,7 @@
  * slugs to be easily changed via a familiar interface. It also allows
  * archives to be easily added to nav menus without using a custom link.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 1.0.0
  */
 

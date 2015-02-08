@@ -2,7 +2,7 @@
 /**
  * Gigs iCal feed template.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 1.0.0
  */
 

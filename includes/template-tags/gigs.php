@@ -2,11 +2,11 @@
 /**
  * Gig and venue template functions.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 1.0.0
  */
 
-use AudioTheme\Util;
+use AudioTheme\Core\Util;
 
 /**
  * Retrieve a gig object with associated venue.

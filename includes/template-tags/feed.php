@@ -2,7 +2,7 @@
 /**
  * Feed functions.
  *
- * @package AudioTheme\Feed
+ * @package AudioTheme\Core\Feed
  * @since 1.0.0
  */
 

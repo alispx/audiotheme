@@ -1,6 +1,6 @@
 <?php
 
-namespace AudioTheme\Theme;
+namespace AudioTheme\Core\Theme;
 
 /**
  * AudioTheme Theme Compatibility

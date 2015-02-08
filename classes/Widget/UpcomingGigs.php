@@ -1,15 +1,15 @@
 <?php
 
-namespace AudioTheme\Widget;
+namespace AudioTheme\Core\Widget;
 
-use AudioTheme\Query\Gigs;
+use AudioTheme\Core\Query\Gigs;
 
 /**
  * AudioTheme record widget class.
  *
  * Display a list of upcoming gigs in a widget area.
  *
- * @package AudioTheme\Widget
+ * @package AudioTheme\Core\Widget
  * @since 1.0.0
  */
 class UpcomingGigs extends \WP_Widget {

@@ -2,16 +2,16 @@
 /**
  * Module defaults.
  *
- * @package AudioTheme\Modules
+ * @package AudioTheme\Core\Modules
  * @since 2.0.0
  */
 
-namespace AudioTheme;
+namespace AudioTheme\Core;
 
 /**
  * Abstract class for a new module.
  *
- * @package AudioTheme\Modules
+ * @package AudioTheme\Core\Modules
  * @since 2.0.0
  */
 abstract class Module {
@@ -61,7 +61,7 @@ abstract class Module {
 	 * Template loader.
 	 *
 	 * @since 2.0.0
-	 * @type AudioTheme\Template\Loader
+	 * @type AudioTheme\Core\Template\Loader
 	 */
 	protected $template_loader;
 
@@ -69,7 +69,7 @@ abstract class Module {
 	 * Theme compatability class.
 	 *
 	 * @since 2.0.0
-	 * @type AudioTheme\Theme\Compatibility
+	 * @type AudioTheme\Core\Theme\Compatibility
 	 */
 	protected $theme_compatibility;
 

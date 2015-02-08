@@ -2,19 +2,19 @@
 /**
  * Video module.
  *
- * @package AudioTheme\Videos
+ * @package AudioTheme\Core\Videos
  * @since 2.0.0
  */
 
-namespace AudioTheme\Module;
+namespace AudioTheme\Core\Module;
 
-use AudioTheme\Module;
-use AudioTheme\Util;
+use AudioTheme\Core\Module;
+use AudioTheme\Core\Util;
 
 /**
  * Video module class.
  *
- * @package AudioTheme\Videos
+ * @package AudioTheme\Core\Videos
  * @since 2.0.0
  */
 class Videos extends Module {

@@ -13,8 +13,8 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require( __DIR__ . '/vendor/autoload.php' );
 }
 
-use AudioTheme\Plugin;
-use AudioTheme\PluginServiceProvider;
+use AudioTheme\Core\Plugin;
+use AudioTheme\Core\PluginServiceProvider;
 
 /**
  * Load functions and template tags.
@@ -56,7 +56,7 @@ spl_autoload_register( 'audiotheme_autoloader' );
  * @since 2.0.0
  *
  * @param string $service Optional. Service identifier.
- * @return AudioTheme\Plugin|object The main AudioTheme plugin instance or a service.
+ * @return AudioTheme\Core\Plugin|object The main AudioTheme plugin instance or a service.
  */
 function audiotheme( $service = null ) {
 	static $instance;

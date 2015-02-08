@@ -2,7 +2,7 @@
 /**
  * Template to display a Recent Posts widget.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 1.6.0
  */
 ?>

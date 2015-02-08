@@ -1,13 +1,13 @@
 <?php
 
-namespace AudioTheme;
+namespace AudioTheme\Core;
 
-use AudioTheme\Util;
+use AudioTheme\Core\Util;
 
 /**
  * Administration class.
  *
- * @package AudioTheme\Administration
+ * @package AudioTheme\Core\Administration
  * @since 2.0.0
  */
 class Admin {

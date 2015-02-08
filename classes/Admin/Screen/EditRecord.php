@@ -2,16 +2,16 @@
 /**
  * Edit record administration screen functionality.
  *
- * @package AudioTheme\Discography
+ * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
 
-namespace AudioTheme\Admin\Screen;
+namespace AudioTheme\Core\Admin\Screen;
 
 /**
  * Edit record administration screen functionality.
  *
- * @package AudioTheme\Discography
+ * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
 class EditRecord {

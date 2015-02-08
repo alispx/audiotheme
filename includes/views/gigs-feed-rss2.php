@@ -2,7 +2,7 @@
 /**
  * Gigs RSS2 feed template.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 1.0.0
  */
 

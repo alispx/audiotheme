@@ -2,7 +2,7 @@
 /**
  * Video template functions.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 1.0.0
  */
 

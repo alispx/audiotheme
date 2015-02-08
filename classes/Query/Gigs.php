@@ -2,18 +2,18 @@
 /**
  * WP_Query for gigs.
  *
- * @package AudioTheme\Query
+ * @package AudioTheme\Core\Query
  * @since 2.0.0
  */
 
-namespace AudioTheme\Query;
+namespace AudioTheme\Core\Query;
 
 /**
  * Class to extend WP_Query and set default arguments when querying for gigs.
  *
  * @link http://bradt.ca/blog/extending-wp_query/
  *
- * @package AudioTheme\Query
+ * @package AudioTheme\Core\Query
  * @since 1.0.0
  */
 class Gigs extends \WP_Query {

@@ -2,19 +2,19 @@
 /**
  * Discography module.
  *
- * @package AudioTheme\Discography
+ * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
 
-namespace AudioTheme\Module;
+namespace AudioTheme\Core\Module;
 
-use AudioTheme\Module;
-use AudioTheme\Util;
+use AudioTheme\Core\Module;
+use AudioTheme\Core\Util;
 
 /**
  * Discography module class.
  *
- * @package AudioTheme\Discography
+ * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
 class Discography extends Module {

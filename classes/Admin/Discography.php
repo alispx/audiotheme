@@ -2,18 +2,18 @@
 /**
  * Administration functionality for the Discography module.
  *
- * @package AudioTheme\Discography
+ * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
 
-namespace AudioTheme\Admin;
+namespace AudioTheme\Core\Admin;
 
-use AudioTheme\Util;
+use AudioTheme\Core\Util;
 
 /**
  * Discography module administration class.
  *
- * @package AudioTheme\Discography
+ * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
 class Discography {

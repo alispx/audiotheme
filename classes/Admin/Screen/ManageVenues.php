@@ -2,16 +2,16 @@
 /**
  * Manage venues administration screen functionality.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 
-namespace AudioTheme\Admin\Screen;
+namespace AudioTheme\Core\Admin\Screen;
 
 /**
  * Manage venues administration screen class.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 class ManageVenues {
@@ -21,7 +21,7 @@ class ManageVenues {
 	 * @since 2.0.0
 	 * @type string
 	 */
-	public $list_table_class = 'AudioTheme\Admin\ListTable\Venues';
+	public $list_table_class = 'AudioTheme\Core\Admin\ListTable\Venues';
 
 	/**
 	 * List table instance.

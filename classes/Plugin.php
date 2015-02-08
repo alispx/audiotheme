@@ -6,7 +6,7 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme;
+namespace AudioTheme\Core;
 
 use \Pimple\Container;
 
@@ -129,19 +129,19 @@ class Plugin extends Container {
 	 */
 	public function register_widgets() {
 		$widgets = array();
-		$widgets['recent-posts'] = '\AudioTheme\Widget\RecentPosts';
+		$widgets['recent-posts'] = '\AudioTheme\Core\Widget\RecentPosts';
 
 		if ( $this['modules']->is_active( 'discography' ) ) {
-			$widgets['record'] = '\AudioTheme\Widget\Record';
-			$widgets['track']  = '\AudioTheme\Widget\Track';
+			$widgets['record'] = '\AudioTheme\Core\Widget\Record';
+			$widgets['track']  = '\AudioTheme\Core\Widget\Track';
 		}
 
 		if ( $this['modules']->is_active( 'gigs' ) ) {
-			$widgets['upcoming-gigs'] = '\AudioTheme\Widget\UpcomingGigs';
+			$widgets['upcoming-gigs'] = '\AudioTheme\Core\Widget\UpcomingGigs';
 		}
 
 		if ( $this['modules']->is_active( 'videos' ) ) {
-			$widgets['video']  = '\AudioTheme\Widget\Video';
+			$widgets['video']  = '\AudioTheme\Core\Widget\Video';
 		}
 
 		if ( $support = get_theme_support( 'audiotheme-widgets' ) ) {

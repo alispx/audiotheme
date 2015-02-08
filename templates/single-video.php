@@ -2,7 +2,7 @@
 /**
  * The template for displaying a single video.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 1.2.0
  */
 

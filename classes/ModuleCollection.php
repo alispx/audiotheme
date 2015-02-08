@@ -2,18 +2,18 @@
 /**
  * Module collection.
  *
- * @package AudioTheme\Modules
+ * @package AudioTheme\Core\Modules
  * @since 2.0.0
  */
 
-namespace AudioTheme;
+namespace AudioTheme\Core;
 
 use \Pimple\Container;
 
 /**
  * Module collection class.
  *
- * @package AudioTheme\ModuleCollection
+ * @package AudioTheme\Core\ModuleCollection
  * @since 2.0.0
  */
 class ModuleCollection extends Container {

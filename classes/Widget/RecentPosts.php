@@ -1,13 +1,13 @@
 <?php
 
-namespace AudioTheme\Widget;
+namespace AudioTheme\Core\Widget;
 
 /**
  * AudioTheme recent posts widget class.
  *
  * An improved recent posts widget to allow for more control over display and post type.
  *
- * @package AudioTheme\Widget
+ * @package AudioTheme\Core\Widget
  * @since 1.0.0
  */
 class RecentPosts extends \WP_Widget {

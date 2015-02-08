@@ -2,11 +2,11 @@
 /**
  * Settings administration screen.
  *
- * @package AudioTheme\Administration
+ * @package AudioTheme\Core\Administration
  * @since 1.0.0
  */
 
-namespace AudioTheme\Admin\Screen;
+namespace AudioTheme\Core\Admin\Screen;
 
 /**
  * Settings administration screen class.

@@ -6,9 +6,9 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme;
+namespace AudioTheme\Core;
 
-use AudioTheme\ObjectSorter;
+use AudioTheme\Core\ObjectSorter;
 
 /**
  * General utility methods class.
@@ -68,8 +68,8 @@ class Util {
 	 * @since 1.0.0
 	 *
 	 * @version  2.0.0
-	 * @uses AudioTheme\Util::array_find()
-	 * @uses AudioTheme\Util::array_asplice()
+	 * @uses AudioTheme\Core\Util::array_find()
+	 * @uses AudioTheme\Core\Util::array_asplice()
 	 *
 	 * @param array $input The input array.
 	 * @param mixed $needle Value to insert new elements after.
@@ -96,8 +96,8 @@ class Util {
 	 * @since 2.0.0
 	 *
 	 * @version 1.0.0
-	 * @uses AudioTheme\Util::array_key_find()
-	 * @uses AudioTheme\Util::array_asplice()
+	 * @uses AudioTheme\Core\Util::array_key_find()
+	 * @uses AudioTheme\Core\Util::array_asplice()
 	 *
 	 * @param array $input The input array.
 	 * @param mixed $needle Value to insert new elements after.
@@ -123,7 +123,7 @@ class Util {
 	 *
 	 * @version 1.0.0
 	 * @see array_search()
-	 * @uses AudioTheme\Util::array_key_find()
+	 * @uses AudioTheme\Core\Util::array_key_find()
 	 *
 	 * @param mixed $needle The value to search for.
 	 * @param array $haystack The array to search.

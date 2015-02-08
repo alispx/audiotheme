@@ -6,13 +6,13 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme;
+namespace AudioTheme\Core;
 
-use AudioTheme\Admin;
-use AudioTheme\Admin\Screen;
-use AudioTheme\Module;
-use AudioTheme\ModuleCollection;
-use AudioTheme\Theme;
+use AudioTheme\Core\Admin;
+use AudioTheme\Core\Admin\Screen;
+use AudioTheme\Core\Module;
+use AudioTheme\Core\ModuleCollection;
+use AudioTheme\Core\Theme;
 use \Pimple\ServiceProviderInterface;
 use \Pimple\Container;
 

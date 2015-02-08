@@ -2,7 +2,7 @@
 /**
  * Template to display a Track widget.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 1.5.0
  */
 ?>

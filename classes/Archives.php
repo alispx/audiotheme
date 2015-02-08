@@ -5,16 +5,16 @@
  * Allows for registering an "archive" CPT to modify titles, descriptions and
  * post type rewrite slugs on a traditional edit post screen.
  *
- * @package AudioTheme\Archives
+ * @package AudioTheme\Core\Archives
  * @since 2.0.0
  */
 
-namespace AudioTheme;
+namespace AudioTheme\Core;
 
 /**
  * Archive custom post type class.
  *
- * @package AudioTheme\Archives
+ * @package AudioTheme\Core\Archives
  * @since 2.0.0
  */
 class Archives {

@@ -2,18 +2,18 @@
 /**
  * Gigs module.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 
-namespace AudioTheme\Module;
+namespace AudioTheme\Core\Module;
 
-use AudioTheme\Module;
+use AudioTheme\Core\Module;
 
 /**
  * Gigs module class.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 class Gigs extends Module {

@@ -2,13 +2,13 @@
 /**
  * Class to list gigs on the Manage Gigs screen.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 1.0.0
  */
 
-namespace AudioTheme\Admin\ListTable;
+namespace AudioTheme\Core\Admin\ListTable;
 
-use AudioTheme\Util;
+use AudioTheme\Core\Util;
 
 /**
  * Gigs list table class.

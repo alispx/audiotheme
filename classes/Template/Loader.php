@@ -1,6 +1,6 @@
 <?php
 
-namespace AudioTheme\Template;
+namespace AudioTheme\Core\Template;
 
 /**
  * Template loader.
@@ -10,7 +10,7 @@ namespace AudioTheme\Template;
  * load_template() method that accepts arbitrary data to extract into the local
  * template scope.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 2.0.0
  * @author Gary Jones
  * @author Brady Vercher
@@ -21,7 +21,7 @@ namespace AudioTheme\Template;
 /**
  * Template loader class.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 2.0.0
  * @author Gary Jones
  * @author Brady Vercher

@@ -2,7 +2,7 @@
 /**
  * The template to display a list of videos.
  *
- * @package AudioTheme\Template
+ * @package AudioTheme\Core\Template
  * @since 1.2.0
  */
 

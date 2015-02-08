@@ -2,7 +2,7 @@
 /**
  * Generic utility functions for us in the admin.
  *
- * @package AudioTheme\Administration
+ * @package AudioTheme\Core\Administration
  * @since 1.0.0
  */
 

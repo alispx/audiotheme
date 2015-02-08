@@ -2,18 +2,18 @@
 /**
  * Manage gigs administration screen functionality.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 
-namespace AudioTheme\Admin\Screen;
+namespace AudioTheme\Core\Admin\Screen;
 
-use AudioTheme\Util;
+use AudioTheme\Core\Util;
 
 /**
  * Manage gigs administration screen class.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
 class ManageGigs {
@@ -23,7 +23,7 @@ class ManageGigs {
 	 * @since 2.0.0
 	 * @type string
 	 */
-	public $list_table_class = 'AudioTheme\Admin\ListTable\Gigs';
+	public $list_table_class = 'AudioTheme\Core\Admin\ListTable\Gigs';
 
 	/**
 	 * List table instance.
