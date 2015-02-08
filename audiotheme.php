@@ -35,22 +35,12 @@
  */
 
 /**
- * Load the Composer autoloader.
- */
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	require( __DIR__ . '/vendor/autoload.php' );
-}
-
-use AudioTheme\Plugin;
-use AudioTheme\PluginServiceProvider;
-
-/**
- * The AudioTheme version.
+ * Plugin version constant.
  */
 define( 'AUDIOTHEME_VERSION', '2.0.0-alpha' );
 
 /**
- * Framework path and URL.
+ * Plugin path and URL constants.
  */
 if ( ! defined( 'AUDIOTHEME_DIR' ) ) {
 	define( 'AUDIOTHEME_DIR', plugin_dir_path( __FILE__ ) );
@@ -61,61 +51,10 @@ if ( ! defined( 'AUDIOTHEME_URI' ) ) {
 }
 
 /**
- * Load functions and template tags.
+ * Load the plugin or display a notice about requirements.
  */
-require( AUDIOTHEME_DIR . 'includes/deprecated.php' );
-require( AUDIOTHEME_DIR . 'includes/template-tags/archive.php' );
-require( AUDIOTHEME_DIR . 'includes/template-tags/discography.php' );
-require( AUDIOTHEME_DIR . 'includes/template-tags/feed.php' );
-require( AUDIOTHEME_DIR . 'includes/template-tags/general.php' );
-require( AUDIOTHEME_DIR . 'includes/template-tags/gigs.php' );
-require( AUDIOTHEME_DIR . 'includes/template-tags/videos.php' );
-
-if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'admin/ajax-actions.php' );
-	require( AUDIOTHEME_DIR . 'admin/functions.php' );
+if ( version_compare( phpversion(), '5.3', '>=' ) ) {
+	require( AUDIOTHEME_DIR . '/plugin.php' );
+} else {
+	require( AUDIOTHEME_DIR . '/compatibility.php' );
 }
-
-/**
- * Autoloader callback.
- *
- * @param string $class Class name.
- */
-function audiotheme_autoloader( $class ) {
-	$classes = array(
-		'wp_less'       => AUDIOTHEME_DIR . '/vendor/icit/wp-less/wp-less.php',
-		'wp_list_table' => ABSPATH . 'wp-admin/includes/class-wp-list-table.php',
-	);
-
-	$class = strtolower( $class );
-	if ( isset( $classes[ $class ] ) ) {
-		require_once( $classes[ $class ] );
-	}
-}
-spl_autoload_register( 'audiotheme_autoloader' );
-
-/**
- * Retrieve the AudioTheme plugin instance.
- *
- * @since 2.0.0
- *
- * @param string $service Optional. Service identifier.
- * @return AudioTheme\Plugin|object The main AudioTheme plugin instance or a service.
- */
-function audiotheme( $service = null ) {
-	static $instance;
-
-	if ( null === $instance ) {
-		$instance = new Plugin;
-	}
-
-	return empty( $service ) ? $instance : $instance[ $service ];
-}
-
-/**
- * Initialize the plugin and register services.
- */
-$audiotheme = audiotheme();
-$audiotheme['plugin_file'] = __FILE__;
-$audiotheme->register( new PluginServiceProvider() );
-add_action( 'plugins_loaded', array( $audiotheme, 'load' ) );
