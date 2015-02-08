@@ -8,7 +8,7 @@
 
 namespace AudioTheme\Core;
 
-use AudioTheme\Core\ObjectSorter;
+use AudioTheme\Core\ObjectListSorter;
 
 /**
  * General utility methods class.
@@ -296,10 +296,10 @@ class Util {
 	/**
 	 * Sort an array of objects by an objects properties.
 	 *
-	 * Ex: sort_objects( $gigs, array( 'venue', 'name' ), 'asc', true, 'gig_datetime' );
+	 * Ex: sort_object_list( $gigs, array( 'venue', 'name' ), 'asc', true, 'gig_datetime' );
 	 *
 	 * @since 2.0.0
-	 * @uses AudioTheme_Sort_Objects
+	 * @uses AudioTheme\Core\ObjectListSorter
 	 *
 	 * @param array $objects An array of objects to sort.
 	 * @param string $orderby The object property to sort on.
@@ -308,12 +308,12 @@ class Util {
 	 * @param string $fallback Optional. Comma-delimited string of properties to sort on if $orderby property is equal.
 	 * @return array The array of sorted objects.
 	 */
-	public static function sort_objects( $objects, $orderby, $order = 'ASC', $unique = true, $fallback = null ) {
+	public static function sort_object_list( $objects, $orderby, $order = 'ASC', $unique = true, $fallback = null ) {
 		if ( ! is_array( $objects ) ) {
 			return false;
 		}
 
-		usort( $objects, array( new ObjectSorter( $orderby, $order, $fallback ), 'sort' ) );
+		usort( $objects, array( new ObjectListSorter( $orderby, $order, $fallback ), 'sort' ) );
 
 		// Use object ids as the array keys.
 		if ( $unique && count( $objects ) && isset( $objects[0]->ID ) ) {
