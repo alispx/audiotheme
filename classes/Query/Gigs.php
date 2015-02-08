@@ -2,21 +2,21 @@
 /**
  * WP_Query for gigs.
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Query
  * @since 2.0.0
  */
 
-namespace AudioTheme\Gig;
+namespace AudioTheme\Query;
 
 /**
  * Class to extend WP_Query and set default arguments when querying for gigs.
  *
  * @link http://bradt.ca/blog/extending-wp_query/
  *
- * @package AudioTheme\Gigs
+ * @package AudioTheme\Query
  * @since 1.0.0
  */
-class Query extends \WP_Query {
+class Gigs extends \WP_Query {
 	/**
 	 * Run the query and cache connected venues.
 	 *

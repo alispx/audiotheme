@@ -2,7 +2,7 @@
 
 namespace AudioTheme\Widget;
 
-use AudioTheme\Gig\Query;
+use AudioTheme\Query\Gigs;
 
 /**
  * AudioTheme record widget class.
@@ -53,7 +53,7 @@ class UpcomingGigs extends \WP_Widget {
 		$instance['date_format'] = apply_filters( 'audiotheme_widget_upcoming_gigs_date_format', get_option( 'date_format' ) );
 		$instance['number'] = ( empty( $instance['number'] ) || ! absint( $instance['number'] ) ) ? 5 : absint( $instance['number'] );
 
-		$loop = new \AudioTheme\Gig\Query( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
+		$loop = new Gigs( apply_filters( 'audiotheme_widget_upcoming_gigs_loop_args', array(
 			'no_found_rows'  => true,
 			'posts_per_page' => $instance['number'],
 		) ) );

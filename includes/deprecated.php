@@ -9,6 +9,13 @@
  */
 
 /**
+ * Deprecated alias for AudioTheme\Query\Gigs.
+ *
+ * @since 2.0.0
+ */
+class AudioTheme_Gig_Query extends \AudioTheme\Query\Gigs {}
+
+/**
  * Old setup method. Used to determine if AudioTheme was active.
  *
  * @since 1.0.0
