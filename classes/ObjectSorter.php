@@ -1,6 +1,9 @@
 <?php
 /**
+ * Object sorting functionality.
  *
+ * @package AudioTheme
+ * @since 2.0.0
  */
 
 namespace AudioTheme;
@@ -8,7 +11,7 @@ namespace AudioTheme;
 /**
  * Object list sorting class.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 class ObjectSorter {
 	protected $fallback;

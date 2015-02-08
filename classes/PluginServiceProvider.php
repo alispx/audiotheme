@@ -1,6 +1,9 @@
 <?php
 /**
+ * Plugin service definitions.
  *
+ * @package AudioTheme
+ * @since 2.0.0
  */
 
 namespace AudioTheme;
@@ -14,9 +17,19 @@ use \Pimple\ServiceProviderInterface;
 use \Pimple\Container;
 
 /**
+ * Plugin service provider class.
  *
+ * @package AudioTheme
+ * @since 2.0.0
  */
 class PluginServiceProvider implements ServiceProviderInterface {
+	/**
+	 * Register plugin services.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param \Pimple\Container $plugin Container instance.
+	 */
 	public function register( Container $plugin ) {
 		$plugin['archives'] = function() {
 			return new Archives;

@@ -1,6 +1,9 @@
 <?php
 /**
+ * General utility methods.
  *
+ * @package AudioTheme
+ * @since 2.0.0
  */
 
 namespace AudioTheme;
@@ -8,7 +11,10 @@ namespace AudioTheme;
 use AudioTheme\ObjectSorter;
 
 /**
+ * General utility methods class.
  *
+ * @package AudioTheme
+ * @since 2.0.0
  */
 class Util {
 	/**

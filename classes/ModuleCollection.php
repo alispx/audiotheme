@@ -1,6 +1,6 @@
 <?php
 /**
- * Modules API.
+ * Module collection.
  *
  * @package AudioTheme\Modules
  * @since 2.0.0
@@ -11,7 +11,7 @@ namespace AudioTheme;
 use \Pimple\Container;
 
 /**
- * Modules API class.
+ * Module collection class.
  *
  * @package AudioTheme\ModuleCollection
  * @since 2.0.0
