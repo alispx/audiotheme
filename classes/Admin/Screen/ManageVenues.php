@@ -21,7 +21,7 @@ class ManageVenues {
 	 * @since 2.0.0
 	 * @type string
 	 */
-	public $list_table_class = 'AudioTheme\Core\Admin\ListTable\Venues';
+	public $list_table_class = '\AudioTheme\Core\Admin\ListTable\Venues';
 
 	/**
 	 * List table instance.

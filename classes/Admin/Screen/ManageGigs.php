@@ -23,7 +23,7 @@ class ManageGigs {
 	 * @since 2.0.0
 	 * @type string
 	 */
-	public $list_table_class = 'AudioTheme\Core\Admin\ListTable\Gigs';
+	public $list_table_class = '\AudioTheme\Core\Admin\ListTable\Gigs';
 
 	/**
 	 * List table instance.
