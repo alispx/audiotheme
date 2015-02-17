@@ -240,7 +240,7 @@ class Compatibility {
 			is_singular() ? $wp_query->post : array()
 		);
 
-		$post = new WP_Post( (object) $post );
+		$post = new \WP_Post( (object) $post );
 		$this->replace_the_query( $post );
 		$this->disable_filters();
 
