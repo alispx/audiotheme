@@ -41,7 +41,7 @@
 
 	<form action="" method="post">
 		<input type="hidden" name="page" value="audiotheme-venue">
-		<input type="hidden" name="audiotheme_venue[ID]" id="venue-id" value="<?php echo esc_attr( $ID ); ?>">
+		<input type="hidden" name="audiotheme_venue[ID]" id="venue-id" value="<?php echo absint( $venue->ID ); ?>">
 		<?php
 		echo $nonce_field;
 		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
@@ -61,44 +61,44 @@
 							<table class="form-table" >
 								<tr>
 									<th><label for="venue-name"><?php _e( 'Name', 'audiotheme' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[name]" id="venue-name" class="regular-text" value="<?php echo esc_attr( $name ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[name]" id="venue-name" class="regular-text" value="<?php echo esc_attr( $venue->name ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-address"><?php _e( 'Address', 'audiotheme' ) ?></label></th>
-									<td><textarea name="audiotheme_venue[address]" id="venue-address" cols="30" rows="2"><?php echo esc_textarea( $address ); ?></textarea></td>
+									<td><textarea name="audiotheme_venue[address]" id="venue-address" cols="30" rows="2"><?php echo esc_textarea( $venue->address ); ?></textarea></td>
 								</tr>
 								<tr>
 									<th><label for="venue-city"><?php _e( 'City', 'audiotheme' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[city]" id="venue-city" class="regular-text" value="<?php echo esc_attr( $city ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[city]" id="venue-city" class="regular-text" value="<?php echo esc_attr( $venue->city ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-state"><?php _e( 'State', 'audiotheme' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[state]" id="venue-state" class="regular-text" value="<?php echo esc_attr( $state ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[state]" id="venue-state" class="regular-text" value="<?php echo esc_attr( $venue->state ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-postal-code"><?php _e( 'Postal Code', 'audiotheme' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[postal_code]" id="venue-postal-code" class="regular-text" value="<?php echo esc_attr( $postal_code ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[postal_code]" id="venue-postal-code" class="regular-text" value="<?php echo esc_attr( $venue->postal_code ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-country"><?php _e( 'Country', 'audiotheme' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[country]" id="venue-country" class="regular-text" value="<?php echo esc_attr( $country ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[country]" id="venue-country" class="regular-text" value="<?php echo esc_attr( $venue->country ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-timezone-string"><?php _e( 'Time zone', 'audiotheme' ) ?></label></th>
 									<td>
 										<select id="venue-timezone-string" name="audiotheme_venue[timezone_string]">
-											<?php echo \AudioTheme\Core\Util::timezone_choice( $timezone_string ); ?>
+											<?php echo \AudioTheme\Core\Util::timezone_choice( $venue->timezone_string ); ?>
 										</select>
 										<span class="description"><?php _e( 'This is important.', 'audiotheme' ); ?></span>
 									</td>
 								</tr>
 								<tr>
 									<th><label for="venue-website"><?php _e( 'Website', 'audiotheme' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[website]" id="venue-website" class="regular-text" value="<?php echo esc_url( $website ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[website]" id="venue-website" class="regular-text" value="<?php echo esc_url( $venue->website ); ?>"></td>
 								</tr>
 								<tr>
 									<th><label for="venue-phone"><?php _e( 'Phone', 'audiotheme' ) ?></label></th>
-									<td><input type="text" name="audiotheme_venue[phone]" id="venue-phone" class="regular-text" value="<?php echo esc_attr( $phone ); ?>"></td>
+									<td><input type="text" name="audiotheme_venue[phone]" id="venue-phone" class="regular-text" value="<?php echo esc_attr( $venue->phone ); ?>"></td>
 								</tr>
 							</table>
 						</div>
@@ -109,7 +109,7 @@
 
 
 				<div id="postbox-container-1" class="postbox-container">
-					<?php do_meta_boxes( $screen->id, 'side', get_post( $ID ) ); ?>
+					<?php do_meta_boxes( $screen->id, 'side', $venue->get_post() ); ?>
 				</div>
 
 

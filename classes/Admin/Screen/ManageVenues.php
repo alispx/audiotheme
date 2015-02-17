@@ -94,21 +94,6 @@ class ManageVenues {
 		$list_table       = $this->list_table;
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
 
-		$action      = 'add';
-		$title       = $post_type_object->labels->name;
-		$nonce_field = wp_nonce_field( 'add-venue', 'audiotheme_venue_nonce', true, false );
-		$values      = get_default_audiotheme_venue_properties();
-
-		if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
-			$venue_to_edit = get_audiotheme_venue( $_GET['venue_id'] );
-
-			$action      = 'edit';
-			$nonce_field = wp_nonce_field( 'update-venue_' . $venue_to_edit->ID, 'audiotheme_venue_nonce', true, false );
-			$values      = wp_parse_args( get_object_vars( $venue_to_edit ), $values );
-		}
-
-		extract( $values, EXTR_SKIP );
-
 		require( AUDIOTHEME_DIR . 'admin/views/screen-manage-venues.php' );
 	}
 }

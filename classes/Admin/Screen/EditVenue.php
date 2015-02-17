@@ -8,6 +8,8 @@
 
 namespace AudioTheme\Core\Admin\Screen;
 
+use AudioTheme\Core\Model\Venue;
+
 /**
  * Edit venue administration screen class.
  *
@@ -75,12 +77,6 @@ class EditVenue {
 	 */
 	public function register_meta_boxes() {
 		$screen = get_current_screen();
-		$values = get_default_audiotheme_venue_properties();
-
-		if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
-			$venue_to_edit = get_audiotheme_venue( $_GET['venue_id'] );
-			$values        = wp_parse_args( get_object_vars( $venue_to_edit ), $values );
-		}
 
 		add_meta_box(
 			'venuecontactdiv',
@@ -88,8 +84,7 @@ class EditVenue {
 			array( $this, 'display_contact_meta_box' ),
 			$screen->id,
 			'normal',
-			'core',
-			$values
+			'core'
 		);
 
 		add_meta_box(
@@ -98,8 +93,7 @@ class EditVenue {
 			array( $this, 'display_notes_meta_box' ),
 			$screen->id,
 			'normal',
-			'core',
-			$values
+			'core'
 		);
 
 		// The 'submitdiv' id prevents the meta box from being hidden.
@@ -131,19 +125,11 @@ class EditVenue {
 	public function display_screen() {
 		$screen           = get_current_screen();
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
+		$action           = $this->get_action();
+		$venue            = $this->get_venue_to_edit();
+		$nonce_action     = 'edit' == $action ? 'update-venue_' . $venue->ID : 'add-venue';
+		$nonce_field      = wp_nonce_field( $nonce_action, 'audiotheme_venue_nonce', true, false );
 
-		$action      = 'add';
-		$nonce_field = wp_nonce_field( 'add-venue', 'audiotheme_venue_nonce', true, false );
-		$values      = get_default_audiotheme_venue_properties();
-
-		if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
-			$venue_to_edit = get_audiotheme_venue( $_GET['venue_id'] );
-			$action        = 'edit';
-			$nonce_field   = wp_nonce_field( 'update-venue_' . $venue_to_edit->ID, 'audiotheme_venue_nonce', true, false );
-			$values        = wp_parse_args( get_object_vars( $venue_to_edit ), $values );
-		}
-
-		extract( $values, EXTR_SKIP );
 		require( AUDIOTHEME_DIR . 'admin/views/screen-edit-venue.php' );
 	}
 
@@ -156,7 +142,7 @@ class EditVenue {
 	 * @param array $args Additional args passed during meta box registration.
 	 */
 	public function display_contact_meta_box( $post, $args ) {
-		extract( $args['args'], EXTR_SKIP );
+		$venue = $this->get_venue_to_edit();
 		require( AUDIOTHEME_DIR . 'admin/views/edit-venue-contact.php' );
 	}
 
@@ -169,9 +155,8 @@ class EditVenue {
 	 * @param array $args Additional args passed during meta box registration.
 	 */
 	public function display_notes_meta_box( $post, $args ) {
-		extract( $args['args'], EXTR_SKIP );
-
-		$notes = format_to_edit( $notes, user_can_richedit() );
+		$venue = $this->get_venue_to_edit();
+		$notes = format_to_edit( $venue->notes, user_can_richedit() );
 
 		wp_editor( $notes, 'venuenotes', array(
 			'editor_css'    => '<style type="text/css" scoped="true">.mceIframeContainer { background-color: #fff;}</style>',
@@ -256,7 +241,35 @@ class EditVenue {
 	}
 
 	/**
-	 * Process venue add/edit actions.
+	 * Retrieve the current action.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return string
+	 */
+	protected function get_action() {
+		return isset( $_GET['action'] ) && 'edit' == $_GET['action'] ? 'edit' : 'add';
+	}
+
+	/**
+	 * Retrieve a venue model to edit.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return Venue
+	 */
+	protected function get_venue_to_edit() {
+		if ( 'edit' == $this->get_action() && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
+			$venue = new Venue( $_GET['venue_id'] );
+		} else {
+			$venue = new Venue;
+		}
+
+		return $venue;
+	}
+
+	/**
+	 * Process venue actions.
 	 *
 	 * @since 1.0.0
 	 */
@@ -264,11 +277,11 @@ class EditVenue {
 		$action = '';
 		if ( isset( $_POST['audiotheme_venue'] ) && isset( $_POST['audiotheme_venue_nonce'] ) ) {
 			$data         = $_POST['audiotheme_venue'];
-			$nonce_action = ( empty( $data['ID'] ) ) ? 'add-venue' : 'update-venue_' . $data['ID'];
+			$nonce_action = empty( $data['ID'] ) ? 'add-venue' : 'update-venue_' . $data['ID'];
 
 			// Should die on error.
 			if ( check_admin_referer( $nonce_action, 'audiotheme_venue_nonce' ) ) {
-				$action = ( ! empty( $data['ID'] ) ) ? 'edit' : 'add';
+				$action = ! empty( $data['ID'] ) ? 'edit' : 'add';
 			}
 		}
 

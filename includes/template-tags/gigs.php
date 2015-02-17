@@ -6,6 +6,7 @@
  * @since 1.0.0
  */
 
+use AudioTheme\Core\Model\Venue;
 use AudioTheme\Core\Util;
 
 /**
@@ -532,34 +533,10 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
  */
 function get_audiotheme_venue( $post = null ) {
 	if ( null === $post ) {
-		$gig  = get_audiotheme_gig();
-		$post = get_post( $gig->venue->ID );
-	} else {
-		$post = get_post( $post );
+		$post = get_audiotheme_gig()->venue->ID;
 	}
 
-	$defaults = get_default_audiotheme_venue_properties();
-	$meta = (array) get_post_custom( $post->ID );
-	foreach( $meta as $key => $val ) {
-		$meta[ str_replace( '_audiotheme_', '', $key ) ] = $val;
-		unset( $meta[ $key ] );
-	}
-
-	$properties = wp_parse_args( $meta, $defaults );
-
-	foreach( $properties as $key => $prop ) {
-		if ( ! array_key_exists( $key, $defaults ) ) {
-			unset( $properties[ $key ] );
-		} elseif ( isset( $prop[0] ) ) {
-			$properties[ $key ] = maybe_unserialize( $prop[0] );
-		}
-	}
-
-	$venue['ID'] = $post->ID;
-	$venue['name'] = $post->post_title;
-	$venue = (object) wp_parse_args( $venue, $properties );
-
-	return $venue;
+	return new Venue( $post );
 }
 
 /**
@@ -592,24 +569,8 @@ function get_audiotheme_venue_by( $field, $value ) {
  * @since 1.0.0
  */
 function get_default_audiotheme_venue_properties() {
-	$args = array(
-		'ID'              => 0,
-		'name'            => '',
-		'address'         => '',
-		'city'            => '',
-		'state'           => '',
-		'postal_code'     => '',
-		'country'         => '',
-		'website'         => '',
-		'phone'           => '',
-		'contact_name'    => '',
-		'contact_phone'   => '',
-		'contact_email'   => '',
-		'notes'           => '',
-		'timezone_string' => '',
-	);
-
-	return $args;
+	$venue = new Venue;
+	return $venue->to_array();
 }
 
 /**
