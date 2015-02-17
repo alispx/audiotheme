@@ -42,7 +42,7 @@ class Venues extends \WP_List_Table {
 
 		$screen   = get_current_screen();
 		$per_page = get_user_option( 'gigs_page_audiotheme_venues_per_page' );
-		$per_page = ( empty( $per_page ) ) ? 20 : $per_page;
+		$per_page = empty( $per_page ) ? 20 : $per_page;
 
 		// Set up column headers.
 		$columns               = $this->get_columns();
@@ -53,8 +53,8 @@ class Venues extends \WP_List_Table {
 		// Compile the WP_Query args based on the current view and user options.
 		$args = array(
 			'post_type'      => 'audiotheme_venue',
-			'order'          => ( isset( $_REQUEST['order'] ) && 'desc' == strtolower( $_REQUEST['order'] ) ) ? 'desc' : 'asc',
-			'orderby'        => ( ! isset( $_REQUEST['orderby'] ) ) ? 'title' : $_REQUEST['orderby'],
+			'order'          => isset( $_REQUEST['order'] ) && 'desc' == strtolower( $_REQUEST['order'] ) ? 'desc' : 'asc',
+			'orderby'        => ! isset( $_REQUEST['orderby'] ) ? 'title' : $_REQUEST['orderby'],
 			'posts_per_page' => $per_page,
 		);
 
@@ -62,7 +62,7 @@ class Venues extends \WP_List_Table {
 			switch( $_REQUEST['orderby'] ) {
 				case 'gigs':
 					$args['meta_key'] = '_audiotheme_gig_count';
-					$args['orderby'] = 'meta_value_num';
+					$args['orderby']  = 'meta_value_num';
 					break;
 				case 'city':
 				case 'contact_name':
@@ -73,7 +73,7 @@ class Venues extends \WP_List_Table {
 				case 'state':
 				case 'website':
 					$args['meta_key'] = '_audiotheme_' . $_REQUEST['orderby'];
-					$args['orderby'] = 'meta_value';
+					$args['orderby']  = 'meta_value';
 					break;
 			}
 		}
@@ -121,7 +121,10 @@ class Venues extends \WP_List_Table {
 			'contact_phone' => __( 'Contact Phone', 'audiotheme' ),
 			'contact_email' => __( 'Contact Email', 'audiotheme' ),
 			'gigs'          => __( 'Gigs', 'audiotheme' ),
-			'website'       => sprintf( '<span class="audiotheme-column-icon dashicons dashicons-admin-links">%s</span>', __( 'Website', 'audiotheme' ) ),
+			'website'       => sprintf(
+				'<span class="audiotheme-column-icon dashicons dashicons-admin-links">%s</span>',
+				__( 'Website', 'audiotheme' )
+			),
 		);
 
 		// The screen id is used when managing column visibility.
@@ -139,7 +142,7 @@ class Venues extends \WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		$sortable_columns = array(
-			'name'          => array( 'title', true ), // True means its already sorted.
+			'name'          => array( 'title', true ), // True means it's already sorted.
 			'city'          => array( 'city', false ),
 			'state'         => array( 'state', false ),
 			'country'       => array( 'country', false ),
@@ -189,18 +192,18 @@ class Venues extends \WP_List_Table {
 		$sendback = add_query_arg( 'paged', $this->get_pagenum(), $sendback );
 
 		if ( isset( $_POST['audiotheme_venue'] ) && isset( $_POST['audiotheme_venue_nonce'] ) ) {
-			$data = $_POST['audiotheme_venue'];
-			$nonce_action = ( empty( $data['ID'] ) ) ? 'add-venue' : 'update-venue_' . $data['ID'];
+			$data         = $_POST['audiotheme_venue'];
+			$nonce_action = empty( $data['ID'] ) ? 'add-venue' : 'update-venue_' . $data['ID'];
 
 			// Should die on error.
 			if ( check_admin_referer( $nonce_action, 'audiotheme_venue_nonce' ) ) {
-				$action = ( ! empty( $data['ID'] ) ) ? 'edit' : 'add';
+				$action = ! empty( $data['ID'] ) ? 'edit' : 'add';
 			}
 		} elseif ( isset( $_REQUEST['action'] ) && 'delete' == $_REQUEST['action'] && ! empty( $_REQUEST['venue_id'] ) ) {
 			$post_ids = array( absint( $_REQUEST['venue_id'] ) );
 
 			if ( wp_verify_nonce( $_REQUEST['_wpnonce'], 'delete-venue_' . $post_ids[0] ) ) {
-				$action = 'delete';
+				$action   = 'delete';
 				$sendback = get_audiotheme_venues_admin_url();
 			}
 		} elseif ( ! empty( $_REQUEST['ids'] ) ) {
@@ -274,17 +277,25 @@ class Venues extends \WP_List_Table {
 	public function column_name( $item ) {
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
 
-		$output = sprintf( '<strong><a href="%s" class="row-title">%s</a></strong><br>',
+		$output = sprintf(
+			'<strong><a href="%s" class="row-title">%s</a></strong><br>',
 			esc_url( get_edit_post_link( $item->ID ) ),
-			$item->name );
+			$item->name
+		);
 
 		$actions['edit'] = sprintf( '<a href="%s">Edit</a>', get_edit_post_link( $item->ID ) );
 
-		$delete_args['action'] = 'delete';
+		$delete_args['action']   = 'delete';
 		$delete_args['venue_id'] = $item->ID;
-		$delete_url = get_audiotheme_venues_admin_url( $delete_args );
-		$delete_url_onclick = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
-		$actions['delete'] = sprintf( '<a href="%s"%s>%s</a>', wp_nonce_url( $delete_url, 'delete-venue_' . $item->ID ), $delete_url_onclick, __( 'Delete', 'audiotheme' ) );
+		$delete_url              = get_audiotheme_venues_admin_url( $delete_args );
+		$delete_url_onclick      = " onclick=\"return confirm('" . esc_js( sprintf( __( 'Are you sure you want to delete this %s?', 'audiotheme' ), strtolower( $post_type_object->labels->singular_name ) ) ) . "');\"";
+
+		$actions['delete'] = sprintf(
+			'<a href="%s"%s>%s</a>',
+			wp_nonce_url( $delete_url, 'delete-venue_' . $item->ID ),
+			$delete_url_onclick,
+			__( 'Delete', 'audiotheme' )
+		);
 
 		$output .= $this->row_actions( $actions );
 
@@ -303,13 +314,21 @@ class Venues extends \WP_List_Table {
 	public function column_default( $item, $column_name ) {
 		switch($column_name){
 			case 'gigs':
-				$count = get_post_meta( $item->ID, '_audiotheme_gig_count', true );
+				$count     = get_post_meta( $item->ID, '_audiotheme_gig_count', true );
 				$admin_url = get_audiotheme_gig_admin_url( array( 'post_type' => 'audiotheme_gig', 'post_status' => 'any', 'venue' => $item->ID ) );
-				return ( empty( $count ) ) ? $count : sprintf( '<a href="%s">%d</a>', $admin_url, $count );
+				return empty( $count ) ? $count : sprintf( '<a href="%s">%d</a>', $admin_url, $count );
 			case 'website':
-				return ( ! empty( $item->website ) ) ? sprintf( ' <a href="%s" class="venue-website-link dashicons dashicons-admin-links" target="_blank"></a>', esc_url( $item->website ), esc_attr( __( 'Visit venue website', 'audiotheme' ) ) ) : '';
+				$website = '';
+				if ( ! empty( $website ) ) {
+					$website = sprintf(
+						' <a href="%s" class="venue-website-link dashicons dashicons-admin-links" target="_blank"></a>',
+						esc_url( $item->website ),
+						esc_attr( __( 'Visit venue website', 'audiotheme' ) )
+					);
+				}
+				return $website;
 			default:
-				return ( isset( $item->{$column_name} ) ) ? $item->{$column_name} : '';
+				return isset( $item->{$column_name} ) ? $item->{$column_name} : '';
 		}
 	}
 }
