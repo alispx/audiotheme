@@ -10,11 +10,11 @@ namespace AudioTheme\Core;
 
 use AudioTheme\Core\Admin;
 use AudioTheme\Core\Admin\Screen;
+use AudioTheme\Core\Container;
 use AudioTheme\Core\Module;
 use AudioTheme\Core\ModuleCollection;
+use AudioTheme\Core\ServiceProviderInterface;
 use AudioTheme\Core\Theme;
-use \Pimple\ServiceProviderInterface;
-use \Pimple\Container;
 
 /**
  * Plugin service provider class.

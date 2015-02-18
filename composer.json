@@ -17,7 +17,6 @@
 	"require": {
 		"gamajo/template-loader": "*",
 		"icit/wp-less": "dev-master",
-		"pimple/pimple": "~3.0",
 		"scribu/lib-posts-to-posts": "dev-master"
 	},
 	"extra": {

@@ -8,7 +8,7 @@
 
 namespace AudioTheme\Core;
 
-use \Pimple\Container;
+use AudioTheme\Core\Container;
 
 /**
  * Main plugin class.
