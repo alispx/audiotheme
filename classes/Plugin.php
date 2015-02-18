@@ -27,6 +27,7 @@ class Plugin extends Container {
 		$this['archives']->load();
 		$this->register_hooks();
 		$this->load_modules();
+		scb_init( array( $this, 'load_p2p_core' ) );
 
 		if ( is_admin() ) {
 			$this['admin']->load();
@@ -74,7 +75,6 @@ class Plugin extends Container {
 	 */
 	protected function register_hooks() {
 		// Default hooks.
-		add_action( 'plugins_loaded',               array( $this, 'load_p2p_core' ), 20 );
 		add_action( 'widgets_init',                 array( $this, 'register_widgets' ) );
 		add_action( 'wp_loaded',                    array( $this, 'maybe_flush_rewrite_rules' ) );
 		add_action( 'wp_enqueue_scripts',           array( $this, 'register_assets' ), 1 );
@@ -103,9 +103,15 @@ class Plugin extends Container {
 	 * @since 2.0.0
 	 */
 	public function load_p2p_core() {
+		if ( function_exists( 'p2p_register_connection_type' ) ) {
+			return;
+		}
+
 		if ( ! defined( 'P2P_TEXTDOMAIN' ) ) {
 			define( 'P2P_TEXTDOMAIN', 'audiotheme' );
 		}
+
+		require( AUDIOTHEME_DIR . '/vendor/scribu/lib-posts-to-posts/autoload.php' );
 
 		\P2P_Storage::init();
 		\P2P_Query_Post::init();
@@ -113,6 +119,8 @@ class Plugin extends Container {
 		\P2P_URL_Query::init();
 		\P2P_Widget::init();
 		\P2P_Shortcodes::init();
+
+		add_action( 'admin_init', array( '\P2P_Storage', 'install' ) );
 	}
 
 	/**

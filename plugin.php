@@ -6,15 +6,25 @@
  * @since 2.0.0
  */
 
-/**
- * Load the Composer autoloader.
- */
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	require( __DIR__ . '/vendor/autoload.php' );
-}
-
+use AudioTheme\Core\Autoloader;
 use AudioTheme\Core\Plugin;
 use AudioTheme\Core\PluginServiceProvider;
+
+/**
+ * Load and configure the autoloader.
+ */
+require( AUDIOTHEME_DIR . 'classes/Autoloader.php' );
+
+// @todo Make sure a root Composer autoloader takes precedence.
+$audiotheme_autoloader = new Autoloader;
+$audiotheme_autoloader->register();
+$audiotheme_autoloader->add_namespace( 'AudioTheme\\Core\\', AUDIOTHEME_DIR . 'classes/', true );
+$audiotheme_autoloader->add_classes( array(
+	'Gamajo_Template_Loader' => AUDIOTHEME_DIR . 'vendor/gamajo/template-loader/class-gamajo-template-loader.php',
+	'lessc'                  => AUDIOTHEME_DIR . 'vendor/leafo/lessphp/lessc.inc.php',
+	'wp_less'                => AUDIOTHEME_DIR . 'vendor/icit/wp-less/wp-less.php',
+	'WP_List_Table'          => ABSPATH . 'wp-admin/includes/class-wp-list-table.php',
+) );
 
 /**
  * Load functions and template tags.
@@ -26,29 +36,12 @@ require( AUDIOTHEME_DIR . 'includes/template-tags/feed.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/general.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/gigs.php' );
 require( AUDIOTHEME_DIR . 'includes/template-tags/videos.php' );
+require( AUDIOTHEME_DIR . 'vendor/scribu/scb-framework/load.php' );
 
 if ( is_admin() ) {
 	require( AUDIOTHEME_DIR . 'admin/ajax-actions.php' );
 	require( AUDIOTHEME_DIR . 'admin/functions.php' );
 }
-
-/**
- * Autoloader callback.
- *
- * @param string $class Class name.
- */
-function audiotheme_autoloader( $class ) {
-	$classes = array(
-		'wp_less'       => AUDIOTHEME_DIR . '/vendor/icit/wp-less/wp-less.php',
-		'wp_list_table' => ABSPATH . 'wp-admin/includes/class-wp-list-table.php',
-	);
-
-	$class = strtolower( $class );
-	if ( isset( $classes[ $class ] ) ) {
-		require_once( $classes[ $class ] );
-	}
-}
-spl_autoload_register( 'audiotheme_autoloader' );
 
 /**
  * Retrieve the AudioTheme plugin instance.
@@ -73,5 +66,6 @@ function audiotheme( $service = null ) {
  */
 $audiotheme = audiotheme();
 $audiotheme['plugin_file'] = AUDIOTHEME_DIR . '/audiotheme.php';
+$audiotheme['autoloader']  = $audiotheme_autoloader;
 $audiotheme->register( new PluginServiceProvider() );
 add_action( 'plugins_loaded', array( $audiotheme, 'load' ) );
