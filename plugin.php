@@ -65,7 +65,8 @@ function audiotheme( $service = null ) {
  * Initialize the plugin and register services.
  */
 $audiotheme = audiotheme();
-$audiotheme['plugin_file'] = AUDIOTHEME_DIR . '/audiotheme.php';
-$audiotheme['autoloader']  = $audiotheme_autoloader;
+$audiotheme['autoloader']          = $audiotheme_autoloader;
+$audiotheme['plugin_file']         = AUDIOTHEME_DIR . '/audiotheme.php';
+$audiotheme['default_hooks_class'] = '\AudioTheme\Core\DefaultHooks';
 $audiotheme->register( new PluginServiceProvider() );
 add_action( 'plugins_loaded', array( $audiotheme, 'load' ) );
