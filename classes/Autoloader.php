@@ -50,7 +50,7 @@ class Autoloader {
 	 * @param string $file Absolute path to file with the class definition.
 	 */
 	public function add_class( $class, $file ) {
-		$this->class_map[ $class ] = $file;
+		$this->classmap[ $class ] = $file;
 	}
 
 	/**
