@@ -288,7 +288,7 @@ class Admin {
 		$saved_version = get_option( 'audiotheme_version', '0' );
 		$current_version = AUDIOTHEME_VERSION;
 
-		if ( version_compare( $saved_version, '2.0.0', '<' ) ) {
+		if ( version_compare( $saved_version, '2.0.0-alpha', '<' ) ) {
 			$this->upgrade200();
 		}
 
