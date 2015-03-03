@@ -2,10 +2,19 @@
 
 Clone framework in your plugins folder:
 
-`git clone git@github.com:AudioTheme/audiotheme.git --recursive audiotheme`
+`git clone https://github.com/audiotheme/audiotheme.git`
+
+Install dependencies with Composer:
+
+`composer install`
+
+Install Grunt modules and run the default task:
+
+```
+npm install
+grunt
+```
 
 Activate the plugin in WordPress.
 
 That's it!
-
-Read about working with the framework in the [Wiki](https://github.com/AudioTheme/audiotheme/wiki)
