@@ -1,16 +1,27 @@
-# Getting Started
+# AudioTheme
 
-Clone framework in your plugins folder:
+Easily manage and display discography, gigs, and videos in WordPress. Find out more and browse our [WordPress music themes at AudioTheme.com](https://audiotheme.com/).
 
-`git clone https://github.com/audiotheme/audiotheme.git`
+Requires WordPress 4.0+ and PHP 5.4+. Licensed under the GPL-2.0+.
+
+## Getting Started
+
+Clone the repo in your plugins folder:
+
+```sh
+git clone https://github.com/audiotheme/audiotheme.git
+cd audiotheme
+```
 
 Install dependencies with Composer:
 
-`composer install`
+```sh
+composer install
+```
 
 Install Grunt modules and run the default task:
 
-```
+```sh
 npm install
 grunt
 ```
@@ -18,3 +29,4 @@ grunt
 Activate the plugin in WordPress.
 
 That's it!
+
