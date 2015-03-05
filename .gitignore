@@ -5,4 +5,4 @@ includes/css/*.min.css
 languages/*
 node_modules
 release
-vendor
+vendor/*
