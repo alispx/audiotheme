@@ -1,4 +1,4 @@
-/*global tb_remove:false, wp:false */
+/*global wp:false */
 
 window.audiotheme = window.audiotheme || {};
 
