@@ -27,7 +27,7 @@ class Discography extends Module {
 		$args = wp_parse_args( array(
 			'id'             => 'discography',
 			'name'           => __( 'Discography', 'audiotheme' ),
-			'description'    => __( '', 'audiotheme' ),
+			'description'    => __( 'Upload album artwork, assign titles and tracks, add audio files, and enter links to purchase your music.', 'audiotheme' ),
 			'is_core_module' => true,
 			'admin_menu_id'  => 'toplevel_page_edit-post_type-audiotheme_record',
 		), $args );

@@ -27,7 +27,7 @@ class Videos extends Module {
 		$args = wp_parse_args( array(
 			'id'             => 'videos',
 			'name'           => __( 'Videos', 'audiotheme' ),
-			'description'    => __( '', 'audiotheme' ),
+			'description'    => __( 'Embed videos from services like YouTube and Vimeo to create your own video library.', 'audiotheme' ),
 			'is_core_module' => true,
 			'admin_menu_id'  => 'menu-posts-audiotheme_video',
 		), $args );

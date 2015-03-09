@@ -19,6 +19,7 @@ module.exports = function(grunt) {
 			dist: {
 				files: [
 					{ src: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/css/jquery-ui-audiotheme.min.css' },
 					{ src: 'includes/css/audiotheme.min.css' }
 				]
@@ -50,6 +51,7 @@ module.exports = function(grunt) {
 			dist: {
 				files: [
 					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/dashboard.min.css', dest: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/css/jquery-ui-audiotheme.min.css', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
 					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
 				]
@@ -63,6 +65,7 @@ module.exports = function(grunt) {
 			dist: {
 				files: [
 					{ src: 'admin/scss/admin.scss', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/scss/dashboard.scss', dest: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/scss/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
 					{ src: 'includes/scss/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' }
 				]
@@ -132,7 +135,6 @@ module.exports = function(grunt) {
 					exclude: ['.git/.*', 'node_modules/.*', 'release/.*', 'tests/.*'],
 					mainFile: 'audiotheme.php',
 					potHeaders: {
-						'report-msgid-bugs-to': 'https://audiotheme.com/support/',
 						poedit: true
 					},
 					type: 'wp-plugin'
@@ -185,7 +187,7 @@ module.exports = function(grunt) {
 	/**
 	 * Default task.
 	 */
-	grunt.registerTask( 'default', ['jshint', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'watch'] );
+	grunt.registerTask( 'default', [ 'jshint', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'watch' ] );
 
 	/**
 	 * Build a release.

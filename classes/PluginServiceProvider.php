@@ -79,10 +79,18 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			$admin->modules = new ModuleCollection;
 			$admin->screens = new Container;
 
-			$admin->screens['settings'] = function() use ( $plugin ) {
-				$screen = new Screen\Settings;
+			$admin->screens['dashboard'] = function() use ( $plugin ) {
+				$screen = new Screen\Dashboard\Main;
 				$screen->modules = $plugin['modules'];
 				return $screen;
+			};
+
+			$admin->screens['themes'] = function() use ( $plugin ) {
+				return new Screen\Dashboard\Themes;
+			};
+
+			$admin->screens['settings'] = function() use ( $plugin ) {
+				return new Screen\Settings;
 			};
 
 			$admin->modules['discography'] = function() use ( $admin ) {

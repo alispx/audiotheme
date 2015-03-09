@@ -245,6 +245,16 @@ body.screen-edit-audiotheme_track select[name="m"] {
 }
 
 
+/* Spinners
+-------------------------------------------------------------- */
+
+.spinner {
+	&.is-visible {
+		display: inline-block;
+	}
+}
+
+
 /* HiDPI Displays
 -------------------------------------------------------------- */
 

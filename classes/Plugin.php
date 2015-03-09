@@ -58,7 +58,7 @@ class Plugin extends Container {
 	 */
 	protected function load_modules() {
 		// Load all modules on the settings screen.
-		if ( $this->is_settings_screen() ) {
+		if ( $this->is_dashboard_screen() ) {
 			$modules = $this['modules']->keys();
 		} else {
 			$modules = $this['modules']->get_active_keys();
@@ -237,13 +237,13 @@ class Plugin extends Container {
 	}
 
 	/**
-	 * Whether the current request is the settings screen.
+	 * Whether the current request is the dashboard screen.
 	 *
 	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */
-	protected function is_settings_screen() {
-		return is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];
+	protected function is_dashboard_screen() {
+		return is_admin() && isset( $_GET['page'] ) && 'audiotheme' == $_GET['page'];
 	}
 }

@@ -25,8 +25,8 @@ class Gigs extends Module {
 	public function __construct( $args = array() ) {
 		$args = wp_parse_args( array(
 			'id'             => 'gigs',
-			'name'           => __( 'Gigs', 'audiotheme' ),
-			'description'    => __( '', 'audiotheme' ),
+			'name'           => __( 'Gigs & Venues', 'audiotheme' ),
+			'description'    => __( 'Share gig details with your fans, include: location, venue, date, time, and ticket prices.', 'audiothmee' ),
 			'is_core_module' => true,
 			'admin_menu_id'  => 'toplevel_page_audiotheme-gigs',
 		), $args );

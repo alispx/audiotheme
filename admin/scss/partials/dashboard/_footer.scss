@@ -1,0 +1,71 @@
+/* Footer
+-------------------------------------------------------------- */
+
+.audiotheme-dashboard-addendum,
+.audiotheme-dashboard-addendum * {
+	box-sizing: border-box;
+}
+
+.audiotheme-dashboard-addendum {
+	@include clearfix();
+
+	background: #fff;
+	border-color: #dedede;
+	border-style: solid;
+	border-width: 1px 0;
+	color: #737780;
+	margin: 0 -20px 40px -22px;
+	position: relative;
+	text-align: center;
+}
+
+.audiotheme-dashboard-addendum aside {
+	float: left;
+	padding: 40px 30px;
+	width: 50%;
+
+	&:first-child:after {
+		border-left: 1px solid #dedede;
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 50%;
+	}
+
+	> :last-child {
+		margin-bottom: 0;
+	}
+
+	h1 {
+		color: #222;
+		font-weight: 300;
+		margin-top: 0;
+	}
+
+	p {
+		font-size: 15px;
+		line-height: 1.5;
+	}
+}
+
+.audiotheme-dashboard-footer {
+	color: #737780;
+	text-align: center;
+
+	a {
+		color: #737780;
+	}
+}
+
+.audiotheme-footer-logo {
+	background-image: url(../images/logo-footer.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	display: block;
+	height: 25px;
+	margin: 0 auto;
+	overflow: hidden;
+	text-indent: 100%;
+	width: 50px;
+}

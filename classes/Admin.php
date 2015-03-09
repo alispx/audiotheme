@@ -46,7 +46,7 @@ class Admin {
 	 */
 	public function load_modules() {
 		// Load all modules on the settings screen.
-		if ( $this->is_settings_screen() ) {
+		if ( $this->is_dashboard_screen() ) {
 			$modules = $this->modules->keys();
 		} else {
 			$modules = $this->modules->get_active_keys();
@@ -74,7 +74,6 @@ class Admin {
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
-		add_action( 'admin_menu',                 array( $this, 'add_menu_items' ) );
 		add_action( 'admin_init',                 array( $this, 'sort_admin_menu' ) );
 		add_action( 'admin_enqueue_scripts',      array( $this, 'register_assets' ), 1 );
 		add_action( 'admin_enqueue_scripts',      array( $this, 'enqueue_assets' ) );
@@ -97,32 +96,6 @@ class Admin {
 	}
 
 	/**
-	 * Add the settings menu item.
-	 *
-	 * @since 2.0.0
-	 */
-	public function add_menu_items() {
-		add_menu_page(
-			__( 'AudioTheme', 'audiotheme' ),
-			__( 'AudioTheme', 'audiotheme' ),
-			'edit_posts',
-			'audiotheme',
-			array( $this, 'render_dashboard_screen' ),
-			Util::encode_svg( 'admin/images/dashicons/audiotheme.svg' ),
-			3.901
-		);
-
-		add_submenu_page(
-			'audiotheme',
-			__( 'Features', 'audiotheme' ),
-			__( 'Features', 'audiotheme' ),
-			'edit_posts',
-			'audiotheme',
-			array( $this, 'render_dashboard_screen' )
-		);
-	}
-
-	/**
 	 * Sort the admin menu.
 	 *
 	 * @since 1.0.0
@@ -136,12 +109,13 @@ class Admin {
 			$separator = array( '', 'read', 'separator-before-audiotheme', '', 'wp-menu-separator' );
 			audiotheme_menu_insert_item( $separator, 'audiotheme', 'before' );
 
-			// Reverse the order and always insert them after the main AudioTheme menu item.
+			// Reverse the order and always insert after the main AudioTheme menu item.
 			audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_video', 'audiotheme' );
 			audiotheme_menu_move_item( 'edit.php?post_type=audiotheme_record', 'audiotheme' );
 			audiotheme_menu_move_item( 'audiotheme-gigs', 'audiotheme' );
 
 			audiotheme_submenu_move_after( 'audiotheme-settings', 'audiotheme', 'audiotheme' );
+			audiotheme_submenu_move_after( 'audiotheme-themes', 'audiotheme', 'audiotheme' );
 		}
 	}
 
@@ -154,8 +128,17 @@ class Admin {
 		$base_url = set_url_scheme( AUDIOTHEME_URI . 'admin/' );
 		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script( 'audiotheme-admin', $base_url . 'js/admin' . $suffix . '.js', array( 'jquery-ui-sortable', 'wp-util' ) );
-		wp_register_script( 'audiotheme-media', $base_url . 'js/media' . $suffix . '.js', array( 'jquery' ) );
+		wp_register_script( 'audiotheme-admin',     $base_url . 'js/admin' . $suffix . '.js', array( 'jquery-ui-sortable', 'wp-util' ), '2.0.0', true );
+		wp_register_script( 'audiotheme-dashboard', $base_url . 'js/dashboard.js',            array( 'jquery', 'wp-backbone', 'wp-util' ), '2.0.0', true );
+		wp_register_script( 'audiotheme-media',     $base_url . 'js/media' . $suffix . '.js', array( 'jquery' ), '2.0.0', true );
+
+		wp_localize_script( 'audiotheme-dashboard', '_audiothemeDashboardSettings', array(
+			'canActivateModules' => current_user_can( 'activate_plugins' ),
+			'l10n'               => array(
+				'activate'   => __( 'Activate', 'audiotheme' ),
+				'deactivate' => __( 'Deactivate', 'audiotheme' ),
+			),
+		) );
 
 		wp_localize_script( 'audiotheme-media', 'AudiothemeMediaControl', array(
 			'audioFiles'      => __( 'Audio files', 'audiotheme' ),
@@ -164,6 +147,7 @@ class Admin {
 		) );
 
 		wp_register_style( 'audiotheme-admin',           $base_url . 'css/admin.min.css' );
+		wp_register_style( 'audiotheme-dashboard',       $base_url . 'css/dashboard.min.css' );
 		wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
 		wp_register_style( 'jquery-ui-theme-audiotheme', $base_url . 'css/jquery-ui-audiotheme.min.css', array( 'jquery-ui-theme-smoothness' ) );
 	}
@@ -196,15 +180,6 @@ class Admin {
 		}
 
 		return implode( ' ', array_unique( explode( ' ', $classes ) ) );
-	}
-
-	/**
-	 * Display the screen.
-	 *
-	 * @since 2.0.0
-	 */
-	public function render_dashboard_screen() {
-		include( AUDIOTHEME_DIR . 'admin/views/screen-dashboard.php' );
 	}
 
 	/**
@@ -269,14 +244,14 @@ class Admin {
 	}
 
 	/**
-	 * Whether the current request is the settings screen.
+	 * Whether the current request is the dashboard screen.
 	 *
 	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */
-	public function is_settings_screen() {
-		return is_admin() && isset( $_GET['page'] ) && 'audiotheme-settings' == $_GET['page'];
+	public function is_dashboard_screen() {
+		return is_admin() && isset( $_GET['page'] ) && 'audiotheme' == $_GET['page'];
 	}
 
 	/**
