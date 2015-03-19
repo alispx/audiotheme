@@ -13,7 +13,7 @@ use AudioTheme\Core\PluginServiceProvider;
 /**
  * Load and configure the autoloader.
  */
-require( AUDIOTHEME_DIR . 'classes/Autoloader.php' );
+require( AUDIOTHEME_DIR . 'autoload.php' );
 
 // @todo Make sure a root Composer autoloader takes precedence.
 $audiotheme_autoloader = new Autoloader;
