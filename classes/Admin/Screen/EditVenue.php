@@ -260,7 +260,7 @@ class EditVenue {
 	 */
 	protected function get_venue_to_edit() {
 		if ( 'edit' == $this->get_action() && isset( $_GET['venue_id'] ) && is_numeric( $_GET['venue_id'] ) ) {
-			$venue = new Venue( $_GET['venue_id'] );
+			$venue = new Venue( absint( $_GET['venue_id'] ) );
 		} else {
 			$venue = new Venue;
 		}
@@ -277,7 +277,7 @@ class EditVenue {
 		$action = '';
 		if ( isset( $_POST['audiotheme_venue'] ) && isset( $_POST['audiotheme_venue_nonce'] ) ) {
 			$data         = $_POST['audiotheme_venue'];
-			$nonce_action = empty( $data['ID'] ) ? 'add-venue' : 'update-venue_' . $data['ID'];
+			$nonce_action = empty( $data['ID'] ) ? 'add-venue' : 'update-venue_' . absint( $data['ID'] );
 
 			// Should die on error.
 			if ( check_admin_referer( $nonce_action, 'audiotheme_venue_nonce' ) ) {
