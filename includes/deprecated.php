@@ -89,6 +89,18 @@ function get_audiotheme_record_type_string( $slug ) {
 	}
 }
 
+/**
+ * Convert enqueued track lists into an array of tracks prepared for JavaScript
+ * and output the JSON-encoded object in the footer.
+ *
+ * @since 1.1.0
+ * @deprecated 2.0.0
+ */
+function audiotheme_print_tracks_js() {
+	$modules = audiotheme( 'modules' );
+	$modules['discography']->print_tracks_js();
+}
+
 if ( ! function_exists( 'get_audiotheme_option' ) ) :
 /**
  * Returns an option value.
