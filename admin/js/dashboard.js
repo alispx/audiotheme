@@ -295,8 +295,9 @@
 		},
 
 		updateToggleButton: function() {
-			var text = this.controller.get( 'current' ).get( 'isActive' ) ? l10n.deactivate : l10n.activate;
-			this.$button.text( text );
+			var isActive = this.controller.get( 'current' ).get( 'isActive' ),
+				text = isActive ? l10n.deactivate : l10n.activate;
+			this.$button.text( text ).toggleClass( 'button-primary', ! isActive );
 		}
 	});
 
