@@ -148,7 +148,7 @@ class Archives {
 	 * @return int Archive post ID.
 	 */
 	public function add_post_type_archive( $post_type, $args = array() ) {
-		$archives = get_audiotheme_archive_ids();
+		$archives = $this->get_archive_ids();
 		$post_id  = isset( $archives[ $post_type ] ) ? $archives[ $post_type ] : '';
 
 		if ( empty( $post_id ) ) {
@@ -788,7 +788,7 @@ class Archives {
 	 */
 	public function updated_messages( $messages ) {
 		$post             = get_post();
-		$post_type        = self::POST_TYPE;
+		$post_type        = get_post_type( $post );
 		$post_type_object = get_post_type_object( $post_type );
 
 		if ( self::POST_TYPE != $post_type ) {
@@ -920,14 +920,18 @@ class Archives {
 		// Otherwise, create a new archive post.
 		$post_type_object = get_post_type_object( $post_type );
 
-		$post = array(
+		$post_id = wp_insert_post( array(
 			'post_title'  => $post_type_object->labels->name,
 			'post_name'   => $this->get_post_type_archive_slug( $post_type ),
 			'post_type'   => self::POST_TYPE,
 			'post_status' => 'publish',
-		);
+		) );
 
-		return wp_insert_post( $post );
+		if ( $post_id ) {
+			update_post_meta( $post_id, 'post_type', $post_type );
+		}
+
+		return $post_id;
 	}
 
 	/**
