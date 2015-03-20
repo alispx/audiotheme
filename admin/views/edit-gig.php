@@ -1,26 +1,33 @@
-<div id="gig-ui" class="audiotheme-edit-after-title">
-	<?php wp_nonce_field( 'save-gig_' . $post->ID, 'audiotheme_save_gig_nonce' ); ?>
-	<table id="gig-fields">
-		<tr>
-			<th><label for="gig-date"><?php _e( 'Date', 'audiotheme' ) ?></label></th>
-			<td>
-				<div class="audiotheme-input-group">
-					<input type="text" name="gig_date" id="gig-date" value="<?php echo esc_attr( $gig_date ); ?>" placeholder="YYYY/MM/DD" autocomplete="off" class="audiotheme-input-group-field">
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<th><label for="gig-time"><?php _e( 'Time', 'audiotheme' ) ?></label></th>
-			<td>
-				<div class="audiotheme-input-group">
+<div class="audiotheme-gig-editor">
+
+	<div class="audiotheme-gig-editor-primary">
+		<div class="audiotheme-gig-date-picker audiotheme-gig-date-picker-start">
+			<div id="audiotheme-gig-start-date-picker"></div>
+			<div class="audiotheme-gig-date-picker-footer">
+				<input type="text" name="gig_date" value="<?php echo esc_attr( $gig_date ); ?>" placeholder="YYYY-MM-DD" autocomplete="off">
+			</div>
+		</div>
+	</div>
+
+	<div class="audiotheme-gig-editor-secondary">
+
+		<div class="audiotheme-meta-box">
+			<div class="audiotheme-meta-box-header">
+				<h4 class="audiotheme-meta-box-title"><?php _e( 'Time', 'audiotheme' ); ?></h4>
+			</div>
+			<div class="audiotheme-meta-box-body">
+				<div class="audiotheme-gig-time-picker audiotheme-input-group">
 					<input type="text" name="gig_time" id="gig-time" value="<?php echo esc_attr( $gig_time ); ?>" placeholder="HH:MM" class="audiotheme-input-group-field ui-autocomplete-input">
 					<label for="gig-time" id="gig-time-select" class="audiotheme-input-group-trigger dashicons dashicons-clock"></label>
 				</div>
-			</td>
-		</tr>
-		<tr>
-			<th><label for="gig-venue"><?php _e( 'Venue', 'audiotheme' ) ?></label></th>
-			<td>
+			</div>
+		</div>
+
+		<div class="audiotheme-meta-box">
+			<div class="audiotheme-meta-box-header">
+				<h4 class="audiotheme-meta-box-title"><?php _e( 'Venue', 'audiotheme' ); ?></h4>
+			</div>
+			<div class="audiotheme-meta-box-body">
 				<div class="audiotheme-input-group">
 					<input type="text" name="gig_venue" id="gig-venue" value="<?php echo esc_html( $gig_venue ); ?>" class="audiotheme-input-group-field">
 					<label for="gig-venue" id="gig-venue-select" class="audiotheme-input-group-trigger dashicons dashicons-arrow-down-alt2"></label>
@@ -33,14 +40,10 @@
 					</select><br>
 					<em><?php _e( "Be sure to set a timezone when adding a new venue.", 'audiotheme' ); ?></em>
 				</div>
-			</td>
-		</tr>
-		<tr>
-			<th><?php _e( 'Note', 'audiotheme' ) ?></th>
-			<td>
-				<textarea name="excerpt" id="excerpt" cols="76" rows="3"><?php echo wp_specialchars_decode( esc_textarea( $post->post_excerpt ) ); ?></textarea><br>
-				<span class="description"><?php _e( 'A description of the gig to display within the list of gigs. Who is the opening act, special guests, etc? Keep it short.', 'audiotheme' ); ?></span>
-			</td>
-		</tr>
-	</table>
+			</div>
+		</div>
+
+	</div>
+
+	<?php wp_nonce_field( 'save-gig_' . $post->ID, 'audiotheme_save_gig_nonce' ); ?>
 </div>

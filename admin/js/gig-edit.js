@@ -1,4 +1,4 @@
-/*global _:false, _audiothemeGigEditSettings:false, ajaxurl:false, isRtl:false, wp:false */
+/*global _:false, _audiothemeGigEditSettings:false, _pikadayL10n:false, ajaxurl:false, isRtl:false, Pikaday:false, wp:false */
 
 (function( window, $, _, wp, undefined ) {
 	'use strict';
@@ -18,14 +18,6 @@
 	if ( lastGigDate ) {
 		lastGigDate.setDate( lastGigDate.getDate() + 1 );
 	}
-
-	// Initialize the date picker.
-	$date.datepicker({
-		dateFormat: 'yy/mm/dd',
-		defaultDate: lastGigDate,
-		showOn: 'both',
-		buttonText: ''
-	}).next( 'button' ).addClass( 'dashicons dashicons-calendar-alt' ).wrap( '<span class="audiotheme-input-group-trigger"/>' );
 
 	// Initialize the time picker.
 	$time.timepicker({
@@ -118,6 +110,17 @@
 		position:  ( 'undefined' !== typeof isRtl && isRtl ) ? { my: 'right top', at: 'right bottom', offset: '0, -1' } : { offset: '0, -1' },
 		open: function() { $( this ).addClass( 'open' ); },
 		close: function() { $( this ).removeClass( 'open' ); }
+	});
+
+	// Initialize the date picker.
+	new Pikaday({
+		bound: false,
+		container: document.getElementById( 'audiotheme-gig-start-date-picker' ),
+		field: $( '.audiotheme-gig-date-picker-start' ).find( 'input' ).get( 0 ),
+		format: 'YYYY-MM-DD',
+		i18n: _pikadayL10n || {},
+		isRTL: isRtl,
+		theme: 'audiotheme-pikaday'
 	});
 
 })( window, jQuery, _, wp );

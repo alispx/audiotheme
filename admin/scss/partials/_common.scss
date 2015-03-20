@@ -66,48 +66,6 @@ body.screen-edit-audiotheme_track select[name="m"] {
 	}
 }
 
-// Fields in 'edit_after_title' action.
-.audiotheme-edit-after-title {
-	margin-bottom: 20px;
-
-	input {
-		font-size: 1.5em;
-		height: 30px;
-		line-height: 22px;
-		padding: 3px 8px;
-		vertical-align: middle;
-	}
-
-	input:-moz-placeholder,
-	textarea:-moz-placeholder {
-		color: #a9a9a9;
-	}
-
-	input::-webkit-input-placeholder {
-		padding: 3px 0;
-	}
-
-	select {
-		font-size: 1.2em;
-		padding: 5px 5px 5px 8px;
-	}
-
-	.audiotheme-input-group {
-		.audiotheme-input-group-field,
-		input.audiotheme-input-group-field {
-			height: 34px;
-		}
-
-		.audiotheme-input-group-trigger {
-			width: 34px;
-		}
-	}
-}
-
-.audiotheme-edit-after-editor {
-	margin: 20px 0;
-}
-
 // Field/icon button combo.
 .audiotheme-input-group {
 	border-spacing: 0;
@@ -173,17 +131,6 @@ body.screen-edit-audiotheme_track select[name="m"] {
 		img {
 			display: inline-block;
 		}
-
-		button.ui-datepicker-trigger {
-			cursor: pointer;
-			background: transparent;
-			border-width: 0;
-			height: 100%;
-			margin: 0;
-			padding: 0;
-			outline: 0;
-			width: 100%;
-		}
 	}
 
 	&.is-focused {
@@ -219,6 +166,30 @@ body.screen-edit-audiotheme_track select[name="m"] {
 	#menu-posts-audiotheme_video div.wp-menu-image.svg {
 		background-position: 50% 7px;
 	}
+}
+
+
+/* Meta Box
+-------------------------------------------------------------- */
+
+.audiotheme-meta-box {
+	background: #fff;
+	border: 1px solid #dedede;
+	margin-bottom: 20px;
+}
+
+.audiotheme-meta-box-body {
+	padding: 14px;
+}
+
+.audiotheme-meta-box-header {
+	border-bottom: 1px solid #dedede;
+	padding: 14px;
+}
+
+.audiotheme-meta-box-title {
+	font-size: 14px;
+	margin: 0;
 }
 
 

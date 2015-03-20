@@ -56,7 +56,7 @@ class Gigs {
 		wp_register_script(
 			'audiotheme-gig-edit',
 			AUDIOTHEME_URI . 'admin/js/gig-edit.js',
-			array( 'audiotheme-admin', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker', 'underscore' ),
+			array( 'audiotheme-admin', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker', 'pikaday', 'underscore' ),
 			AUDIOTHEME_VERSION,
 			true
 		);
