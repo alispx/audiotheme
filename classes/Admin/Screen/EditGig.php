@@ -120,33 +120,33 @@ class EditGig {
 		wp_enqueue_script( 'audiotheme-gig-edit' );
 		wp_enqueue_script( 'pikaday' );
 		wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
+
+		wp_localize_script( 'audiotheme-gig-edit', '_audiothemeGigEditSettings', array(
+			'timeFormat' => $this->compatible_time_format(),
+		) );
 	}
 
 	/**
 	 * Set up and display the main gig fields for editing.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param WP_Post $post Post object.
 	 */
-	public function display_edit_fields() {
-		global $post, $wpdb;
-
+	public function display_edit_fields( $post ) {
 		$gig = get_audiotheme_gig( $post->ID );
 
-		$gig_date = '';
-		$gig_time = '';
+		$gig_date  = '';
+		$gig_time  = '';
 		$gig_venue = '';
 
 		if ( $gig->gig_datetime ) {
 			$timestamp = strtotime( $gig->gig_datetime );
-			// jQuery date format is kinda limited?
-			$gig_date = date( 'Y/m/d', $timestamp );
+			$gig_date  = date( 'Y/m/d', $timestamp );
 
 			$t = date_parse( $gig->gig_time );
 			if ( empty( $t['errors'] ) ) {
-				$gig_time = date( get_option( 'time_format' ), $timestamp );
-			} else {
-				// No values allowed other than valid times.
-				$gig_time = '';
+				$gig_time = date( $this->compatible_time_format(), $timestamp );
 			}
 		}
 
@@ -208,5 +208,25 @@ class EditGig {
 		update_post_meta( $post_id, '_audiotheme_gig_time', $time );
 		update_post_meta( $post_id, '_audiotheme_tickets_price', $_POST['gig_tickets_price'] );
 		update_post_meta( $post_id, '_audiotheme_tickets_url', $_POST['gig_tickets_url'] );
+	}
+
+	/**
+	 * Attempt to make custom time formats more compatible between JavaScript and PHP.
+	 *
+	 * If the time format option has an escape sequences, use a default format
+	 * determined by whether or not the option uses 24 hour format or not.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return string
+	 */
+	protected function compatible_time_format() {
+		$time_format = get_option( 'time_format' );
+
+		if ( false !== strpos( $time_format, '\\' ) ) {
+			$time_format = false !== strpbrk( $time_format, 'GH' ) ? 'G:i' : 'g:i a';
+		}
+
+		return $time_format;
 	}
 }

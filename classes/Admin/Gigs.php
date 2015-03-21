@@ -61,10 +61,6 @@ class Gigs {
 			true
 		);
 
-		wp_localize_script( 'audiotheme-gig-edit', '_audiothemeGigEditSettings', array(
-			'timeFormat'     => get_option( 'time_format' ),
-		) );
-
 		wp_register_script(
 			'audiotheme-venue-edit',
 			AUDIOTHEME_URI . 'admin/js/venue-edit.js',
