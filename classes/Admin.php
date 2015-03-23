@@ -148,7 +148,7 @@ class Admin {
 
 		wp_register_style( 'audiotheme-admin',           $base_url . 'css/admin.min.css' );
 		wp_register_style( 'audiotheme-dashboard',       $base_url . 'css/dashboard.min.css' );
-		wp_register_style( 'audiotheme-venue-modal',     $base_url . 'css/venue-modal.min.css', array(), '2.0.0' );
+		wp_register_style( 'audiotheme-venue-manager',   $base_url . 'css/venue-manager.min.css', array(), '2.0.0' );
 		wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
 		wp_register_style( 'jquery-ui-theme-audiotheme', $base_url . 'css/jquery-ui-audiotheme.min.css', array( 'jquery-ui-theme-smoothness' ) );
 	}

@@ -54,9 +54,9 @@ class Gigs {
 	 * @since 2.0.0
 	 */
 	public function register_assets() {
-		wp_register_script( 'audiotheme-gig-edit',    AUDIOTHEME_URI . 'admin/js/gig-edit.js',    array( 'audiotheme-admin', 'audiotheme-venue-modal', 'jquery-timepicker', 'jquery-ui-autocomplete', 'jquery-ui-datepicker', 'pikaday', 'underscore' ), AUDIOTHEME_VERSION, true );
-		wp_register_script( 'audiotheme-venue-edit',  AUDIOTHEME_URI . 'admin/js/venue-edit.js',  array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post', 'underscore' ), AUDIOTHEME_VERSION, true );
-		wp_register_script( 'audiotheme-venue-modal', AUDIOTHEME_URI . 'admin/js/venue-modal.js', array( 'audiotheme-admin', 'jquery', 'media-models', 'media-views', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme-gig-edit',      AUDIOTHEME_URI . 'admin/js/gig-edit.js',    array( 'audiotheme-admin', 'audiotheme-venue-manager', 'jquery-timepicker', 'jquery-ui-autocomplete', 'pikaday', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme-venue-edit',    AUDIOTHEME_URI . 'admin/js/venue-edit.js',  array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post', 'underscore' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme-venue-manager', AUDIOTHEME_URI . 'admin/js/venue-manager.js', array( 'audiotheme-admin', 'jquery', 'media-models', 'media-views', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
 
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
 
@@ -74,7 +74,7 @@ class Gigs {
 			$settings['insertVenueNonce'] = wp_create_nonce( 'insert-venue' );
 		}
 
-		wp_localize_script( 'audiotheme-venue-modal', '_audiothemeVenueModalSettings', $settings );
+		wp_localize_script( 'audiotheme-venue-manager', '_audiothemeVenueManagerSettings', $settings );
 	}
 
 	/**

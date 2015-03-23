@@ -1,7 +1,5 @@
 /*global wp:false */
 
-window.audiotheme = window.audiotheme || {};
-
 jQuery(function( $ ) {
 	$( '.wrap' ).on( 'focus', '.audiotheme-input-group-field', function() {
 		$( this ).parent().addClass( 'is-focused' );

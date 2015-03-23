@@ -120,9 +120,7 @@ class EditGig {
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-gig-edit' );
-		wp_enqueue_script( 'audiotheme-venue-modal' );
-		wp_enqueue_script( 'pikaday' );
-		wp_enqueue_style( 'audiotheme-venue-modal' );
+		wp_enqueue_style( 'audiotheme-venue-manager' );
 		wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
 	}
 

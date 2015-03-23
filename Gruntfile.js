@@ -1,12 +1,12 @@
 /*jshint node:true */
 
-module.exports = function(grunt) {
+module.exports = function( grunt ) {
 	'use strict';
 
-	require('matchdep').filterDev('grunt-*').forEach( grunt.loadNpmTasks );
+	require( 'matchdep' ).filterDev( 'grunt-*' ).forEach( grunt.loadNpmTasks );
 
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
+		pkg: grunt.file.readJSON( 'package.json' ),
 		version: '<%= pkg.version %>',
 
 		/**
@@ -14,15 +14,46 @@ module.exports = function(grunt) {
 		 */
 		autoprefixer: {
 			options: {
-				browsers: ['> 1%', 'last 2 versions', 'ff 17', 'opera 12.1', 'android 4']
+				browsers: [ '> 1%', 'last 2 versions', 'ff 17', 'opera 12.1', 'android 4' ]
 			},
 			dist: {
 				files: [
 					{ src: 'admin/css/admin.min.css' },
 					{ src: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/css/jquery-ui-audiotheme.min.css' },
-					{ src: 'admin/css/venue-modal.min.css' },
+					{ src: 'admin/css/venue-manager.min.css' },
 					{ src: 'includes/css/audiotheme.min.css' }
+				]
+			}
+		},
+
+		browserify: {
+			options: {
+				alias: [
+					'./admin/js/application.js:audiotheme'
+				],
+				//watch: true,
+				//keepAlive: true
+			},
+			build: {
+				files: [
+					{ src: 'admin/js/gig-edit.manifest.js', dest: 'admin/js/gig-edit.js' },
+					{ src: 'admin/js/venue-manager.manifest.js', dest: 'admin/js/venue-manager.js' }
+				]
+			}
+		},
+
+		/**
+		 * Minimize CSS files.
+		 */
+		cssmin: {
+			dist: {
+				files: [
+					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
+					{ src: 'admin/css/dashboard.min.css', dest: 'admin/css/dashboard.min.css' },
+					{ src: 'admin/css/jquery-ui-audiotheme.min.css', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'admin/css/venue-manager.min.css', dest: 'admin/css/venue-manager.min.css' },
+					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
 		},
@@ -38,26 +69,11 @@ module.exports = function(grunt) {
 				'Gruntfile.js',
 				'admin/js/*.js',
 				'!admin/js/*.min.js',
-				'admin/js/*.js',
-				'!admin/js/*.min.js',
+				'!admin/js/gig-edit.js',
+				'!admin/js/venue-manager.js',
 				'includes/js/*.js',
 				'!includes/js/*.min.js'
 			]
-		},
-
-		/**
-		 * Minimize CSS files.
-		 */
-		cssmin: {
-			dist: {
-				files: [
-					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
-					{ src: 'admin/css/dashboard.min.css', dest: 'admin/css/dashboard.min.css' },
-					{ src: 'admin/css/jquery-ui-audiotheme.min.css', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
-					{ src: 'admin/css/venue-modal.min.css', dest: 'admin/css/venue-modal.min.css' },
-					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
-				]
-			}
 		},
 
 		/**
@@ -69,7 +85,7 @@ module.exports = function(grunt) {
 					{ src: 'admin/scss/admin.scss', dest: 'admin/css/admin.min.css' },
 					{ src: 'admin/scss/dashboard.scss', dest: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/scss/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
-					{ src: 'admin/scss/venue-modal.scss', dest: 'admin/css/venue-modal.min.css' },
+					{ src: 'admin/scss/venue-manager.scss', dest: 'admin/css/venue-manager.min.css' },
 					{ src: 'includes/scss/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
@@ -82,7 +98,9 @@ module.exports = function(grunt) {
 			dist: {
 				files: [
 					{ src: 'admin/js/admin.js', dest: 'admin/js/admin.min.js' },
-					{ src: 'admin/js/media.js', dest: 'admin/js/media.min.js' }
+					{ src: 'admin/js/gig-edit.js', dest: 'admin/js/gig-edit.min.js' },
+					{ src: 'admin/js/media.js', dest: 'admin/js/media.min.js' },
+					{ src: 'admin/js/venue-manager.js', dest: 'admin/js/venue-manager.min.js' }
 				]
 			}
 		},
@@ -92,12 +110,12 @@ module.exports = function(grunt) {
 		 */
 		watch: {
 			js: {
-				files: ['<%= jshint.all %>'],
-				tasks: ['jshint', 'uglify']
+				files: [ '<%= jshint.all %>' ],
+				tasks: [ 'jshint', 'uglify' ]
 			},
 			sass: {
-				files: ['includes/**/*.scss', 'admin/**/*.scss'],
-				tasks: ['sass', 'autoprefixer', 'cssmin']
+				files: [ 'includes/**/*.scss', 'admin/**/*.scss' ],
+				tasks: [ 'sass', 'autoprefixer', 'cssmin' ]
 			}
 		},
 
@@ -135,7 +153,7 @@ module.exports = function(grunt) {
 		makepot: {
 			build: {
 				options: {
-					exclude: ['.git/.*', 'node_modules/.*', 'release/.*', 'tests/.*'],
+					exclude: [ '.git/.*', 'node_modules/.*', 'release/.*', 'tests/.*' ],
 					mainFile: 'audiotheme.php',
 					potHeaders: {
 						poedit: true
@@ -168,10 +186,12 @@ module.exports = function(grunt) {
 			},
 			release: {
 				options: {
-					replacements: [{
-						pattern: /@since x\.x\.x/g,
-						replacement: '@since <%= version %>'
-					}]
+					replacements: [
+						{
+							pattern: /@since x\.x\.x/g,
+							replacement: '@since <%= version %>'
+						}
+					]
 				},
 				files: [
 					{
@@ -190,7 +210,7 @@ module.exports = function(grunt) {
 	/**
 	 * Default task.
 	 */
-	grunt.registerTask( 'default', [ 'jshint', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'watch' ] );
+	grunt.registerTask( 'default', [ 'jshint', 'browserify', 'uglify', 'sass', 'autoprefixer', 'cssmin', 'watch' ] );
 
 	/**
 	 * Build a release.

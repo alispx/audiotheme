@@ -1,6 +1,8 @@
 .DS_Store
 admin/css/*.min.css
 admin/js/*.min.js
+admin/js/gig-edit.js
+admin/js/venue-manager.js
 includes/css/*.min.css
 languages/*
 node_modules
