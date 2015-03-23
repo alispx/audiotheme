@@ -232,6 +232,7 @@ module.exports = function( grunt ) {
 		grunt.task.run('sass');
 		grunt.task.run('autoprefixer');
 		grunt.task.run('cssmin');
+		grunt.task.run('browserify');
 		grunt.task.run('uglify');
 		grunt.task.run('makepot');
 		grunt.task.run('compress:build');
