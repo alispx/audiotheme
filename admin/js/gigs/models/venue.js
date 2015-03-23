@@ -1,6 +1,7 @@
 var Venue,
 	_ = require( 'underscore' ),
 	Backbone = require( 'backbone' ),
+	settings = require( 'audiotheme' ).settings(),
 	wp = require( 'wp' );
 
 Venue = Backbone.Model.extend({

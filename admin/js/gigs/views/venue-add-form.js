@@ -1,4 +1,5 @@
 var VenueAddForm,
+	$ = require( 'jquery' ),
 	wp = require( 'wp' );
 
 /**

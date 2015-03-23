@@ -1,5 +1,6 @@
 var VenueAddToolbar,
 	_ = require( 'underscore' ),
+	Venue = require( '../../models/venue' ),
 	wp = require( 'wp' );
 
 VenueAddToolbar = wp.media.view.Toolbar.extend({
@@ -44,7 +45,7 @@ VenueAddToolbar = wp.media.view.Toolbar.extend({
 			selectController.get( 'venues' ).add( model );
 			selectController.get( 'selection' ).reset( model );
 			selectController.set( 'mode', 'view' );
-			controller.state().set( 'model', new app.model.Venue() );
+			controller.state().set( 'model', new Venue() );
 
 			// Switch to the select view.
 			controller.setState( 'audiotheme-venues' );
