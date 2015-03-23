@@ -34,8 +34,8 @@ class Plugin extends Container {
 			$this['admin']->load();
 		}
 
-		register_activation_hook( $this['plugin_file'], 'activate' );
-		register_deactivation_hook( $this['plugin_file'], 'deactivate' );
+		register_activation_hook( $this['plugin_file'], array( $this, 'activate' ) );
+		register_deactivation_hook( $this['plugin_file'], array( $this, 'deactivate' ) );
 	}
 
 	/**
