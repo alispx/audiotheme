@@ -153,7 +153,7 @@ module.exports = function( grunt ) {
 		makepot: {
 			build: {
 				options: {
-					exclude: [ '.git/.*', 'node_modules/.*', 'release/.*', 'tests/.*' ],
+					exclude: [ '.git/.*', 'node_modules/.*', 'release/.*', 'tests/.*', 'vendor/.*' ],
 					mainFile: 'audiotheme.php',
 					potHeaders: {
 						poedit: true
