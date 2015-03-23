@@ -21,6 +21,7 @@ module.exports = function(grunt) {
 					{ src: 'admin/css/admin.min.css' },
 					{ src: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'admin/css/venue-modal.min.css' },
 					{ src: 'includes/css/audiotheme.min.css' }
 				]
 			}
@@ -53,6 +54,7 @@ module.exports = function(grunt) {
 					{ src: 'admin/css/admin.min.css', dest: 'admin/css/admin.min.css' },
 					{ src: 'admin/css/dashboard.min.css', dest: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/css/jquery-ui-audiotheme.min.css', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'admin/css/venue-modal.min.css', dest: 'admin/css/venue-modal.min.css' },
 					{ src: 'includes/css/audiotheme.min.css', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}
@@ -67,6 +69,7 @@ module.exports = function(grunt) {
 					{ src: 'admin/scss/admin.scss', dest: 'admin/css/admin.min.css' },
 					{ src: 'admin/scss/dashboard.scss', dest: 'admin/css/dashboard.min.css' },
 					{ src: 'admin/scss/jquery-ui-audiotheme.scss', dest: 'admin/css/jquery-ui-audiotheme.min.css' },
+					{ src: 'admin/scss/venue-modal.scss', dest: 'admin/css/venue-modal.min.css' },
 					{ src: 'includes/scss/audiotheme.scss', dest: 'includes/css/audiotheme.min.css' }
 				]
 			}

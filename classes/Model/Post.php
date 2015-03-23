@@ -21,7 +21,7 @@ abstract class Post {
 	 * @since 2.0.0
 	 * @type int
 	 */
-	public $ID = 0;
+	public $ID = null;
 
 	/**
 	 * WordPress post object.
@@ -154,15 +154,15 @@ abstract class Post {
 	 * @return object
 	 */
 	public function prepare_for_js() {
-		$data = array();
+		$post = $this->to_array();
 
-		foreach ( $this->to_array() as $key => $value ) {
-			// Underscore to camelCase.
-			$js_key = lcfirst( str_replace( ' ', '', ucwords( str_replace( '_', ' ', strtolower( $key ) ) ) ) );
-			$data[ $js_key ] = $value;
+		$post['nonces']['update'] = false;
+
+		if ( current_user_can( 'edit_post', $this->ID ) ) {
+			$post['nonces']['update'] = wp_create_nonce( 'update-post_' . $this->ID );
 		}
 
-		return (object) $data;
+		return (object) $post;
 	}
 
 	/**

@@ -473,11 +473,31 @@ function get_audiotheme_gig_admin_url( $args = '' ) {
 	return $admin_url;
 }
 
+function set_audiotheme_gig_venue( $gig_id, $venue_id = 0 ) {
+	$gig = get_audiotheme_gig( $gig_id ); // Retrieve current venue info.
+
+	if ( empty( $venue_id ) ) {
+		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
+	} elseif ( ! isset( $gig->venue->ID ) || $venue_id != $gig->venue->ID ) {
+		p2p_delete_connections( 'audiotheme_venue_to_gig', array( 'to' => $gig_id ) );
+
+		p2p_create_connection( 'audiotheme_venue_to_gig', array(
+			'from' => $venue_id,
+			'to'   => $gig_id,
+		) );
+
+		update_audiotheme_venue_gig_count( $venue_id );
+	}
+
+	return empty( $venue_id ) ? false : get_audiotheme_venue( $venue_id );
+}
+
 /**
  * Update a gig's venue and the gig count for any modified venues.
  *
  * @since 1.0.0
  */
+/*
 function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 	$gig = get_audiotheme_gig( $gig_id ); // Retrieve current venue info.
 	$venue_name = trim( stripslashes( $venue_name ) );
@@ -525,6 +545,7 @@ function set_audiotheme_gig_venue( $gig_id, $venue_name ) {
 
 	return ( empty( $venue_id ) ) ? false : get_audiotheme_venue( $venue_id );
 }
+*/
 
 /**
  * Retrieve a venue by its ID.
@@ -841,6 +862,8 @@ function get_audiotheme_venue_edit_link( $admin_url, $post_id ) {
  * Return a unique venue name.
  *
  * @since 1.0.0
+ *
+ * @todo Remove the uniqueness requirement for venues.
  */
 function get_unique_audiotheme_venue_name( $name, $venue_id = 0 ) {
 	global $wpdb;

@@ -8,6 +8,7 @@
 
 namespace AudioTheme\Core\Admin\Screen;
 
+use AudioTheme\Core\Model\Venue;
 use AudioTheme\Core\Util;
 
 /**
@@ -73,6 +74,7 @@ class EditGig {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'edit_form_after_title', array( $this, 'display_edit_fields' ) );
+		add_action( 'admin_footer',          array( $this, 'print_templates' ) );
 	}
 
 	/**
@@ -118,12 +120,10 @@ class EditGig {
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_script( 'audiotheme-gig-edit' );
+		wp_enqueue_script( 'audiotheme-venue-modal' );
 		wp_enqueue_script( 'pikaday' );
+		wp_enqueue_style( 'audiotheme-venue-modal' );
 		wp_enqueue_style( 'jquery-ui-theme-audiotheme' );
-
-		wp_localize_script( 'audiotheme-gig-edit', '_audiothemeGigEditSettings', array(
-			'timeFormat' => $this->compatible_time_format(),
-		) );
 	}
 
 	/**
@@ -150,8 +150,13 @@ class EditGig {
 			}
 		}
 
-		$gig_venue = isset( $gig->venue->name ) ? $gig->venue->name : '';
-		$timezone_string = isset( $gig->venue->timezone_string ) ? $gig->venue->timezone_string : '';
+		$venue    = isset( $gig->venue->ID ) ? new Venue( $gig->venue->ID ) : null;
+		$venue_id = $venue ? $venue->ID : 0;
+
+		wp_localize_script( 'audiotheme-gig-edit', '_audiothemeGigEditSettings', array(
+			'venue'      => $venue ? $venue->prepare_for_js() : array(),
+			'timeFormat' => $this->compatible_time_format(),
+		) );
 
 		require( AUDIOTHEME_DIR . 'admin/views/edit-gig.php' );
 	}
@@ -177,6 +182,16 @@ class EditGig {
 	}
 
 	/**
+	 * Print Underscore.js templates.
+	 *
+	 * @since 2.0.0
+	 */
+	public function print_templates() {
+		include( AUDIOTHEME_DIR . 'admin/views/templates-gig.php' );
+		include( AUDIOTHEME_DIR . 'admin/views/templates-venue.php' );
+	}
+
+	/**
 	 * Process and save gig info when the CPT is saved.
 	 *
 	 * @since 1.0.0
@@ -195,7 +210,7 @@ class EditGig {
 			return;
 		}
 
-		$venue    = set_audiotheme_gig_venue( $post_id, $_POST['gig_venue'] );
+		$venue    = set_audiotheme_gig_venue( $post_id, absint( $_POST['gig_venue_id'] ) );
 		$datetime = Util::format_datetime_string( $_POST['gig_date'], $_POST['gig_time'] );
 		$time     = Util::format_time_string( $_POST['gig_time'] );
 

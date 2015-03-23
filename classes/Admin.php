@@ -128,9 +128,9 @@ class Admin {
 		$base_url = set_url_scheme( AUDIOTHEME_URI . 'admin/' );
 		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script( 'audiotheme-admin',     $base_url . 'js/admin' . $suffix . '.js', array( 'jquery-ui-sortable', 'wp-util' ), '2.0.0', true );
-		wp_register_script( 'audiotheme-dashboard', $base_url . 'js/dashboard.js',            array( 'jquery', 'wp-backbone', 'wp-util' ), '2.0.0', true );
-		wp_register_script( 'audiotheme-media',     $base_url . 'js/media' . $suffix . '.js', array( 'jquery' ), '2.0.0', true );
+		wp_register_script( 'audiotheme-admin',     $base_url . 'js/admin' . $suffix . '.js',       array( 'jquery-ui-sortable', 'wp-util' ), '2.0.0', true );
+		wp_register_script( 'audiotheme-dashboard', $base_url . 'js/dashboard.js',                  array( 'jquery', 'wp-backbone', 'wp-util' ), '2.0.0', true );
+		wp_register_script( 'audiotheme-media',     $base_url . 'js/media' . $suffix . '.js',       array( 'jquery' ), '2.0.0', true );
 
 		wp_localize_script( 'audiotheme-dashboard', '_audiothemeDashboardSettings', array(
 			'canActivateModules' => current_user_can( 'activate_plugins' ),
@@ -148,6 +148,7 @@ class Admin {
 
 		wp_register_style( 'audiotheme-admin',           $base_url . 'css/admin.min.css' );
 		wp_register_style( 'audiotheme-dashboard',       $base_url . 'css/dashboard.min.css' );
+		wp_register_style( 'audiotheme-venue-modal',     $base_url . 'css/venue-modal.min.css', array(), '2.0.0' );
 		wp_register_style( 'jquery-ui-theme-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
 		wp_register_style( 'jquery-ui-theme-audiotheme', $base_url . 'css/jquery-ui-audiotheme.min.css', array( 'jquery-ui-theme-smoothness' ) );
 	}
