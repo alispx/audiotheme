@@ -73,71 +73,75 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return $modules;
 		};
 
-		$plugin['admin'] = function( $plugin ) {
-			$admin = new Admin;
+		$plugin['admin.screens'] = function( $plugin ) {
+			$screens = new Container;
 
-			$admin->modules = new ModuleCollection;
-			$admin->screens = new Container;
-
-			$admin->screens['dashboard'] = function() use ( $plugin ) {
+			$screens['dashboard'] = function() use ( $plugin ) {
 				$screen = new Screen\Dashboard\Main;
 				$screen->modules = $plugin['modules'];
 				return $screen;
 			};
 
-			$admin->screens['themes'] = function() use ( $plugin ) {
+			$screens['themes'] = function() {
 				return new Screen\Dashboard\Themes;
 			};
 
-			$admin->screens['settings'] = function() use ( $plugin ) {
+			$screens['settings'] = function() {
 				return new Screen\Settings;
 			};
 
-			$admin->modules['discography'] = function() use ( $admin ) {
-				$admin->screens['manage_records'] = function() {
+			return $screens;
+		};
+
+		$plugin['admin.modules'] = function( $plugin ) {
+			$modules = new ModuleCollection;
+			$screens = $plugin['admin.screens'];
+
+			$modules['discography'] = function() use ( $screens ) {
+				$screens['manage_records'] = function() {
 					return new Screen\ManageRecords;
 				};
 
-				$admin->screens['edit_record'] = function() {
+				$screens['edit_record'] = function() {
 					return new Screen\EditRecord;
 				};
 
-				$admin->screens['manage_tracks'] = function() {
+				$screens['manage_tracks'] = function() {
 					return new Screen\ManageTracks;
 				};
 
-				$admin->screens['edit_track'] = function() {
+				$screens['edit_track'] = function() {
 					return new Screen\EditTrack;
 				};
 
 				return new Admin\Discography;
 			};
 
-			$admin->modules['gigs'] = function() use ( $admin ) {
-				$admin->screens['manage_gigs'] = function() {
+			$modules['gigs'] = function() use ( $screens ) {
+				$screens['manage_gigs'] = function() {
 					return new Screen\ManageGigs;
 				};
 
-				$admin->screens['edit_gig'] = function() {
+				$screens['edit_gig'] = function() {
 					return new Screen\EditGig;
 				};
 
-				$admin->screens['manage_venues'] = function() {
+				$screens['manage_venues'] = function() {
 					return new Screen\ManageVenues;
 				};
 
-				$admin->screens['edit_venue'] = function() {
+				$screens['edit_venue'] = function() {
 					return new Screen\EditVenue;
 				};
 
 				return new Admin\Gigs;
 			};
 
-			$admin->modules['videos'] = function() {
+			$modules['videos'] = function() {
 				return new Admin\Videos;
 			};
 
-			return $admin;
+			return $modules;
 		};
 	}
 }
