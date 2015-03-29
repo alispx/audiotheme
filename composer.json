@@ -1,29 +1,40 @@
 {
-	"name": "audiotheme/audiotheme",
-	"description": "A WordPress framework plugin built for bands, musicians, and labels.",
-	"keywords": ["wordpress"],
-	"type": "wordpress-plugin",
-	"homepage": "https://github.com/audiotheme/audiotheme",
-	"license": "GPL-2.0+",
-	"support": {
-		"issues": "https://github.com/audiotheme/audiotheme/issues",
-		"source": "https://github.com/audiotheme/audiotheme"
-	},
-	"autoload": {
-		"psr-4": {
-			"AudioTheme\\Core\\": "classes/"
-		}
-	},
-	"require": {
-		"gamajo/template-loader": "*",
-		"icit/wp-less": "dev-master",
-		"scribu/lib-posts-to-posts": "dev-master"
-	},
-	"extra": {
-        "installer-paths": {
-            "vendor/{$vendor}/{$name}": ["icit/wp-less"]
-        }
-    },
-	"minimum-stability": "dev",
-	"prefer-stable": true
+  "name": "audiotheme/audiotheme",
+  "description": "A WordPress framework plugin built for bands, musicians, and labels.",
+  "keywords": ["wordpress"],
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/audiotheme/audiotheme",
+  "license": "GPL-2.0+",
+  "support": {
+    "issues": "https://github.com/audiotheme/audiotheme/issues",
+    "source": "https://github.com/audiotheme/audiotheme"
+  },
+  "require": {
+    "gamajo/template-loader": "*",
+    "icit/wp-less": "dev-master",
+    "scribu/lib-posts-to-posts": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*@stable"
+  },
+  "autoload": {
+    "psr-4": {
+      "AudioTheme\\Core\\": "classes/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AudioTheme\\Core\\Test\\": "tests/phpunit/"
+    }
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/{$vendor}/{$name}": ["icit/wp-less"]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "test": "phpunit"
+  }
 }
