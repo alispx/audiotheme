@@ -16,7 +16,7 @@ $columns = get_audiotheme_archive_meta( 'columns', true, 4 );
 
 	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-		<?php get_audiotheme_template_part( 'parts/content-record', 'archive' ); ?>
+		<?php get_audiotheme_template_part( 'record/content', 'archive' ); ?>
 
 	<?php endwhile; endif; ?>
 

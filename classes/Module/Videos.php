@@ -247,11 +247,11 @@ class Videos extends Module {
 
 			$template = $template_loader->locate_template( 'archive-video.php' );
 			$compat->set_title( get_audiotheme_post_type_archive_title() );
-			$compat->set_loop_template_part( 'parts/loop-archive', 'video' );
+			$compat->set_loop_template_part( 'video/loop', 'archive' );
 		} elseif ( is_singular( 'audiotheme_video' ) ) {
 			$template = $template_loader->locate_template( 'single-video.php' );
 			$compat->set_title( get_queried_object()->post_title );
-			$compat->set_loop_template_part( 'parts/loop-single', 'video' );
+			$compat->set_loop_template_part( 'video/loop', 'single' );
 		}
 
 		if ( $template !== $original_template ) {

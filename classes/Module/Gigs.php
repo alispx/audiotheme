@@ -324,11 +324,11 @@ class Gigs extends Module {
 		if ( is_post_type_archive( 'audiotheme_gig' ) ) {
 			$template = $template_loader->locate_template( 'archive-gig.php' );
 			$compat->set_title( get_audiotheme_post_type_archive_title() );
-			$compat->set_loop_template_part( 'parts/loop-archive', 'gig' );
+			$compat->set_loop_template_part( 'gig/loop', 'archive' );
 		} elseif ( is_singular( 'audiotheme_gig' ) ) {
 			$template = $template_loader->locate_template( 'single-gig.php' );
 			$compat->set_title( get_queried_object()->post_title );
-			$compat->set_loop_template_part( 'parts/loop-single', 'gig' );
+			$compat->set_loop_template_part( 'gig/loop', 'single' );
 		}
 
 		if ( $template !== $original_template ) {

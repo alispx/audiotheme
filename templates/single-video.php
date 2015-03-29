@@ -11,7 +11,7 @@ get_header();
 
 <?php do_action( 'audiotheme_before_main_content' ); ?>
 
-<?php get_audiotheme_template_part( 'parts/loop-single', 'video' ); ?>
+<?php get_audiotheme_template_part( 'video/loop', 'single' ); ?>
 
 <?php do_action( 'audiotheme_after_main_content' ); ?>
 

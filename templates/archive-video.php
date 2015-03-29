@@ -13,7 +13,7 @@ get_header();
 
 <?php get_audiotheme_template_part( 'parts/archive-header', 'video' ); ?>
 
-<?php get_audiotheme_template_part( 'parts/loop-archive', 'video' ); ?>
+<?php get_audiotheme_template_part( 'video/loop', 'archive' ); ?>
 
 <?php do_action( 'audiotheme_after_main_content' ); ?>
 

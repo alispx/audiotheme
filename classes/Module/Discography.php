@@ -392,17 +392,17 @@ class Discography extends Module {
 
 			$template = $template_loader->locate_template( $templates );
 			$compat->set_title( get_audiotheme_post_type_archive_title() );
-			$compat->set_loop_template_part( 'parts/loop-archive', 'record' );
+			$compat->set_loop_template_part( 'record/loop', 'archive' );
 		} elseif ( is_singular( 'audiotheme_record' ) ) {
 			$templates = array( 'single-record.php' );
 
 			$template = $template_loader->locate_template( $templates );
 			$compat->set_title( get_queried_object()->post_title );
-			$compat->set_loop_template_part( 'parts/loop-single', 'record' );
+			$compat->set_loop_template_part( 'record/loop', 'single' );
 		} elseif ( is_singular( 'audiotheme_track' ) ) {
 			$template = $template_loader->locate_template( 'single-track.php' );
 			$compat->set_title( get_queried_object()->post_title );
-			$compat->set_loop_template_part( 'parts/loop-single', 'track' );
+			$compat->set_loop_template_part( 'track/loop', 'single' );
 		}
 
 		if ( $template !== $original_template ) {
