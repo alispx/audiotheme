@@ -101,6 +101,19 @@ function audiotheme_print_tracks_js() {
 	$modules['discography']->print_tracks_js();
 }
 
+/**
+ * Display a video.
+ *
+ * @since 1.0.0
+ * @deprecated 2.0.0
+ *
+ * @param array $args Optional. (width, height)
+ * @param array $query_args Optional. Provider specific parameters.
+ */
+function the_audiotheme_video( $args = array(), $query_args = array() ) {
+	the_audiotheme_video_html( get_the_ID(), $args, $query_args );
+}
+
 if ( ! function_exists( 'get_audiotheme_option' ) ) :
 /**
  * Returns an option value.

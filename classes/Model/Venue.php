@@ -132,16 +132,14 @@ class Venue extends AbstractPost {
 	/**
 	 * Constructor method.
 	 *
-	 * Intializes the model attributes from post meta.
-	 *
 	 * @since 2.0.0
 	 *
 	 * @param mixed $post CPT slug, post ID or post object.
 	 */
-	public function __construct( $post = 0 ) {
+	public function __construct( $post = null ) {
 		parent::__construct( $post );
 
-		if ( empty( $this->post ) ) {
+		if ( ! $this->has_post() ) {
 			return;
 		}
 

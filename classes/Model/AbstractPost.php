@@ -48,7 +48,7 @@ abstract class AbstractPost implements \JsonSerializable {
 	 *
 	 * @param mixed $post Slug, post ID, post object, or an array of default attributes.
 	 */
-	public function __construct( $post = 0 ) {
+	public function __construct( $post = null ) {
 		// Array of default attributes.
 		if ( is_array( $post ) ) {
 			// Set default attributes.

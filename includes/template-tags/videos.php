@@ -6,6 +6,8 @@
  * @since 1.0.0
  */
 
+use AudioTheme\Core\Model\Video;
+
 /**
  * Retrieve a video URL.
  *
@@ -15,8 +17,26 @@
  * @return string
  */
 function get_audiotheme_video_url( $post_id = null ) {
-	$post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-	return get_post_meta( $post_id, '_audiotheme_video_url', true );
+	$video = get_audiotheme_video( $post_id );
+	return $video->get_url();
+}
+
+/**
+ * Retrieve a video.
+ *
+ * @since 1.0.0
+ *
+ * @param int $post_id Optional. Post ID.
+ * @return \AudioTheme\Core\Model\Video
+ */
+function get_audiotheme_video( $post_id = null, $args = array(), $query_args = array() ) {
+	$video = new Video( $post_id );
+
+	if ( ! empty( $args ) || ! empty( $query_args ) ) {
+		return $video->get_html( $args, $query_args );
+	}
+
+	return $video;
 }
 
 /**
@@ -27,52 +47,21 @@ function get_audiotheme_video_url( $post_id = null ) {
  * @param array $args Optional. (width, height)
  * @param array $query_args Optional. Provider specific parameters.
  */
-function the_audiotheme_video( $args = array(), $query_args = array() ) {
-	echo get_audiotheme_video( get_the_ID(), $args, $query_args );
+function the_audiotheme_video_html( $args = array(), $query_args = array() ) {
+	echo get_audiotheme_video_html( get_the_ID(), $args, $query_args );
 }
 
 /**
  * Retrieve a video.
  *
- * @since 1.0.0
+ * @since 2.0.0
  *
  * @param int $post_id Optional. Post ID.
  * @param array $args Optional. (width, height)
  * @param array $query_args Optional. Provider specific parameters.
  * @return string Video HTML
  */
-function get_audiotheme_video( $post_id = null, $args = array(), $query_args = array() ) {
-	global $wp_embed;
-
-	$html      = '';
-	$post_id   = empty( $post_id ) ? get_the_ID() : $post_id;
-	$video_url = get_audiotheme_video_url( $post_id );
-
-	if ( ! empty( $video_url ) ) {
-		// Save current embed settings and restore them after running the shortcode.
-		$restore_post_id       = $wp_embed->post_ID;
-		$restore_false_on_fail = $wp_embed->return_false_on_fail;
-		$restore_linkifunknown = $wp_embed->linkifunknown;
-		$restore_usecache      = $wp_embed->usecache;
-
-		// Can't be sure what the embed settings are, so explicitly set them.
-		$wp_embed->post_ID              = $post_id;
-		$wp_embed->return_false_on_fail = true;
-		$wp_embed->linkifunknown        = false;
-		$wp_embed->usecache             = true;
-
-		$html = $wp_embed->shortcode( $args, add_query_arg( $query_args, $video_url ) );
-
-		// Restore original embed settings.
-		$wp_embed->post_ID              = $restore_post_id;
-		$wp_embed->return_false_on_fail = $restore_false_on_fail;
-		$wp_embed->linkifunknown        = $restore_linkifunknown;
-		$wp_embed->usecache             = $restore_usecache;
-	}
-
-	if ( false !== strpos( $html, '[video' ) ) {
-		$html = do_shortcode( $html );
-	}
-
-	return apply_filters( 'audiotheme_video_html', $html, $post_id, $video_url, $args, $query_args );
+function get_audiotheme_video_html( $post_id = null, $args = array(), $query_args = array() ) {
+	$video = get_audiotheme_video( $post_id );
+	return $video->get_html( $args, $query_args );
 }
