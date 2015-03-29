@@ -1,26 +1,61 @@
 <?php
 /**
- * Default hook callbacks.
+ * Template hooks.
  *
- * @package AudioTheme
+ * @package AudioTheme\Core
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core;
+namespace AudioTheme\Core\HookProvider;
+
+use AudioTheme\Core\HookProviderInterface;
+use AudioTheme\Core\Plugin;
 
 /**
- * Class with default hook callbacks.
+ * Template hooks class.
  *
- * @package AudioTheme
- * @since 2.0.0
+ * @package AudioTheme\Core
+ * @since   2.0.0
  */
-class DefaultHooks {
+class TemplateHookProvider implements HookProviderInterface {
+	/**
+	 * Plugin instance.
+	 *
+	 * @since 2.0.0
+	 * @var \AudioTheme\Core\Plugin
+	 */
+	protected $plugin;
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
+	 */
+	public function register( Plugin $plugin ) {
+		$this->plugin = $plugin;
+
+		// Default hooks.
+		add_action( 'wp_head',                      array( $this, 'document_javascript_support' ) );
+		add_filter( 'body_class',                   array( $this, 'body_classes' ) );
+		add_filter( 'wp_nav_menu_objects',          array( $this, 'nav_menu_classes' ), 10, 3 );
+		add_filter( 'wp_prepare_attachment_for_js', array( $this, 'prepare_audio_attachment_for_js' ), 10, 3 );
+
+		// Prevent the audiotheme_archive rewrite rules from being registered.
+		add_filter( 'audiotheme_archive_rewrite_rules',   '__return_empty_array' );
+		add_filter( 'audiotheme_archive_settings_fields', array( $this, 'default_archive_settings_fields' ), 9, 2 );
+
+		// Deprecated.
+		add_action( 'init', 'audiotheme_less_setup' );
+	}
+
 	/**
 	 * Add a 'js' class to the html element if JavaScript is enabled.
 	 *
 	 * @since 2.0.0
 	 */
-	public static function document_javascript_support() {
+	public function document_javascript_support() {
 		?>
 		<script>
 		var classes = document.documentElement.className.replace( 'no-js', 'js' );
@@ -37,7 +72,7 @@ class DefaultHooks {
 	 * @param array $classes Array of classes.
 	 * @return array
 	 */
-	public static function body_classes( $classes ) {
+	public function body_classes( $classes ) {
 		if ( is_audiotheme_theme_compat_active() ) {
 			$classes[] = 'audiotheme-theme-compat';
 		}
@@ -54,7 +89,7 @@ class DefaultHooks {
 	 * @param array $args Menu display args.
 	 * @return array
 	 */
-	public static function nav_menu_classes( $items, $args ) {
+	public function nav_menu_classes( $items, $args ) {
 		global $wp;
 
 		if ( is_404() || is_search() ) {
@@ -116,7 +151,7 @@ class DefaultHooks {
 	 * @param array $meta Attachment meta.
 	 * @return array
 	 */
-	public static function prepare_audio_attachment_for_js( $response, $attachment, $meta ) {
+	public function prepare_audio_attachment_for_js( $response, $attachment, $meta ) {
 		if ( 'audio' !== $response['type'] ) {
 			return $response;
 		}
@@ -137,7 +172,7 @@ class DefaultHooks {
 	 * @param string $post_type Post type archive.
 	 * @return array
 	 */
-	public static function default_archive_settings_fields( $fields, $post_type ) {
+	public function default_archive_settings_fields( $fields, $post_type ) {
 		if ( ! in_array( $post_type, array( 'audiotheme_record', 'audiotheme_video' ) ) ) {
 			return $fields;
 		}
