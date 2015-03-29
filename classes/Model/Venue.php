@@ -8,7 +8,7 @@
 
 namespace AudioTheme\Core\Model;
 
-use AudioTheme\Core\Model\Post;
+use AudioTheme\Core\Model\AbstractPost;
 
 /**
  * Venue model class.
@@ -16,7 +16,7 @@ use AudioTheme\Core\Model\Post;
  * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
-class Venue extends Post {
+class Venue extends AbstractPost {
 	/**
 	 * Venue name.
 	 *

@@ -14,7 +14,7 @@ namespace AudioTheme\Core\Model;
  * @package AudioTheme\Core
  * @since 2.0.0
  */
-abstract class Post {
+abstract class AbstractPost implements \JsonSerializable {
 	/**
 	 * WordPress post ID.
 	 *
@@ -52,7 +52,7 @@ abstract class Post {
 		// Array of default attributes.
 		if ( is_array( $post ) ) {
 			// Set default attributes.
-			$this->set( $post );
+			$this->set_attributes( $post );
 		}
 
 		// Post ID or object.
@@ -66,34 +66,11 @@ abstract class Post {
 		}
 
 		// Don't fetch attributes if a post hasn't been initialized.
-		if ( empty( $this->post ) ) {
+		if ( ! $this->has_post() ) {
 			return;
 		}
 
-		$attributes = array();
-		$meta       = (array) get_post_custom( $this->post->ID );
-
-		// Grab metadata and strip the '_audiotheme_' prefix.
-		foreach( $meta as $key => $value ) {
-			// Serialized and non-single metadata should be
-			// set in child model constructors.
-			if ( ! isset( $value[0] ) ) {
-				continue;
-			}
-
-			$unprefixed = str_replace( '_audiotheme_', '', $key );
-			$attributes[ $unprefixed ] = $value[0];
-		}
-
-		$defaults   = $this->to_array();
-		$attributes = array_intersect_key( $attributes, $defaults );
-		$attributes = wp_parse_args( $attributes, $defaults );
-
-		// Initialize model attributes from post meta.
-		foreach( $attributes as $key => $value ) {
-			$this->{$key} = $value;
-		}
-
+		$this->initialize_meta();
 		$this->ID = $this->post->ID;
 	}
 
@@ -101,7 +78,7 @@ abstract class Post {
 	 *
 	 */
 	public function __isset( $key ) {
-		return isset( $this->post->{$key} );
+		return isset( $this->post->$key );
 	}
 
 	/**
@@ -147,6 +124,13 @@ abstract class Post {
 	}
 
 	/**
+	 *
+	 */
+	public function jsonSerialize() {
+        return $this->to_array();
+    }
+
+	/**
 	 * Prepare the post for JavaScript.
 	 *
 	 * @since 2.0.0
@@ -166,19 +150,45 @@ abstract class Post {
 	}
 
 	/**
+	 *
+	 */
+	public function get_attribute( $name ) {
+		return isset( $this->$name ) ? $this->$name : null;
+	}
+
+	/**
+	 *
+	 */
+	public function has_attribute( $name ) {
+		return property_exists( $this, $name );
+	}
+
+	/**
+	 * Set an attribute value.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $name Attribute name.
+	 * @param array  $value  Attribute value.
+	 */
+	public function set_attribute( $name, $value ) {
+		if ( $this->has_attribute( $name ) ) {
+			$this->$name = $value;
+		}
+	}
+
+	/**
 	 * Set model attributes.
 	 *
-	 * @todo Allow key/value arguments, too?
-	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 *
 	 * @param array $attributes Array of model attributes.
 	 */
-	public function set( $attributes ) {
+	public function set_attributes( $attributes = array() ) {
+		$attributes = (array) $attributes;
+
 		foreach ( array_keys( $this->to_array() ) as $key ) {
-			if ( isset( $attributes[ $key ] ) ) {
-				$this->{$key} = $attributes[ $key ];
-			}
+			$this->set_attribute( $key, $attributes[ $key ] );
 		}
 	}
 
@@ -193,5 +203,31 @@ abstract class Post {
 	 */
 	public function to_array() {
 		return call_user_func( 'get_object_vars', $this );
+	}
+
+	/**
+	 *
+	 */
+	protected function initialize_meta() {
+		$attributes = array();
+		$meta       = (array) get_post_custom( $this->post->ID );
+
+		// Grab metadata and strip the '_audiotheme_' prefix.
+		foreach( $meta as $key => $value ) {
+			// Serialized and non-single metadata should be
+			// set in children.
+			if ( ! isset( $value[0] ) ) {
+				continue;
+			}
+
+			$unprefixed = str_replace( '_audiotheme_', '', $key );
+			$attributes[ $unprefixed ] = $value[0];
+		}
+
+		$defaults   = $this->to_array();
+		$attributes = array_intersect_key( $attributes, $defaults );
+		$attributes = wp_parse_args( $attributes, $defaults );
+
+		$this->set_attributes( $attributes );
 	}
 }
