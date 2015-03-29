@@ -5,7 +5,7 @@
 
 <?php endif; ?>
 
-<ul class="audiotheme-gigs no-fouc js-media-classes">
+<ul class="audiotheme-gigs no-fouc" data-audiotheme-media-classes="400,600">
 
 	<?php while ( have_posts() ) : the_post(); $gig = get_audiotheme_gig(); ?>
 

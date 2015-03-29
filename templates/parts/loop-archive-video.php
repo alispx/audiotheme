@@ -12,7 +12,7 @@ $columns = get_audiotheme_archive_meta( 'columns', true, 4 );
 
 <?php endif; ?>
 
-<ul class="audiotheme-videos audiotheme-grid audiotheme-grid--columns-<?php echo absint( $columns ); ?> no-fouc js-media-classes">
+<ul class="audiotheme-videos audiotheme-grid audiotheme-grid--columns-<?php echo absint( $columns ); ?> no-fouc" data-audiotheme-media-classes="400,600">
 
 	<?php while ( have_posts() ) : the_post(); ?>
 

@@ -18,10 +18,6 @@
 				features: ['cueplaylist']
 			});
 		}
-
-		$( '.js-media-classes' ).audiothemeMediaClasses({
-			breakpoints: [ 600, 400 ]
-		});
 	});
 
 })( this, jQuery );

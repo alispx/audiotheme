@@ -231,7 +231,7 @@ class Compatibility {
 		// Hack to create a deep copy of $wp_query.
 		$this->the_query = unserialize( serialize( $wp_query ) );
 
-		// Get a temporary post for the default main loop.
+		// Make a temporary post for the default main loop.
 		$post = $this->get_temporary_post(
 			array(
 				'post_content' => $this->get_content(),
