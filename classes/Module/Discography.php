@@ -286,7 +286,7 @@ class Discography extends Module {
 					$query->set( 'meta_key', '_audiotheme_release_year' );
 					$query->set( 'orderby', 'meta_value_num' );
 					$query->set( 'order', 'desc' );
-					add_filter( 'posts_orderby_request', 'audiotheme_record_query_sort_sql' );
+					add_filter( 'posts_orderby_request', array( $this, 'record_query_sort_sql' ) );
 			}
 
 			do_action_ref_array( 'audiotheme_record_query_sort', array( &$query ) );
