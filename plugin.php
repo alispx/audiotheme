@@ -46,7 +46,6 @@ require( AUDIOTHEME_DIR . 'includes/template-tags/videos.php' );
 require( AUDIOTHEME_DIR . 'vendor/scribu/scb-framework/load.php' );
 
 if ( is_admin() ) {
-	require( AUDIOTHEME_DIR . 'admin/ajax-actions.php' );
 	require( AUDIOTHEME_DIR . 'admin/functions.php' );
 }
 

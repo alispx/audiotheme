@@ -24,7 +24,6 @@ class Discography {
 	 */
 	public function load() {
 		$this->register_hooks();
-		$this->register_ajax_actions();
 	}
 
 	/**
@@ -45,18 +44,6 @@ class Discography {
 		add_filter( 'cue_playlist_args',      array( $this, 'playlist_post_type_args' ) );
 		add_action( 'admin_enqueue_scripts',  array( $this, 'enqueue_playlist_assets' ) );
 		add_action( 'print_media_templates',  array( $this, 'print_playlist_templates' ) );
-	}
-
-	/**
-	 * Register AJAX callbacks.
-	 *
-	 * @since 2.0.0
-	 */
-	public function register_ajax_actions() {
-		add_action( 'wp_ajax_audiotheme_ajax_get_default_track',    'audiotheme_ajax_get_default_track' );
-		add_action( 'wp_ajax_audiotheme_ajax_get_playlist_track',   'audiotheme_ajax_get_playlist_track' );
-		add_action( 'wp_ajax_audiotheme_ajax_get_playlist_tracks',  'audiotheme_ajax_get_playlist_tracks' );
-		add_action( 'wp_ajax_audiotheme_ajax_get_playlist_records', 'audiotheme_ajax_get_playlist_records' );
 	}
 
 	/**

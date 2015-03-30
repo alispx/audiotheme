@@ -8,8 +8,10 @@
 
 namespace AudioTheme\Core;
 
-use AudioTheme\Core\Admin;
 use AudioTheme\Core\Admin\Screen;
+use AudioTheme\Core\Ajax\DiscographyAjax;
+use AudioTheme\Core\Ajax\GigsAjax;
+use AudioTheme\Core\Ajax\VideosAjax;
 use AudioTheme\Core\Container;
 use AudioTheme\Core\Module;
 use AudioTheme\Core\ModuleCollection;
@@ -44,7 +46,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		};
 
 		$plugin['modules'] = function() use ( $plugin ) {
-			$modules = new ModuleCollection();
+			$modules = new ModuleCollection;
 
 			$modules['discography'] = function() use ( $plugin ) {
 				$module = new Module\Discography;
@@ -97,7 +99,9 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			$modules = new ModuleCollection;
 			$screens = $plugin['admin.screens'];
 
-			$modules['discography'] = function() use ( $screens ) {
+			$modules['discography'] = function() use ( $plugin, $screens ) {
+				$plugin->register_hooks( new DiscographyAjax );
+
 				$screens['manage_records'] = function() {
 					return new Screen\ManageRecords;
 				};
@@ -117,7 +121,9 @@ class PluginServiceProvider implements ServiceProviderInterface {
 				return new Admin\Discography;
 			};
 
-			$modules['gigs'] = function() use ( $screens ) {
+			$modules['gigs'] = function() use ( $plugin, $screens ) {
+				$plugin->register_hooks( new GigsAjax );
+
 				$screens['manage_gigs'] = function() {
 					return new Screen\ManageGigs;
 				};
@@ -137,7 +143,8 @@ class PluginServiceProvider implements ServiceProviderInterface {
 				return new Admin\Gigs;
 			};
 
-			$modules['videos'] = function() {
+			$modules['videos'] = function() use( $plugin ) {
+				$plugin->register_hooks( new VideosAjax );
 				return new Admin\Videos;
 			};
 

@@ -22,7 +22,6 @@ class Gigs {
 	 */
 	public function load() {
 		$this->register_hooks();
-		$this->register_ajax_actions();
 	}
 
 	/**
@@ -35,17 +34,6 @@ class Gigs {
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_assets' ), 1 );
 		add_filter( 'set-screen-option',     array( $this, 'screen_options' ), 999, 3 );
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
-	}
-
-	/**
-	 * Register AJAX callbacks.
-	 *
-	 * @since 2.0.0
-	 */
-	public function register_ajax_actions() {
-		add_action( 'wp_ajax_audiotheme_ajax_get_venue',  'audiotheme_ajax_get_venue' );
-		add_action( 'wp_ajax_audiotheme_ajax_get_venues', 'audiotheme_ajax_get_venues' );
-		add_action( 'wp_ajax_audiotheme_ajax_save_venue', 'audiotheme_ajax_save_venue' );
 	}
 
 	/**
