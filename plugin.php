@@ -6,14 +6,14 @@
  * @since 2.0.0
  */
 
-use AudioTheme\Core\Ajax\AdminAjax;
 use AudioTheme\Core\Autoloader;
-use AudioTheme\Core\HookProvider\AdminHookProvider;
-use AudioTheme\Core\HookProvider\AdminAssetHookProvider;
-use AudioTheme\Core\HookProvider\AssetHookProvider;
-use AudioTheme\Core\HookProvider\PluginSetupHookProvider;
-use AudioTheme\Core\HookProvider\TemplateHookProvider;
-use AudioTheme\Core\HookProvider\WidgetHookProvider;
+use AudioTheme\Core\Provider\AdminAssets;
+use AudioTheme\Core\Provider\AdminHooks;
+use AudioTheme\Core\Provider\Assets;
+use AudioTheme\Core\Provider\PluginSetup;
+use AudioTheme\Core\Provider\TemplateHooks;
+use AudioTheme\Core\Provider\WidgetHooks;
+use AudioTheme\Core\Provider\Ajax\AdminAjax;
 use AudioTheme\Core\Plugin;
 use AudioTheme\Core\PluginServiceProvider;
 
@@ -83,14 +83,14 @@ $audiotheme->register( new PluginServiceProvider() );
  * @since 2.0.0
  */
 add_action( 'plugins_loaded', function() use ( $audiotheme ) {
-	$audiotheme->register_hooks( new AssetHookProvider );
-	$audiotheme->register_hooks( new PluginSetupHookProvider );
-	$audiotheme->register_hooks( new TemplateHookProvider );
-	$audiotheme->register_hooks( new WidgetHookProvider );
+	$audiotheme->register_hooks( new Assets );
+	$audiotheme->register_hooks( new PluginSetup );
+	$audiotheme->register_hooks( new TemplateHooks );
+	$audiotheme->register_hooks( new WidgetHooks );
 
 	if ( is_admin() ) {
-		$audiotheme->register_hooks( new AdminHookProvider );
-		$audiotheme->register_hooks( new AdminAssetHookProvider );
+		$audiotheme->register_hooks( new AdminAssets );
+		$audiotheme->register_hooks( new AdminHooks );
 		$audiotheme->register_hooks( new AdminAjax );
 	}
 

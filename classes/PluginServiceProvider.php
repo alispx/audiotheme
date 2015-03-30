@@ -9,12 +9,12 @@
 namespace AudioTheme\Core;
 
 use AudioTheme\Core\Admin\Screen;
-use AudioTheme\Core\Ajax\DiscographyAjax;
-use AudioTheme\Core\Ajax\GigsAjax;
-use AudioTheme\Core\Ajax\VideosAjax;
 use AudioTheme\Core\Container;
 use AudioTheme\Core\Module;
 use AudioTheme\Core\ModuleCollection;
+use AudioTheme\Core\Provider\Ajax\DiscographyAjax;
+use AudioTheme\Core\Provider\Ajax\GigsAjax;
+use AudioTheme\Core\Provider\Ajax\VideosAjax;
 use AudioTheme\Core\ServiceProviderInterface;
 use AudioTheme\Core\Theme;
 

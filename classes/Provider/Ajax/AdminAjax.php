@@ -6,7 +6,7 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core\Ajax;
+namespace AudioTheme\Core\Provider\Ajax;
 
 use AudioTheme\Core\HookProviderInterface;
 use AudioTheme\Core\Plugin;

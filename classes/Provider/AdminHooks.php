@@ -6,7 +6,7 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core\HookProvider;
+namespace AudioTheme\Core\Provider;
 
 use AudioTheme\Core\HookProviderInterface;
 use AudioTheme\Core\Plugin;
@@ -18,7 +18,7 @@ use AudioTheme\Core\Util;
  * @package AudioTheme\Core
  * @since   2.0.0
  */
-class AdminHookProvider implements HookProviderInterface {
+class AdminHooks implements HookProviderInterface {
 	/**
 	 * Plugin instance.
 	 *
