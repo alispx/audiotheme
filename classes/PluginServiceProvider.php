@@ -8,7 +8,6 @@
 
 namespace AudioTheme\Core;
 
-use AudioTheme\Core\Admin\Screen;
 use AudioTheme\Core\Container;
 use AudioTheme\Core\Module;
 use AudioTheme\Core\ModuleCollection;
@@ -21,6 +20,7 @@ use AudioTheme\Core\Provider\PostType\RecordPostType;
 use AudioTheme\Core\Provider\PostType\TrackPostType;
 use AudioTheme\Core\Provider\PostType\VenuePostType;
 use AudioTheme\Core\Provider\PostType\VideoPostType;
+use AudioTheme\Core\Provider\Screen;
 use AudioTheme\Core\Provider\Taxonomy\GenreTaxonomy;
 use AudioTheme\Core\Provider\Taxonomy\RecordTypeTaxonomy;
 use AudioTheme\Core\Provider\Taxonomy\VideoCategoryTaxonomy;
@@ -99,95 +99,41 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return $modules;
 		};
 
-		$plugin['admin.screens'] = function( $plugin ) {
-			$screens = new Container;
-
-			$screens['dashboard'] = function() use ( $plugin ) {
-				$screen = new Screen\Dashboard\Main;
-				$screen->modules = $plugin['modules'];
-				return $screen;
-			};
-
-			$screens['themes'] = function() {
-				return new Screen\Dashboard\Themes;
-			};
-
-			$screens['settings'] = function() {
-				return new Screen\Settings;
-			};
-
-			return $screens;
-		};
-
+		// Register module admin hooks and screens.
 		$plugin->extend( 'modules', function( $modules, $plugin ) {
 			if ( ! is_admin() ) {
 				return $modules;
 			}
 
-			$screens = $plugin['admin.screens'];
-
-			$modules->extend( 'discography', function( $module ) use( $plugin, $screens ) {
+			$modules->extend( 'discography', function( $module ) use( $plugin ) {
 				$plugin->register_hooks( new DiscographyAjax );
 
-				$screens['manage_records'] = function() {
-					return new Screen\ManageRecords;
-				};
-
-				$screens['edit_record'] = function() {
-					return new Screen\EditRecord;
-				};
-
-				$screens['manage_tracks'] = function() {
-					return new Screen\ManageTracks;
-				};
-
-				$screens['edit_track'] = function() {
-					return new Screen\EditTrack;
-				};
-
-				$screens['edit_record_archive'] = function() {
-					return new Screen\EditRecordArchive;
-				};
+				$plugin->register_screen( new Screen\ManageRecords );
+				$plugin->register_screen( new Screen\EditRecord );
+				$plugin->register_screen( new Screen\ManageTracks );
+				$plugin->register_screen( new Screen\EditTrack );
+				$plugin->register_screen( new Screen\EditRecordArchive );
 
 				return $module;
 			} );
 
-			$modules->extend( 'gigs', function( $module ) use( $plugin, $screens ) {
+			$modules->extend( 'gigs', function( $module ) use( $plugin ) {
 				$plugin->register_hooks( new GigsAjax );
 
-				$screens['manage_gigs'] = function() {
-					return new Screen\ManageGigs;
-				};
-
-				$screens['edit_gig'] = function() {
-					return new Screen\EditGig;
-				};
-
-				$screens['manage_venues'] = function() {
-					return new Screen\ManageVenues;
-				};
-
-				$screens['edit_venue'] = function() {
-					return new Screen\EditVenue;
-				};
+				$plugin->register_screen( new Screen\ManageGigs );
+				$plugin->register_screen( new Screen\EditGig );
+				$plugin->register_screen( new Screen\ManageVenues );
+				$plugin->register_screen( new Screen\EditVenue );
 
 				return $module;
 			} );
 
-			$modules->extend( 'videos', function( $module ) use( $plugin, $screens ) {
+			$modules->extend( 'videos', function( $module ) use( $plugin ) {
 				$plugin->register_hooks( new VideosAjax );
 
-				$screens['manage_videos'] = function() {
-					return new Screen\ManageVideos;
-				};
-
-				$screens['edit_video'] = function() {
-					return new Screen\EditVideo;
-				};
-
-				$screens['edit_video_archive'] = function() {
-					return new Screen\EditVideoArchive;
-				};
+				$plugin->register_screen( new Screen\ManageVideos );
+				$plugin->register_screen( new Screen\EditVideo );
+				$plugin->register_screen( new Screen\EditVideoArchive );
 
 				return $module;
 			} );

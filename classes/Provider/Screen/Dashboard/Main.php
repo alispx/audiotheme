@@ -6,9 +6,10 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core\Admin\Screen\Dashboard;
+namespace AudioTheme\Core\Provider\Screen\Dashboard;
 
-use AudioTheme\Core\Admin\Screen\Dashboard;
+use AudioTheme\Core\Plugin;
+use AudioTheme\Core\Provider\Screen\Dashboard;
 use AudioTheme\Core\Util;
 
 /**
@@ -24,14 +25,18 @@ class Main extends Dashboard {
 	 * @since 2.0.0
 	 * @type AudioTheme\Core\ModuleCollection
 	 */
-	public $modules;
+	protected $modules;
 
 	/**
 	 * Register hooks.
 	 *
 	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register_hooks() {
+	public function register_hooks( Plugin $plugin ) {
+		$this->modules = $plugin['modules'];
+
 		add_action( 'admin_menu',                      array( $this, 'add_menu_item' ) );
 		add_action( 'audiotheme_module_card_overview', array( $this, 'render_core_module_overview' ) );
 	}

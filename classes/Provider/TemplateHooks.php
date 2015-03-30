@@ -33,7 +33,7 @@ class TemplateHooks implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		$this->plugin = $plugin;
 
 		// Default hooks.

@@ -6,7 +6,9 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core\Admin\Screen;
+namespace AudioTheme\Core\Provider\Screen;
+
+use AudioTheme\Core\Plugin;
 
 /**
  * Manage venues administration screen class.
@@ -14,7 +16,7 @@ namespace AudioTheme\Core\Admin\Screen;
  * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
-class ManageVenues {
+class ManageVenues extends AbstractScreen {
 	/**
 	 * List table class.
 	 *
@@ -32,20 +34,13 @@ class ManageVenues {
 	protected $list_table;
 
 	/**
-	 * Load the screen.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load() {
-		$this->register_hooks();
-	}
-
-	/**
 	 * Register hooks.
 	 *
 	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register_hooks() {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'admin_menu', array( $this, 'add_menu_item' ) );
 	}
 

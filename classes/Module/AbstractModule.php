@@ -130,7 +130,16 @@ abstract class AbstractModule {
 	 *
 	 * @since 2.0.0
 	 */
-	abstract function load();
+	public function load() {
+		$this->register_hooks();
+	}
+
+	/**
+	 * Register module hooks.
+	 *
+	 * @since 2.0.0
+	 */
+	abstract function register_hooks();
 
 	/**
 	 * Whether the module is a core module.

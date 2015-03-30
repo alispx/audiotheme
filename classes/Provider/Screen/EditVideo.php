@@ -6,7 +6,9 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core\Admin\Screen;
+namespace AudioTheme\Core\Provider\Screen;
+
+use AudioTheme\Core\Plugin;
 
 /**
  * Edit video administration screen class.
@@ -14,26 +16,18 @@ namespace AudioTheme\Core\Admin\Screen;
  * @package AudioTheme\Core\Videos
  * @since 2.0.0
  */
-class EditVideo {
-	/**
-	 * Load the screen.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load() {
-		$this->register_hooks();
-	}
-
+class EditVideo extends AbstractScreen {
 	/**
 	 * Register hooks.
 	 *
 	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register_hooks() {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'load-post.php',                   array( $this, 'load_screen' ) );
 		add_action( 'load-post-new.php',               array( $this, 'load_screen' ) );
 		add_action( 'admin_enqueue_scripts',           array( $this, 'register_assets' ), 1 );
-		add_action( 'admin_enqueue_scripts',           array( $this, 'enqueue_assets' ) );
 		add_action( 'add_meta_boxes_audiotheme_video', array( $this, 'register_meta_boxes' ) );
 		add_filter( 'admin_post_thumbnail_html',       array( $this, 'post_thumbnail_html' ), 10, 2 );
 		add_action( 'save_post',                       array( $this, 'on_video_save' ), 10, 2 );

@@ -6,7 +6,9 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core\Admin\Screen;
+namespace AudioTheme\Core\Provider\Screen;
+
+use AudioTheme\Core\Plugin;
 
 /**
  * Edit record administration screen functionality.
@@ -14,22 +16,15 @@ namespace AudioTheme\Core\Admin\Screen;
  * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
-class EditRecord {
-	/**
-	 * Load the screen.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load() {
-		$this->register_hooks();
-	}
-
+class EditRecord extends AbstractScreen {
 	/**
 	 * Register hooks.
 	 *
 	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register_hooks() {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'load-post.php',                      array( $this, 'load_screen' ) );
 		add_action( 'load-post-new.php',                  array( $this, 'load_screen' ) );
 		add_action( 'add_meta_boxes_audiotheme_record',   array( $this, 'register_meta_boxes' ) );

@@ -6,7 +6,9 @@
  * @since 1.0.0
  */
 
-namespace AudioTheme\Core\Admin\Screen;
+namespace AudioTheme\Core\Provider\Screen;
+
+use AudioTheme\Core\Plugin;
 
 /**
  * Settings administration screen class.
@@ -14,13 +16,15 @@ namespace AudioTheme\Core\Admin\Screen;
  * @package AudioTheme
  * @since 1.0.0
  */
-class Settings {
+class Settings extends AbstractScreen {
 	/**
-	 * Load the screen.
+	 * Register hooks.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function load() {
+	public function register_hooks( Plugin $plugin ) {
 		if ( is_multisite() && ! is_network_admin() ) {
 			return;
 		}

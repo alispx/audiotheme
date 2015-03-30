@@ -54,7 +54,7 @@ class GenreTaxonomy implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'init',                           array( $this, 'register_taxonomy' ) );
 		add_filter( 'term_link',                      array( $this, 'term_permalinks' ), 10, 3 );
 		add_filter( 'post_type_archive_title',        array( $this, 'archive_title' ) );

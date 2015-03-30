@@ -55,7 +55,7 @@ class GigPostType implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'init',                     array( $this, 'register_post_type' ) );
 		add_filter( 'query_vars',               array( $this, 'register_query_vars' ) );
 		add_action( 'pre_get_posts',            array( $this, 'query' ) );

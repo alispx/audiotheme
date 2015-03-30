@@ -6,8 +6,9 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core\Admin\Screen;
+namespace AudioTheme\Core\Provider\Screen;
 
+use AudioTheme\Core\Plugin;
 use AudioTheme\Core\Util;
 
 /**
@@ -16,22 +17,15 @@ use AudioTheme\Core\Util;
  * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
-class ManageRecords {
-	/**
-	 * Load the screen.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load() {
-		$this->register_hooks();
-	}
-
+class ManageRecords extends AbstractScreen {
 	/**
 	 * Register hooks.
 	 *
 	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register_hooks() {
+	public function register_hooks( Plugin $plugin ) {
 		add_filter( 'parse_query',                                    array( $this, 'admin_query' ) );
 		add_filter( 'manage_edit-audiotheme_record_columns',          array( $this, 'register_columns' ) );
 		add_action( 'manage_edit-audiotheme_record_sortable_columns', array( $this, 'register_sortable_columns' ) );

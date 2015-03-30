@@ -35,15 +35,6 @@ class Videos extends AbstractModule {
 	}
 
 	/**
-	 * Load the video module.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load() {
-		$this->register_hooks();
-	}
-
-	/**
 	 * Register module hooks.
 	 *
 	 * @since 2.0.0

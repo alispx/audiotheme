@@ -14,6 +14,7 @@ use AudioTheme\Core\Provider\PluginSetup;
 use AudioTheme\Core\Provider\TemplateHooks;
 use AudioTheme\Core\Provider\WidgetHooks;
 use AudioTheme\Core\Provider\Ajax\AdminAjax;
+use AudioTheme\Core\Provider\Screen;
 use AudioTheme\Core\Plugin;
 use AudioTheme\Core\PluginServiceProvider;
 
@@ -92,6 +93,11 @@ add_action( 'plugins_loaded', function() use ( $audiotheme ) {
 		$audiotheme->register_hooks( new AdminAssets );
 		$audiotheme->register_hooks( new AdminHooks );
 		$audiotheme->register_hooks( new AdminAjax );
+
+		// Register Dashboard screens.
+		$audiotheme->register_screen( new Screen\Dashboard\Main );
+		$audiotheme->register_screen( new Screen\Dashboard\Themes );
+		$audiotheme->register_screen( new Screen\Settings );
 	}
 
 	$audiotheme->load();

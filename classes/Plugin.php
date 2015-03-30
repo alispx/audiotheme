@@ -26,10 +26,6 @@ class Plugin extends Container {
 		$this['archives']->load();
 		$this->load_modules();
 		scb_init( array( $this, 'load_p2p_core' ) );
-
-		if ( is_admin() ) {
-			$this->load_screens();
-		}
 	}
 
 	/**
@@ -37,11 +33,25 @@ class Plugin extends Container {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param object $provider Hook provider.
+	 * @param \AudioTheme\Core\HookProviderInterface $provider Hook provider.
 	 * @return $this
 	 */
 	public function register_hooks( $provider ) {
-		$provider->register( $this );
+		$provider->register_hooks( $this );
+		return $this;
+	}
+
+	/**
+	 * Register an admin screen.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param object $provider Screen
+	 * @return $this
+	 */
+	public function register_screen( $screen ) {
+		$screen->register_screen( $this );
+		$this->register_hooks( $screen );
 		return $this;
 	}
 
@@ -63,17 +73,6 @@ class Plugin extends Container {
 
 		foreach ( $modules as $module_id ) {
 			$this['modules'][ $module_id ]->load();
-		}
-	}
-
-	/**
-	 * Load admin screens.
-	 *
-	 * @since 2.0.0
-	 */
-	protected function load_screens() {
-		foreach ( $this['admin.screens']->keys() as $screen_id ) {
-			$this['admin.screens'][ $screen_id ]->load();
 		}
 	}
 

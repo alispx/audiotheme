@@ -6,9 +6,10 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core\Admin\Screen;
+namespace AudioTheme\Core\Provider\Screen;
 
 use AudioTheme\Core\Model\Venue;
+use AudioTheme\Core\Plugin;
 
 /**
  * Edit venue administration screen class.
@@ -16,22 +17,15 @@ use AudioTheme\Core\Model\Venue;
  * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
-class EditVenue {
-	/**
-	 * Load the screen.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load() {
-		$this->register_hooks();
-	}
-
+class EditVenue extends AbstractScreen {
 	/**
 	 * Register hooks.
 	 *
 	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register_hooks() {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'admin_menu', array( $this, 'add_menu_item' ) );
 	}
 

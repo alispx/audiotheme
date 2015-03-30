@@ -22,5 +22,5 @@ interface HookProviderInterface {
      *
      * @param Plugin $plugin The main plugin instance.
      */
-    public function register( Plugin $plugin );
+    public function register_hooks( Plugin $plugin );
 }

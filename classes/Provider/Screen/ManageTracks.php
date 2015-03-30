@@ -6,8 +6,9 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core\Admin\Screen;
+namespace AudioTheme\Core\Provider\Screen;
 
+use AudioTheme\Core\Plugin;
 use AudioTheme\Core\Util;
 
 /**
@@ -16,22 +17,15 @@ use AudioTheme\Core\Util;
  * @package AudioTheme\Core\Discography
  * @since 2.0.0
  */
-class ManageTracks {
-	/**
-	 * Load the screen.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load() {
-		$this->register_hooks();
-	}
-
+class ManageTracks extends AbstractScreen {
 	/**
 	 * Register hooks.
 	 *
 	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register_hooks() {
+	public function register_hooks( Plugin $plugin ) {
 		add_filter( 'parse_query',                                   array( $this, 'admin_query' ) );
 		add_action( 'post_row_actions',                              array( $this, 'list_table_actions' ), 10, 2 );
 		add_action( 'restrict_manage_posts',                         array( $this, 'list_table_filters' ) );

@@ -33,7 +33,7 @@ class Assets implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		$this->plugin = $plugin;
 
 		add_action( 'wp_enqueue_scripts',    array( $this, 'register_assets' ), 1 );

@@ -55,7 +55,7 @@ class VideoPostType implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'init',              array( $this, 'register_post_type' ) );
 		add_action( 'delete_attachment', array( $this, 'delete_oembed_thumbnail_data' ) );
 		add_filter( 'post_class',        array( $this, 'archive_post_class' ) );

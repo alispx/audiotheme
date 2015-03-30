@@ -55,7 +55,7 @@ class VenuePostType implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'init', array( $this, 'register_post_type' ) );
 		add_filter( 'get_edit_post_link', 'get_audiotheme_venue_edit_link', 10, 2 );
 	}

@@ -33,7 +33,7 @@ class PluginSetup implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		$this->plugin = $plugin;
 		$this->load_textdomain();
 		add_action( 'wp_loaded', array( $this, 'maybe_flush_rewrite_rules' ) );

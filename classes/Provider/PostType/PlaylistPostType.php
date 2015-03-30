@@ -57,7 +57,7 @@ class PlaylistPostType implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		add_filter( 'cue_playlist_args',     array( $this, 'playlist_post_type_args' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_playlist_assets' ) );
 		add_action( 'print_media_templates', array( $this, 'print_playlist_templates' ) );

@@ -54,7 +54,7 @@ class VideoCategoryTaxonomy implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'init',          array( $this, 'register_taxonomy' ) );
 		add_action( 'pre_get_posts', array( $this, 'video_category_query' ), 9 );
 	}

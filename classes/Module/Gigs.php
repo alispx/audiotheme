@@ -33,15 +33,6 @@ class Gigs extends AbstractModule {
 	}
 
 	/**
-	 * Load the Gigs module.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load() {
-		$this->register_hooks();
-	}
-
-	/**
 	 * Register module hooks.
 	 *
 	 * @since 2.0.0

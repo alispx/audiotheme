@@ -35,15 +35,6 @@ class Discography extends AbstractModule {
 	}
 
 	/**
-	 * Load the Discography module.
-	 *
-	 * @since 2.0.0
-	 */
-	public function load() {
-		$this->register_hooks();
-	}
-
-	/**
 	 * Register module hooks.
 	 *
 	 * @since 2.0.0

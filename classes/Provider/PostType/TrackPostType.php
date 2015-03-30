@@ -54,7 +54,7 @@ class TrackPostType implements HookProviderInterface {
 	 *
 	 * @param \AudioTheme\Core\Plugin Main plugin instance.
 	 */
-	public function register( Plugin $plugin ) {
+	public function register_hooks( Plugin $plugin ) {
 		add_action( 'init',                    array( $this, 'register_post_type' ) );
 		add_action( 'pre_get_posts',           array( $this, 'track_query' ) );
 		add_filter( 'post_type_archive_link',  array( $this, 'archive_permalink' ), 10, 2 );
