@@ -56,6 +56,30 @@ class Plugin extends Container {
 	}
 
 	/**
+	 * Retrieve the path to a file in the plugin.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $path Optional. Path relative to the plugin root.
+	 * @return string
+	 */
+	public function get_path( $path = '' ) {
+		return AUDIOTHEME_DIR . ltrim( $path, '/' );
+	}
+
+	/**
+	 * Retrieve the URL for a file in the plugin.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $path Optional. Path relative to the plugin root.
+	 * @return string
+	 */
+	public function get_url( $path = '' ) {
+		return AUDIOTHEME_URI . ltrim( $path, '/' );
+	}
+
+	/**
 	 * Load the active modules.
 	 *
 	 * Modules are always loaded when viewing the AudioTheme Settings screen so

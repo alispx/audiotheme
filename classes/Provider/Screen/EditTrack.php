@@ -106,7 +106,7 @@ class EditTrack extends AbstractScreen {
 	 */
 	public function display_details_meta_box( $post ) {
 		wp_nonce_field( 'update-track_' . $post->ID, 'audiotheme_track_nonce' );
-		include( AUDIOTHEME_DIR . 'admin/views/meta-box-track-details.php' );
+		include( $this->plugin->get_path( 'admin/views/meta-box-track-details.php' ) );
 	}
 
 	/**
@@ -128,7 +128,7 @@ class EditTrack extends AbstractScreen {
 			$release = get_audiotheme_record_release_year( $record->ID );
 		}
 
-		include( AUDIOTHEME_DIR . 'admin/views/meta-box-track-record-info.php' );
+		include( $this->plugin->get_path( 'admin/views/meta-box-track-record-info.php' ) );
 	}
 
 	/**

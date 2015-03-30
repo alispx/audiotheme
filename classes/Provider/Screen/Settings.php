@@ -69,6 +69,6 @@ class Settings extends AbstractScreen {
 	 * @since 1.0.0
 	 */
 	public function render_screen() {
-		include( AUDIOTHEME_DIR . 'admin/views/screen-settings.php' );
+		include( $this->plugin->get_path( 'admin/views/screen-settings.php' ) );
 	}
 }

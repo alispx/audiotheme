@@ -1,6 +1,6 @@
 <?php
 /**
- * Module defaults.
+ * Module base.
  *
  * @package AudioTheme\Core\Modules
  * @since 2.0.0
@@ -8,8 +8,10 @@
 
 namespace AudioTheme\Core\Module;
 
+use AudioTheme\Core\Plugin;
+
 /**
- * Abstract class for a new module.
+ * Base module class.
  *
  * @package AudioTheme\Core\Modules
  * @since 2.0.0
@@ -56,6 +58,14 @@ abstract class AbstractModule {
 	 * @type bool
 	 */
 	protected $is_core_module = false;
+
+	/**
+	 * Plugin instance.
+	 *
+	 * @since 2.0.0
+	 * @var \AudioTheme\Core\Plugin
+	 */
+	protected $plugin;
 
 	/**
 	 * Template loader.
@@ -116,6 +126,9 @@ abstract class AbstractModule {
 	 */
 	public function __set( $name, $value ) {
 		switch ( $name ) {
+			case 'plugin' :
+				$this->set_plugin( $value );
+				break;
 			case 'archives' :
 			case 'template_loader' :
 			case 'theme_compatibility' :
@@ -174,5 +187,16 @@ abstract class AbstractModule {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Set the main plugin instance.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param \AudioTheme\Core\Plugin Main plugin instance.
+	 */
+	protected function set_plugin( Plugin $plugin ) {
+		$this->plugin = $plugin;
 	}
 }

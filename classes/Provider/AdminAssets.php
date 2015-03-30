@@ -46,7 +46,7 @@ class AdminAssets implements HookProviderInterface {
 	 * @since 2.0.0
 	 */
 	public function register_assets() {
-		$base_url = set_url_scheme( AUDIOTHEME_URI . 'admin/' );
+		$base_url = set_url_scheme( $this->plugin->get_url( 'admin/' ) );
 		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		wp_register_script( 'audiotheme-admin',     $base_url . 'js/admin' . $suffix . '.js', array( 'jquery-ui-sortable', 'wp-util' ), '2.0.0', true );

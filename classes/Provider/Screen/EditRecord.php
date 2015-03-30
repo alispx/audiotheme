@@ -91,7 +91,7 @@ class EditRecord extends AbstractScreen {
 	public function enqueue_assets() {
 		wp_enqueue_script(
 			'audiotheme-record-edit',
-			AUDIOTHEME_URI . 'admin/js/record-edit.js',
+			$this->plugin->get_url( 'admin/js/record-edit.js' ),
 			array( 'audiotheme-admin', 'audiotheme-media' ),
 			'1.0.0',
 			true
@@ -120,8 +120,8 @@ class EditRecord extends AbstractScreen {
 			}
 		}
 
-		include( AUDIOTHEME_DIR . 'admin/views/edit-record-tracklist.php' );
-		include( AUDIOTHEME_DIR . 'admin/views/templates-record.php' );
+		include( $this->plugin->get_path( 'admin/views/edit-record-tracklist.php' ) );
+		include( $this->plugin->get_path( 'admin/views/templates-record.php' ) );
 
 		wp_localize_script( 'audiotheme-record-edit', '_audiothemeTracklistSettings', array(
 			'postId' => $post->ID,
@@ -191,7 +191,7 @@ class EditRecord extends AbstractScreen {
 		$record_link_source_names = array_keys( $record_link_sources );
 		sort( $record_link_source_names );
 
-		include( AUDIOTHEME_DIR . 'admin/views/edit-record-links.php' );
+		include( $this->plugin->get_path( 'admin/views/edit-record-links.php' ) );
 	}
 
 	/**

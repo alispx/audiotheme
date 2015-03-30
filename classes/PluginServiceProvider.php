@@ -59,6 +59,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 
 			$modules['discography'] = function() use ( $plugin ) {
 				$module = new Module\Discography;
+				$module->plugin              = $plugin;
 				$module->archives            = $plugin['archives'];
 				$module->template_loader     = $plugin['template_loader'];
 				$module->theme_compatibility = $plugin['theme_compatibility'];
@@ -74,6 +75,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 
 			$modules['gigs'] = function() use ( $plugin ) {
 				$module = new Module\Gigs;
+				$module->plugin              = $plugin;
 				$module->archives            = $plugin['archives'];
 				$module->template_loader     = $plugin['template_loader'];
 				$module->theme_compatibility = $plugin['theme_compatibility'];
@@ -86,6 +88,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 
 			$modules['videos'] = function() use ( $plugin ) {
 				$module = new Module\Videos;
+				$module->plugin              = $plugin;
 				$module->archives            = $plugin['archives'];
 				$module->template_loader     = $plugin['template_loader'];
 				$module->theme_compatibility = $plugin['theme_compatibility'];

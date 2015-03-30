@@ -150,7 +150,7 @@ class EditGig extends AbstractScreen {
 			'timeFormat' => $this->compatible_time_format(),
 		) );
 
-		require( AUDIOTHEME_DIR . 'admin/views/edit-gig.php' );
+		require( $this->plugin->get_path( 'admin/views/edit-gig.php' ) );
 	}
 
 	/**
@@ -179,8 +179,8 @@ class EditGig extends AbstractScreen {
 	 * @since 2.0.0
 	 */
 	public function print_templates() {
-		include( AUDIOTHEME_DIR . 'admin/views/templates-gig.php' );
-		include( AUDIOTHEME_DIR . 'admin/views/templates-venue.php' );
+		include( $this->plugin->get_path( 'admin/views/templates-gig.php' ) );
+		include( $this->plugin->get_path( 'admin/views/templates-venue.php' ) );
 	}
 
 	/**

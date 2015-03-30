@@ -108,10 +108,10 @@ class Gigs extends AbstractModule {
 
 			switch( $type ) {
 				case 'feed':
-					load_template( AUDIOTHEME_DIR . 'includes/views/gigs-feed-rss2.php' );
+					load_template( $this->plugin->get_path( 'includes/views/gigs-feed-rss2.php' ) );
 					break;
 				case 'ical':
-					load_template( AUDIOTHEME_DIR . 'includes/views/gigs-feed-ical.php' );
+					load_template( $this->plugin->get_path( 'includes/views/gigs-feed-ical.php' ) );
 					break;
 				default:
 					$message = sprintf( __( 'ERROR: %s is not a valid feed template.', 'audiotheme' ), esc_html( $type ) );
@@ -203,9 +203,11 @@ class Gigs extends AbstractModule {
 	 * @since 2.0.0
 	 */
 	public function register_admin_assets() {
-		wp_register_script( 'audiotheme-gig-edit',      AUDIOTHEME_URI . 'admin/js/gig-edit.js',    array( 'audiotheme-admin', 'audiotheme-venue-manager', 'jquery-timepicker', 'jquery-ui-autocomplete', 'pikaday', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
-		wp_register_script( 'audiotheme-venue-edit',    AUDIOTHEME_URI . 'admin/js/venue-edit.js',  array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post', 'underscore' ), AUDIOTHEME_VERSION, true );
-		wp_register_script( 'audiotheme-venue-manager', AUDIOTHEME_URI . 'admin/js/venue-manager.js', array( 'audiotheme-admin', 'jquery', 'media-models', 'media-views', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
+		$base_url = set_url_scheme( $this->plugin->get_url( 'admin/js/' ) );
+
+		wp_register_script( 'audiotheme-gig-edit',      $base_url . 'gig-edit.js',      array( 'audiotheme-admin', 'audiotheme-venue-manager', 'jquery-timepicker', 'jquery-ui-autocomplete', 'pikaday', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme-venue-edit',    $base_url . 'venue-edit.js',    array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post', 'underscore' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme-venue-manager', $base_url . 'venue-manager.js', array( 'audiotheme-admin', 'jquery', 'media-models', 'media-views', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
 
 		$post_type_object = get_post_type_object( 'audiotheme_venue' );
 

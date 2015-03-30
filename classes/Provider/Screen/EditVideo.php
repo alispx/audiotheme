@@ -54,7 +54,7 @@ class EditVideo extends AbstractScreen {
 	public function register_assets() {
 		wp_register_script(
 			'audiotheme-video-edit',
-			AUDIOTHEME_URI . 'admin/js/video-edit.js',
+			$this->plugin->get_url( 'admin/js/video-edit.js' ),
 			array( 'jquery', 'post', 'wp-backbone', 'wp-util' ),
 			'2.0.0',
 			true

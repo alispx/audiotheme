@@ -32,7 +32,7 @@ class Dashboard extends AbstractScreen {
 	 * @since 2.0.0
 	 */
 	public function render_screen_header() {
-		include( AUDIOTHEME_DIR . 'admin/views/screen-dashboard-header.php' );
+		include( $this->plugin->get_path( 'admin/views/screen-dashboard-header.php' ) );
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Dashboard extends AbstractScreen {
 	 * @since 2.0.0
 	 */
 	public function render_screen_footer() {
-		include( AUDIOTHEME_DIR . 'admin/views/screen-dashboard-footer.php' );
+		include( $this->plugin->get_path( 'admin/views/screen-dashboard-footer.php' ) );
 	}
 
 	/**

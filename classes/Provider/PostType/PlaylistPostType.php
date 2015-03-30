@@ -86,11 +86,11 @@ class PlaylistPostType implements HookProviderInterface {
 			return;
 		}
 
-		wp_enqueue_style( 'audiotheme-playlist-admin', AUDIOTHEME_URI . 'admin/css/playlist.css' );
+		wp_enqueue_style( 'audiotheme-playlist-admin', $this->plugin->get_url( 'admin/css/playlist.css' ) );
 
 		wp_enqueue_script(
 			'audiotheme-playlist-admin',
-			AUDIOTHEME_URI . 'admin/js/playlist.js',
+			$this->plugin->get_url( 'admin/js/playlist.js' ),
 			array( 'cue-admin' ),
 			'1.0.0',
 			true
@@ -111,6 +111,6 @@ class PlaylistPostType implements HookProviderInterface {
 	 * @since 1.5.0
 	 */
 	public function print_playlist_templates() {
-		include( AUDIOTHEME_DIR . 'admin/views/templates-playlist.php' );
+		include( $this->plugin->get_path( 'admin/views/templates-playlist.php' ) );
 	}
 }

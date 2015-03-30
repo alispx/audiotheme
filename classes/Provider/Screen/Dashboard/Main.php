@@ -105,9 +105,9 @@ class Main extends Dashboard {
 		$modules = $this->modules;
 
 		$this->render_screen_header();
-		include( AUDIOTHEME_DIR . 'admin/views/screen-dashboard.php' );
+		include( $this->plugin->get_path( 'admin/views/screen-dashboard.php' ) );
 		$this->render_screen_footer();
-		include( AUDIOTHEME_DIR . 'admin/views/templates-dashboard.php' );
+		include( $this->plugin->get_path( 'admin/views/templates-dashboard.php' ) );
 	}
 
 	/**

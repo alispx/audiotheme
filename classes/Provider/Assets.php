@@ -53,7 +53,7 @@ class Assets implements HookProviderInterface {
 	public function register_assets() {
 		global $wp_locale;
 
-		$base_url = set_url_scheme( AUDIOTHEME_URI );
+		$base_url = set_url_scheme( $this->plugin->get_url() );
 		$suffix   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		wp_register_script( 'audiotheme',               $base_url . 'includes/js/audiotheme.js',                   array( 'jquery', 'jquery-cue', 'audiotheme-media-classes' ), AUDIOTHEME_VERSION, true );

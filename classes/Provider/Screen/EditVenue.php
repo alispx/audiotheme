@@ -124,7 +124,7 @@ class EditVenue extends AbstractScreen {
 		$nonce_action     = 'edit' == $action ? 'update-venue_' . $venue->ID : 'add-venue';
 		$nonce_field      = wp_nonce_field( $nonce_action, 'audiotheme_venue_nonce', true, false );
 
-		require( AUDIOTHEME_DIR . 'admin/views/screen-edit-venue.php' );
+		require( $this->plugin->get_path( 'admin/views/screen-edit-venue.php' ) );
 	}
 
 	/**
@@ -137,7 +137,7 @@ class EditVenue extends AbstractScreen {
 	 */
 	public function display_contact_meta_box( $post, $args ) {
 		$venue = $this->get_venue_to_edit();
-		require( AUDIOTHEME_DIR . 'admin/views/edit-venue-contact.php' );
+		require( $this->plugin->get_path( 'admin/views/edit-venue-contact.php' ) );
 	}
 
 	/**

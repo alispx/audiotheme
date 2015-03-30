@@ -73,7 +73,7 @@ class Themes extends Dashboard {
 	 */
 	public function render_screen() {
 		$this->render_screen_header();
-		include( AUDIOTHEME_DIR . 'admin/views/screen-themes.php' );
+		include( $this->plugin->get_path( 'admin/views/screen-themes.php' ) );
 		$this->render_screen_footer();
 	}
 }

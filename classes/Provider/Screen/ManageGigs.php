@@ -110,6 +110,6 @@ class ManageGigs extends AbstractScreen {
 
 		$list_table       = $this->list_table;
 		$post_type_object = get_post_type_object( 'audiotheme_gig' );
-		require( AUDIOTHEME_DIR . 'admin/views/screen-manage-gigs.php' );
+		require( $this->plugin->get_path( 'admin/views/screen-manage-gigs.php' ) );
 	}
 }
