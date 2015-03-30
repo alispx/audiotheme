@@ -15,6 +15,15 @@ use AudioTheme\Core\ModuleCollection;
 use AudioTheme\Core\Provider\Ajax\DiscographyAjax;
 use AudioTheme\Core\Provider\Ajax\GigsAjax;
 use AudioTheme\Core\Provider\Ajax\VideosAjax;
+use AudioTheme\Core\Provider\PostType\GigPostType;
+use AudioTheme\Core\Provider\PostType\PlaylistPostType;
+use AudioTheme\Core\Provider\PostType\RecordPostType;
+use AudioTheme\Core\Provider\PostType\TrackPostType;
+use AudioTheme\Core\Provider\PostType\VenuePostType;
+use AudioTheme\Core\Provider\PostType\VideoPostType;
+use AudioTheme\Core\Provider\Taxonomy\GenreTaxonomy;
+use AudioTheme\Core\Provider\Taxonomy\RecordTypeTaxonomy;
+use AudioTheme\Core\Provider\Taxonomy\VideoCategoryTaxonomy;
 use AudioTheme\Core\ServiceProviderInterface;
 use AudioTheme\Core\Theme;
 
@@ -53,6 +62,13 @@ class PluginServiceProvider implements ServiceProviderInterface {
 				$module->archives            = $plugin['archives'];
 				$module->template_loader     = $plugin['template_loader'];
 				$module->theme_compatibility = $plugin['theme_compatibility'];
+
+				$plugin->register_hooks( new RecordPostType( $plugin, $module ) );
+				$plugin->register_hooks( new TrackPostType( $plugin, $module ) );
+				$plugin->register_hooks( new RecordTypeTaxonomy( $plugin, $module ) );
+				$plugin->register_hooks( new GenreTaxonomy( $plugin, $module ) );
+				$plugin->register_hooks( new PlaylistPostType( $plugin, $module ) );
+
 				return $module;
 			};
 
@@ -61,6 +77,10 @@ class PluginServiceProvider implements ServiceProviderInterface {
 				$module->archives            = $plugin['archives'];
 				$module->template_loader     = $plugin['template_loader'];
 				$module->theme_compatibility = $plugin['theme_compatibility'];
+
+				$plugin->register_hooks( new GigPostType( $plugin, $module ) );
+				$plugin->register_hooks( new VenuePostType( $plugin, $module ) );
+
 				return $module;
 			};
 
@@ -69,6 +89,10 @@ class PluginServiceProvider implements ServiceProviderInterface {
 				$module->archives            = $plugin['archives'];
 				$module->template_loader     = $plugin['template_loader'];
 				$module->theme_compatibility = $plugin['theme_compatibility'];
+
+				$plugin->register_hooks( new VideoCategoryTaxonomy( $plugin, $module ) );
+				$plugin->register_hooks( new VideoPostType( $plugin, $module ) );
+
 				return $module;
 			};
 
@@ -95,11 +119,14 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return $screens;
 		};
 
-		$plugin['admin.modules'] = function( $plugin ) {
-			$modules = new ModuleCollection;
+		$plugin->extend( 'modules', function( $modules, $plugin ) {
+			if ( ! is_admin() ) {
+				return $modules;
+			}
+
 			$screens = $plugin['admin.screens'];
 
-			$modules['discography'] = function() use ( $plugin, $screens ) {
+			$modules->extend( 'discography', function( $module ) use( $plugin, $screens ) {
 				$plugin->register_hooks( new DiscographyAjax );
 
 				$screens['manage_records'] = function() {
@@ -118,10 +145,14 @@ class PluginServiceProvider implements ServiceProviderInterface {
 					return new Screen\EditTrack;
 				};
 
-				return new Admin\Discography;
-			};
+				$screens['edit_record_archive'] = function() {
+					return new Screen\EditRecordArchive;
+				};
 
-			$modules['gigs'] = function() use ( $plugin, $screens ) {
+				return $module;
+			} );
+
+			$modules->extend( 'gigs', function( $module ) use( $plugin, $screens ) {
 				$plugin->register_hooks( new GigsAjax );
 
 				$screens['manage_gigs'] = function() {
@@ -140,15 +171,28 @@ class PluginServiceProvider implements ServiceProviderInterface {
 					return new Screen\EditVenue;
 				};
 
-				return new Admin\Gigs;
-			};
+				return $module;
+			} );
 
-			$modules['videos'] = function() use( $plugin ) {
+			$modules->extend( 'videos', function( $module ) use( $plugin, $screens ) {
 				$plugin->register_hooks( new VideosAjax );
-				return new Admin\Videos;
-			};
+
+				$screens['manage_videos'] = function() {
+					return new Screen\ManageVideos;
+				};
+
+				$screens['edit_video'] = function() {
+					return new Screen\EditVideo;
+				};
+
+				$screens['edit_video_archive'] = function() {
+					return new Screen\EditVideoArchive;
+				};
+
+				return $module;
+			} );
 
 			return $modules;
-		};
+		} );
 	}
 }

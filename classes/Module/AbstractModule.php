@@ -6,7 +6,7 @@
  * @since 2.0.0
  */
 
-namespace AudioTheme\Core;
+namespace AudioTheme\Core\Module;
 
 /**
  * Abstract class for a new module.
@@ -14,7 +14,7 @@ namespace AudioTheme\Core;
  * @package AudioTheme\Core\Modules
  * @since 2.0.0
  */
-abstract class Module {
+abstract class AbstractModule {
 	/**
 	 * Archives class.
 	 *

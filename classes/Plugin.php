@@ -28,18 +28,8 @@ class Plugin extends Container {
 		scb_init( array( $this, 'load_p2p_core' ) );
 
 		if ( is_admin() ) {
-			$this->load_admin();
+			$this->load_screens();
 		}
-	}
-
-	/**
-	 * Load administration functionality.
-	 *
-	 * @since 2.0.0
-	 */
-	protected function load_admin() {
-		$this->load_admin_modules();
-		$this->load_admin_screens();
 	}
 
 	/**
@@ -77,29 +67,11 @@ class Plugin extends Container {
 	}
 
 	/**
-	 * Load module admin classes.
-	 *
-	 * @since 2.0.0
-	 */
-	protected function load_admin_modules() {
-		// Load all modules on the settings screen.
-		if ( $this->is_dashboard_screen() ) {
-			$modules = $this['admin.modules']->keys();
-		} else {
-			$modules = $this['admin.modules']->get_active_keys();
-		}
-
-		foreach ( $modules as $module_id ) {
-			$this['admin.modules'][ $module_id ]->load();
-		}
-	}
-
-	/**
 	 * Load admin screens.
 	 *
 	 * @since 2.0.0
 	 */
-	protected function load_admin_screens() {
+	protected function load_screens() {
 		foreach ( $this['admin.screens']->keys() as $screen_id ) {
 			$this['admin.screens'][ $screen_id ]->load();
 		}

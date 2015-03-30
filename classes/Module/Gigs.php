@@ -8,15 +8,13 @@
 
 namespace AudioTheme\Core\Module;
 
-use AudioTheme\Core\Module;
-
 /**
  * Gigs module class.
  *
  * @package AudioTheme\Core\Gigs
  * @since 2.0.0
  */
-class Gigs extends Module {
+class Gigs extends AbstractModule {
 	/**
 	 * Constructor method.
 	 *
@@ -49,92 +47,15 @@ class Gigs extends Module {
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
-		add_action( 'init',                     array( $this, 'register_post_types' ) );
-		add_action( 'wp_loaded',                array( $this, 'register_post_connections' ) );
-		add_filter( 'generate_rewrite_rules',   array( $this, 'generate_rewrite_rules' ) );
-		add_filter( 'query_vars',               array( $this, 'register_query_vars' ) );
-		add_action( 'pre_get_posts',            array( $this, 'gig_query' ) );
-		add_action( 'template_redirect',        array( $this, 'template_redirect' ) );
-		add_action( 'template_include',         array( $this, 'template_include' ) );
-		add_filter( 'post_type_link',           array( $this, 'post_permalinks' ), 10, 4 );
-		add_filter( 'post_type_archive_link',   array( $this, 'archive_permalink' ), 10, 2 );
-		add_filter( 'wp_unique_post_slug',      array( $this, 'get_unique_gig_slug' ), 10, 6 );
-		add_action( 'save_post_audiotheme_gig', array( $this, 'update_bad_gig_slug' ), 20, 2 );
-		add_filter( 'get_edit_post_link',       'get_audiotheme_venue_edit_link', 10, 2 );
-		add_filter( 'post_class',               array( $this, 'gig_post_class' ), 10, 3 );
-		add_action( 'before_delete_post',       array( $this, 'on_before_delete_gig' ) );
-	}
+		add_action( 'wp_loaded',              array( $this, 'register_post_connections' ) );
+		add_filter( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
+		add_action( 'template_redirect',      array( $this, 'template_redirect' ) );
+		add_action( 'template_include',       array( $this, 'template_include' ) );
 
-	/**
-	 * Register post types.
-	 *
-	 * @since 2.0.0
-	 */
-	public function register_post_types() {
-		$labels = array(
-			'name'               => _x( 'Gigs', 'post type general name', 'audiotheme' ),
-			'singular_name'      => _x( 'Gig', 'post type singular name', 'audiotheme' ),
-			'add_new'            => _x( 'Add New', 'gig', 'audiotheme' ),
-			'add_new_item'       => __( 'Add New Gig', 'audiotheme' ),
-			'edit_item'          => __( 'Edit Gig', 'audiotheme' ),
-			'new_item'           => __( 'New Gig', 'audiotheme' ),
-			'view_item'          => __( 'View Gig', 'audiotheme' ),
-			'search_items'       => __( 'Search Gigs', 'audiotheme' ),
-			'not_found'          => __( 'No gigs found', 'audiotheme' ),
-			'not_found_in_trash' => __( 'No gigs found in Trash', 'audiotheme' ),
-			'all_items'          => __( 'All Gigs', 'audiotheme' ),
-			'menu_name'          => __( 'Gigs', 'audiotheme' ),
-			'name_admin_bar'     => _x( 'Gigs', 'add new on admin bar', 'audiotheme' ),
-		);
-
-		$args = array(
-			'has_archive'            => $this->get_rewrite_base(),
-			'hierarchical'           => false,
-			'labels'                 => $labels,
-			'menu_position'          => 512,
-			'public'                 => true,
-			'rewrite'                => false,
-			'show_in_admin_bar'      => true,
-			'show_in_menu'           => 'audiotheme-gigs',
-			'show_in_nav_menus'      => false,
-			'supports'               => array( 'title', 'editor', 'thumbnail' ),
-		);
-
-		register_post_type( 'audiotheme_gig', $args );
-
-		$labels = array(
-			'name'               => _x( 'Venues', 'post type general name', 'audiotheme' ),
-			'singular_name'      => _x( 'Venue', 'post type singular name', 'audiotheme' ),
-			'add_new'            => _x( 'Add New', 'venue', 'audiotheme' ),
-			'add_new_item'       => __( 'Add New Venue', 'audiotheme' ),
-			'edit_item'          => __( 'Edit Venue', 'audiotheme' ),
-			'new_item'           => __( 'New Venue', 'audiotheme' ),
-			'view_item'          => __( 'View Venue', 'audiotheme' ),
-			'search_items'       => __( 'Search Venues', 'audiotheme' ),
-			'not_found'          => __( 'No venues found', 'audiotheme' ),
-			'not_found_in_trash' => __( 'No venues found in Trash', 'audiotheme' ),
-			'all_items'          => __( 'All Venues', 'audiotheme' ),
-			'menu_name'          => __( 'Venues', 'audiotheme' ),
-			'name_admin_bar'     => _x( 'Venues', 'add new on admin bar', 'audiotheme' ),
-		);
-
-		$args = array(
-			'has_archive'            => false,
-			'hierarchical'           => false,
-			'labels'                 => $labels,
-			'public'                 => false,
-			'publicly_queryable'     => false,
-			'query_var'              => 'audiotheme_venue',
-			'rewrite'                => false,
-			'supports'               => array( '' ),
-		);
-
-		register_post_type( 'audiotheme_venue', $args );
-
-		// Register the archive.
-		$this->archives->add_post_type_archive( 'audiotheme_gig', array(
-			'admin_menu_parent' => 'audiotheme-gigs',
-		) );
+		// Admin hooks.
+		add_action( 'parent_file',            array( $this, 'admin_menu_highlight' ) );
+		add_action( 'admin_enqueue_scripts',  array( $this, 'register_admin_assets' ), 1 );
+		add_filter( 'set-screen-option',      array( $this, 'screen_options' ), 999, 3 );
 	}
 
 	/**
@@ -151,19 +72,6 @@ class Gigs extends Module {
 			'cardinality' => 'one-to-many',
 			'admin_box'   => false,
 		) );
-	}
-
-	/**
-	 * Register query variables.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param array $vars Array of valid query variables.
-	 * @return array
-	 */
-	public function register_query_vars( $vars ) {
-		$vars[] = 'audiotheme_gig_range';
-		return $vars;
 	}
 
 	/**
@@ -184,90 +92,6 @@ class Gigs extends Module {
 		}
 
 		return $front . $base;
-	}
-
-	/**
-	 * Filter gigs requests.
-	 *
-	 * Automatically sorts gigs in ascending order by the gig date, but limits to
-	 * showing upcoming gigs unless a specific date range is requested (year,
-	 * month, day).
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param object $query The main WP_Query object. Passed by reference.
-	 */
-	public function gig_query( $query ) {
-		if ( is_admin() || ! $query->is_main_query() || ! is_post_type_archive( 'audiotheme_gig' ) ) {
-			return;
-		}
-
-		$orderby = $query->get( 'orderby' );
-		if ( ! empty( $orderby ) ) {
-			return;
-		}
-
-		$query->set( 'posts_per_archive_page', -1 );
-		$query->set( 'meta_key', '_audiotheme_gig_datetime' );
-		$query->set( 'orderby', 'meta_value' );
-		$query->set( 'order', 'asc' );
-
-		if ( is_date() ) {
-			if ( is_day() ) {
-				$d = absint( $query->get( 'day' ) );
-				$m = absint( $query->get( 'monthnum' ) );
-				$y = absint( $query->get( 'year' ) );
-
-				$start = sprintf( '%s-%s-%s 00:00:00', $y, zeroise( $m, 2 ), zeroise( $d, 2 ) );
-				$end = sprintf( '%s-%s-%s 23:59:59', $y, zeroise( $m, 2 ), zeroise( $d, 2 ) );
-			} elseif ( is_month() ) {
-				$m = absint( $query->get( 'monthnum' ) );
-				$y = absint( $query->get( 'year' ) );
-
-				$start = sprintf( '%s-%s-01 00:00:00', $y, zeroise( $m, 2 ) );
-				$end = sprintf( '%s 23:59:59', date( 'Y-m-t', mktime( 0, 0, 0, $m, 1, $y ) ) );
-			} elseif ( is_year() ) {
-				$y = absint( $query->get( 'year' ) );
-
-				$start = sprintf( '%s-01-01 00:00:00', $y );
-				$end = sprintf( '%s-12-31 23:59:59', $y );
-			}
-
-			if ( isset( $start ) && isset( $end ) ) {
-				$meta_query[] = array(
-					'key'     => '_audiotheme_gig_datetime',
-					'value'   => array( $start, $end ),
-					'compare' => 'BETWEEN',
-					'type'    => 'DATETIME',
-				);
-
-				$query->set( 'day', null );
-				$query->set( 'monthnum', null );
-				$query->set( 'year', null );
-			}
-		} elseif ( 'past' == $query->get( 'audiotheme_gig_range' ) ){
-			$meta_query[] = array(
-				'key'     => '_audiotheme_gig_datetime',
-				'value'   => date( 'Y-m-d', current_time( 'timestamp' ) ),
-				'compare' => '<',
-				'type'    => 'DATETIME',
-			);
-
-			$query->set( 'posts_per_archive_page', null );
-			$query->set( 'order', 'desc' );
-		} else {
-			// Only show upcoming gigs.
-			$meta_query[] = array(
-				'key'     => '_audiotheme_gig_datetime',
-				'value'   => date( 'Y-m-d', current_time( 'timestamp' ) ),
-				'compare' => '>=',
-				'type'    => 'DATETIME',
-			);
-		}
-
-		if ( isset( $meta_query ) ) {
-			$query->set( 'meta_query', $meta_query );
-		}
 	}
 
 	/**
@@ -340,192 +164,6 @@ class Gigs extends Module {
 	}
 
 	/**
-	 * Filter gig permalinks to match the custom rewrite rules.
-	 *
-	 * Allows the standard WordPress API function get_permalink() to return the
-	 * correct URL when used with a gig post type.
-	 *
-	 * @since 1.0.0
-	 * @see get_post_permalink()
-	 * @see audiotheme_gigs_rewrite_base()
-	 *
-	 * @param string $post_link The default gig URL.
-	 * @param object $post_link The gig to get the permalink for.
-	 * @param bool $leavename Whether to keep the post name.
-	 * @param bool $sample Is it a sample permalink.
-	 * @return string The gig permalink.
-	 */
-	public function post_permalinks( $post_link, $post, $leavename, $sample ) {
-		$is_draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
-
-		if ( ! $is_draft_or_pending || $sample ) {
-			$permalink = get_option( 'permalink_structure' );
-
-			if ( ! empty( $permalink ) && 'audiotheme_gig' == get_post_type( $post ) ) {
-				$base = $this->get_rewrite_base();
-				$slug = ( $leavename ) ? '%postname%' : $post->post_name;
-
-				$post_link = home_url( sprintf( '/%s/%s/', $base, $slug ) );
-			}
-		}
-
-		return $post_link;
-	}
-
-	/**
-	 * Filter the permalink for the gigs archive.
-	 *
-	 * @since 1.0.0
-	 * @uses audiotheme_gigs_rewrite_base()
-	 *
-	 * @param string $link The default archive URL.
-	 * @param string $post_type Post type.
-	 * @return string The gig archive URL.
-	 */
-	public function archive_permalink( $link, $post_type ) {
-		if ( 'audiotheme_gig' == $post_type && get_option( 'permalink_structure' ) ) {
-			$base = $this->get_rewrite_base();
-			$link = home_url( '/' . $base . '/' );
-		} elseif ( 'audiotheme_gig' == $post_type ) {
-			$link = add_query_arg( 'post_type', 'audiotheme_gig', home_url( '/' ) );
-		}
-
-		return $link;
-	}
-
-	/**
-	 * Prevent conflicts in gig permalinks.
-	 *
-	 * Gigs without titles will fall back to using the ID for the slug, however,
-	 * when the ID is a 4 digit number, it will conflict with date-based permalinks.
-	 *
-	 * Any slugs that match the ID will default to the gig date if one has been
-	 * saved, otherwise the ID will be prepended with 'gig-'.
-	 *
-	 * @since 1.6.1
-	 * @see wp_unique_post_slug()
-	 *
-	 * @param string $slug The desired slug (post_name).
-	 * @param integer $post_id
-	 * @param string $post_status No uniqueness checks are made if the post is still draft or pending.
-	 * @param string $post_type
-	 * @param integer $post_parent
-	 * @param string $original_slug Slug passed to the uniqueness method.
-	 * @return string
-	 */
-	public function get_unique_gig_slug( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug = null ) {
-		global $wpdb, $wp_rewrite;
-
-		if ( 'audiotheme_gig' == $post_type ) {
-			$slug = $original_slug;
-
-			$feeds = $wp_rewrite->feeds;
-			if ( ! is_array( $feeds ) ) {
-				$feeds = array();
-			}
-
-			// Four-digit numeric slugs interfere with date-based archives.
-			if ( $slug == $post_id ) {
-				$slug = 'gig-' . $slug;
-
-				// If a date is set, default to the date rather than the post id.
-				$datetime = get_post_meta( $post_id, '_audiotheme_gig_datetime', true );
-				if ( ! empty( $datetime ) ) {
-					$dt = date_parse( $datetime );
-					$slug = sprintf( '%s-%s-%s', $dt['year'], zeroise( $dt['month'], 2 ), zeroise( $dt['day'], 2 ) );
-				}
-			}
-
-			// Make sure the gig slug is unique.
-			$check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name=%s AND post_type=%s AND ID!=%d LIMIT 1";
-			$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_id ) );
-
-			if ( $post_name_check || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $slug, $post_type ) ) {
-				$suffix = 2;
-				do {
-					$alt_post_name = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-					$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_id ) );
-					$suffix++;
-				} while ( $post_name_check );
-				$slug = $alt_post_name;
-			}
-		}
-
-		return $slug;
-	}
-
-	/**
-	 * Prevent conflicts with numeric gig slugs.
-	 *
-	 * If a slug is empty when a post is published, wp_insert_post() will base the
-	 * slug off the title/ID without a way to filter it until after the post is
-	 * saved.
-	 *
-	 * @since 1.6.1
-	 *
-	 * @param int $post_id Post ID.
-	 * @param WP_Post $post Post object.
-	 */
-	public function update_bad_gig_slug( $post_id, $post ) {
-		global $wpdb;
-
-		if ( 'audiotheme_gig' !== $post->post_type ) {
-			return;
-		}
-
-		if ( $post->post_name == $post_id && ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
-			$slug = audiotheme_gig_unique_slug(
-				'gig-' . $post_id,
-				$post_id,
-				$post->post_status,
-				$post->post_type,
-				$post->post_parent,
-				$post_id
-			);
-
-			$wpdb->update( $wpdb->posts, array( 'post_name' => $slug ), array( 'ID' => $post_id ) );
-		}
-	}
-
-	/**
-	 * Update a venue's cached gig count when gig is deleted.
-	 *
-	 * Determines if a venue's gig_count meta field needs to be updated
-	 * when a gig is deleted.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param int $post_id ID of the gig being deleted.
-	 */
-	public function on_before_delete_gig( $post_id ) {
-		if ( 'audiotheme_gig' == get_post_type( $post_id ) ) {
-			$gig = get_audiotheme_gig( $post_id );
-			if ( isset( $gig->venue->ID ) ) {
-				$count = get_audiotheme_venue_gig_count( $gig->venue->ID );
-				update_audiotheme_venue_gig_count( $gig->venue->ID, --$count );
-			}
-		}
-	}
-
-	/**
-	 * Add useful classes to gig posts.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param array $classes List of classes.
-	 * @param string|array $class One or more classes to add to the class list.
-	 * @param int $post_id An optional post ID.
-	 * @return array Array of classes.
-	 */
-	public function gig_post_class( $classes, $class, $post_id ) {
-		if ( 'audiotheme_gig' == get_post_type( $post_id ) && audiotheme_gig_has_ticket_meta() ) {
-			$classes[] = 'has-audiotheme-ticket-meta';
-		}
-
-		return $classes;
-	}
-
-	/**
 	 * Add custom gig rewrite rules.
 	 *
 	 * /base/YYYY/MM/DD/(feed|ical)/
@@ -566,5 +204,96 @@ class Gigs extends Module {
 		$new_rules[ $base . '/?$' ] = 'index.php?post_type=audiotheme_gig';
 
 		$wp_rewrite->rules = array_merge( $new_rules, $wp_rewrite->rules );
+	}
+
+	/**
+	 * Register scripts and styles.
+	 *
+	 * @since 2.0.0
+	 */
+	public function register_admin_assets() {
+		wp_register_script( 'audiotheme-gig-edit',      AUDIOTHEME_URI . 'admin/js/gig-edit.js',    array( 'audiotheme-admin', 'audiotheme-venue-manager', 'jquery-timepicker', 'jquery-ui-autocomplete', 'pikaday', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme-venue-edit',    AUDIOTHEME_URI . 'admin/js/venue-edit.js',  array( 'audiotheme-admin', 'jquery-ui-autocomplete', 'post', 'underscore' ), AUDIOTHEME_VERSION, true );
+		wp_register_script( 'audiotheme-venue-manager', AUDIOTHEME_URI . 'admin/js/venue-manager.js', array( 'audiotheme-admin', 'jquery', 'media-models', 'media-views', 'underscore', 'wp-backbone', 'wp-util' ), AUDIOTHEME_VERSION, true );
+
+		$post_type_object = get_post_type_object( 'audiotheme_venue' );
+
+		$settings = array(
+			'canPublishVenues' => false,
+			'canEditVenues'    => current_user_can( $post_type_object->cap->edit_posts ),
+			'insertVenueNonce' => false,
+			'l10n'             => array(
+
+			),
+		);
+
+		if ( current_user_can( $post_type_object->cap->publish_posts ) ) {
+			$settings['canPublishVenues'] = true;
+			$settings['insertVenueNonce'] = wp_create_nonce( 'insert-venue' );
+		}
+
+		wp_localize_script( 'audiotheme-venue-manager', '_audiothemeVenueManagerSettings', $settings );
+	}
+
+	/**
+	 * Sanitize the 'per_page' screen option on the Manage Gigs and Manage Venues
+	 * screens.
+	 *
+	 * Apparently any other hook attached to the same filter that runs after
+	 * this will stomp all over it. To prevent this filter from doing the same,
+	 * it's only attached on the screens that require it. The priority should be
+	 * set extremely low to help ensure the correct value gets returned.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param bool $return Default is 'false'.
+	 * @param string $option The option name.
+	 * @param mixed $value The value to sanitize.
+	 * @return mixed The sanitized value.
+	 */
+	public function screen_options( $return, $option, $value ) {
+		global $pagenow;
+
+		// Only run on the gig and venue Manage Screens.
+		$is_manage_screen = 'admin.php' == $pagenow && isset( $_GET['page'] ) && ( 'audiotheme-gigs' == $_GET['page'] || 'audiotheme-venues' == $_GET['page'] );
+		$is_valid_option  = ( 'toplevel_page_audiotheme_gigs_per_page' == $option || 'gigs_page_audiotheme_venues_per_page' == $option );
+
+		if ( $is_manage_screen && $is_valid_option ) {
+			$return = absint( $value );
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Highlight the correct top level and sub menu items for the current screen.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $parent_file The screen being displayed.
+	 * @return string The menu item to highlight.
+	 */
+	public function admin_menu_highlight( $parent_file ) {
+		global $pagenow, $post_type, $submenu, $submenu_file;
+
+		if ( 'audiotheme_gig' == $post_type ) {
+			$parent_file  = 'audiotheme-gigs';
+			$submenu_file = ( 'post.php' == $pagenow ) ? 'audiotheme-gigs' : $submenu_file;
+		}
+
+		if ( 'audiotheme-gigs' == $parent_file && isset( $_GET['page'] ) && 'audiotheme-venue' == $_GET['page'] ) {
+			$submenu_file = 'audiotheme-venues';
+		}
+
+		// Remove the Add New Venue submenu item.
+		if ( isset( $submenu['audiotheme-gigs'] ) ) {
+			foreach ( $submenu['audiotheme-gigs'] as $key => $sm ) {
+				if ( isset( $sm[0] ) && 'audiotheme-venue' == $sm[2] ) {
+					unset( $submenu['audiotheme-gigs'][ $key ] );
+				}
+			}
+		}
+
+		return $parent_file;
 	}
 }
